@@ -1,56 +1,117 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mera Multitool Website</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Mera Multitool Website</h1>
-        <p>Oppo mobile se GitHub Pages pe banaya! 📱</p>
-    </header>
+// Tool 1: Calculator Functions
+function add() {
+    const num1 = parseFloat(document.getElementById('num1').value) || 0;
+    const num2 = parseFloat(document.getElementById('num2').value) || 0;
+    const result = num1 + num2;
+    document.getElementById('calcResult').textContent = `Result: ${result}`;
+}
+
+function subtract() {
+    const num1 = parseFloat(document.getElementById('num1').value) || 0;
+    const num2 = parseFloat(document.getElementById('num2').value) || 0;
+    const result = num1 - num2;
+    document.getElementById('calcResult').textContent = `Result: ${result}`;
+}
+
+function multiply() {
+    const num1 = parseFloat(document.getElementById('num1').value) || 0;
+    const num2 = parseFloat(document.getElementById('num2').value) || 0;
+    const result = num1 * num2;
+    document.getElementById('calcResult').textContent = `Result: ${result}`;
+}
+
+function divide() {
+    const num1 = parseFloat(document.getElementById('num1').value) || 0;
+    const num2 = parseFloat(document.getElementById('num2').value) || 0;
+    if (num2 === 0) {
+        document.getElementById('calcResult').textContent = 'Error: Cannot divide by zero';
+    } else {
+        const result = num1 / num2;
+        document.getElementById('calcResult').textContent = `Result: ${result}`;
+    }
+}
+
+// Tool 2: Unit Converter
+function convertUnit() {
+    const inputValue = parseFloat(document.getElementById('converterInput').value) || 0;
+    const converterType = document.getElementById('converterType').value;
+    let result;
+
+    switch(converterType) {
+        case 'cmToM':
+            result = inputValue / 100;
+            break;
+        case 'mToCm':
+            result = inputValue * 100;
+            break;
+        case 'kmToM':
+            result = inputValue * 1000;
+            break;
+        default:
+            result = inputValue;
+    }
+
+    document.getElementById('converterResult').textContent = `Result: ${result}`;
+}
+
+// Tool 3: Notes Functions
+function saveNotes() {
+    const notes = document.getElementById('notes').value;
+    localStorage.setItem('savedNotes', notes);
+    alert('Notes saved successfully! ✅');
+}
+
+function clearNotes() {
+    if(confirm('Kya aap sure hain notes delete karne ke liye?')) {
+        document.getElementById('notes').value = '';
+        localStorage.removeItem('savedNotes');
+        alert('Notes cleared! 🗑️');
+    }
+}
+
+// Tool 4: Age Calculator
+function calculateAge() {
+    const birthDate = new Date(document.getElementById('birthDate').value);
+    const today = new Date();
     
-    <div class="container">
-        <!-- Calculator Tool -->
-        <div class="tool-card">
-            <h2>Calculator</h2>
-            <input type="number" id="num1" placeholder="Pehla number">
-            <input type="number" id="num2" placeholder="Dusra number">
-            <div class="buttons">
-                <button onclick="add()">+</button>
-                <button onclick="subtract()">-</button>
-                <button onclick="multiply()">×</button>
-                <button onclick="divide()">÷</button>
-            </div>
-            <p id="calcResult">Result: </p>
-        </div>
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    
+    document.getElementById('ageResult').textContent = `Your age: ${age} years`;
+}
 
-        <!-- Unit Converter -->
-        <div class="tool-card">
-            <h2>Unit Converter</h2>
-            <input type="number" id="converterInput" placeholder="Enter value">
-            <select id="converterType">
-                <option value="cmToM">CM to Meter</option>
-                <option value="mToCm">Meter to CM</option>
-                <option value="kmToM">KM to Meter</option>
-            </select>
-            <button onclick="convertUnit()">Convert</button>
-            <p id="converterResult">Result: </p>
-        </div>
+// Tool 5: BMI Calculator
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value) / 100;
+    
+    if (weight && height) {
+        const bmi = (weight / (height * height)).toFixed(2);
+        document.getElementById('bmiResult').textContent = `Your BMI: ${bmi}`;
+    }
+}
 
-        <!-- Notes Tool -->
-        <div class="tool-card">
-            <h2>Quick Notes</h2>
-            <textarea id="notes" placeholder="Yahan apne notes likhein..."></textarea>
-            <div class="notes-buttons">
-                <button onclick="saveNotes()">Save Notes</button>
-                <button onclick="clearNotes()">Clear Notes</button>
-            </div>
-        </div>
-    </div>
+// Tool 6: Password Generator
+function generatePassword() {
+    const length = document.getElementById('passwordLength').value;
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    let password = "";
+    
+    for (let i = 0; i < length; i++) {
+        password += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    
+    document.getElementById('passwordResult').textContent = `Password: ${password}`;
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+// Load saved notes when page loads
+window.onload = function() {
+    const savedNotes = localStorage.getItem('savedNotes');
+    if (savedNotes) {
+        document.getElementById('notes').value = savedNotes;
+    }
+}
