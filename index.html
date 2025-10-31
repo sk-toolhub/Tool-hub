@@ -1,117 +1,249 @@
-// Tool 1: Calculator Functions
-function add() {
-    const num1 = parseFloat(document.getElementById('num1').value) || 0;
-    const num2 = parseFloat(document.getElementById('num2').value) || 0;
-    const result = num1 + num2;
-    document.getElementById('calcResult').textContent = `Result: ${result}`;
-}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi Tool Web App</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f7f9fc;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    color: #005f73;
+  }
+  section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+  }
+  input, textarea, button, select {
+    width: 100%;
+    padding: 6px 10px;
+    margin-top: 6px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #0a9396;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #00707a;
+  }
+  .result {
+    margin-top:10px;
+    padding: 10px;
+    background: #94d2bd;
+    border-radius: 5px;
+    color: #003d33;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
 
-function subtract() {
-    const num1 = parseFloat(document.getElementById('num1').value) || 0;
-    const num2 = parseFloat(document.getElementById('num2').value) || 0;
-    const result = num1 - num2;
-    document.getElementById('calcResult').textContent = `Result: ${result}`;
-}
+<h1>Multi Functional Toolset</h1>
 
-function multiply() {
-    const num1 = parseFloat(document.getElementById('num1').value) || 0;
-    const num2 = parseFloat(document.getElementById('num2').value) || 0;
-    const result = num1 * num2;
-    document.getElementById('calcResult').textContent = `Result: ${result}`;
-}
+<!-- Image Resizer -->
+<section>
+  <h2>Image Resizer</h2>
+  <label for="imgUpload">Image Upload (JPG, PNG):</label>
+  <input type="file" id="imgUpload" accept="image/*" />
+  <label for="imgWidth">Width (px):</label>
+  <input type="number" id="imgWidth" placeholder="Enter width in pixels"/>
+  <button onclick="resizeImage()">Resize Image</button>
+  <div class="result" id="resizedImageContainer"></div>
+</section>
 
-function divide() {
-    const num1 = parseFloat(document.getElementById('num1').value) || 0;
-    const num2 = parseFloat(document.getElementById('num2').value) || 0;
-    if (num2 === 0) {
-        document.getElementById('calcResult').textContent = 'Error: Cannot divide by zero';
-    } else {
-        const result = num1 / num2;
-        document.getElementById('calcResult').textContent = `Result: ${result}`;
+<!-- JPG to PDF Converter -->
+<section>
+  <h2>JPG to PDF Converter</h2>
+  <label for="pdfImgUpload">Upload JPG Image:</label>
+  <input type="file" id="pdfImgUpload" accept="image/jpeg" />
+  <button onclick="convertJpgToPdf()">Convert to PDF</button>
+  <div class="result" id="pdfResult"></div>
+</section>
+
+<!-- Age Calculator -->
+<section>
+  <h2>Age Calculator</h2>
+  <label for="dobInput">Enter Date of Birth:</label>
+  <input type="date" id="dobInput" />
+  <button onclick="calculateAge()">Calculate Age</button>
+  <div class="result" id="ageResult"></div>
+</section>
+
+<!-- Word Count -->
+<section>
+  <h2>Word Count</h2>
+  <label for="textInput">Enter Text:</label>
+  <textarea id="textInput" rows="4" placeholder="Type or paste text here..."></textarea>
+  <button onclick="countWords()">Count Words</button>
+  <div class="result" id="wordCountResult"></div>
+</section>
+
+<!-- Image Converter -->
+<section>
+  <h2>Image Converter (PNG/JPG)</h2>
+  <label for="convertImageUpload">Upload Image:</label>
+  <input type="file" id="convertImageUpload" accept="image/*" />
+  <label for="formatSelect">Convert to:</label>
+  <select id="formatSelect">
+    <option value="png">PNG</option>
+    <option value="jpeg">JPEG</option>
+  </select>
+  <button onclick="convertImageFormat()">Convert Image</button>
+  <div class="result" id="convertedImageResult"></div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  // Image Resizer
+  function resizeImage() {
+    const fileInput = document.getElementById('imgUpload');
+    const width = parseInt(document.getElementById('imgWidth').value);
+    const container = document.getElementById('resizedImageContainer');
+    container.innerHTML = '';
+    if (!fileInput.files.length) {
+      container.textContent = 'कृपया इमेज चुनें।';
+      return;
     }
-}
-
-// Tool 2: Unit Converter
-function convertUnit() {
-    const inputValue = parseFloat(document.getElementById('converterInput').value) || 0;
-    const converterType = document.getElementById('converterType').value;
-    let result;
-
-    switch(converterType) {
-        case 'cmToM':
-            result = inputValue / 100;
-            break;
-        case 'mToCm':
-            result = inputValue * 100;
-            break;
-        case 'kmToM':
-            result = inputValue * 1000;
-            break;
-        default:
-            result = inputValue;
+    if (!width || width <= 0) {
+      container.textContent = 'कृपया सही चौड़ाई दर्ज करें।';
+      return;
     }
-
-    document.getElementById('converterResult').textContent = `Result: ${result}`;
-}
-
-// Tool 3: Notes Functions
-function saveNotes() {
-    const notes = document.getElementById('notes').value;
-    localStorage.setItem('savedNotes', notes);
-    alert('Notes saved successfully! ✅');
-}
-
-function clearNotes() {
-    if(confirm('Kya aap sure hain notes delete karne ke liye?')) {
-        document.getElementById('notes').value = '';
-        localStorage.removeItem('savedNotes');
-        alert('Notes cleared! 🗑️');
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const ratio = img.height / img.width;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = width * ratio;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const resizedDataUrl = canvas.toDataURL(file.type);
+        const resizedImg = document.createElement('img');
+        resizedImg.src = resizedDataUrl;
+        resizedImg.alt = 'Resized Image';
+        container.appendChild(resizedImg);
+      }
+      img.src = e.target.result;
     }
-}
+    reader.readAsDataURL(file);
+  }
 
-// Tool 4: Age Calculator
-function calculateAge() {
-    const birthDate = new Date(document.getElementById('birthDate').value);
+  // JPG to PDF Converter
+  async function convertJpgToPdf() {
+    const input = document.getElementById('pdfImgUpload');
+    const resultDiv = document.getElementById('pdfResult');
+    resultDiv.innerHTML = '';
+    if (!input.files.length) {
+      resultDiv.textContent = 'कृपया JPG फाइल चुनें।';
+      return;
+    }
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imgData = e.target.result;
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+      const img = new Image();
+      img.onload = () => {
+        const imgProps = pdf.getImageProperties(img);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(img, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('converted.pdf');
+        resultDiv.textContent = 'PDF सफलतापूर्वक डाउनलोड हो चुका है।';
+      };
+      img.src = imgData;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Age Calculator
+  function calculateAge() {
+    const dobInput = document.getElementById('dobInput').value;
+    const resultDiv = document.getElementById('ageResult');
+    if (!dobInput) {
+      resultDiv.textContent = 'कृपया जन्म तिथि डालें।';
+      return;
+    }
+    const dob = new Date(dobInput);
     const today = new Date();
-    
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+      age--;
     }
-    
-    document.getElementById('ageResult').textContent = `Your age: ${age} years`;
-}
+    resultDiv.textContent = `आपकी उम्र: ${age} वर्ष`;
+  }
 
-// Tool 5: BMI Calculator
-function calculateBMI() {
-    const weight = parseFloat(document.getElementById('weight').value);
-    const height = parseFloat(document.getElementById('height').value) / 100;
-    
-    if (weight && height) {
-        const bmi = (weight / (height * height)).toFixed(2);
-        document.getElementById('bmiResult').textContent = `Your BMI: ${bmi}`;
+  // Word Count
+  function countWords() {
+    const text = document.getElementById('textInput').value.trim();
+    const resultDiv = document.getElementById('wordCountResult');
+    if (!text) {
+      resultDiv.textContent = 'कृपया टेक्स्ट इनपुट करें।';
+      return;
     }
-}
+    const words = text.split(/s+/);
+    resultDiv.textContent = `शब्दों की संख्या: ${words.length}`;
+  }
 
-// Tool 6: Password Generator
-function generatePassword() {
-    const length = document.getElementById('passwordLength').value;
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-    let password = "";
-    
-    for (let i = 0; i < length; i++) {
-        password += charset.charAt(Math.floor(Math.random() * charset.length));
+  // Image Converter
+  function convertImageFormat() {
+    const input = document.getElementById('convertImageUpload');
+    const format = document.getElementById('formatSelect').value;
+    const resultDiv = document.getElementById('convertedImageResult');
+    resultDiv.innerHTML = '';
+    if (!input.files.length) {
+      resultDiv.textContent = 'कृपया एक इमेज चुनें।';
+      return;
     }
-    
-    document.getElementById('passwordResult').textContent = `Password: ${password}`;
-}
 
-// Load saved notes when page loads
-window.onload = function() {
-    const savedNotes = localStorage.getItem('savedNotes');
-    if (savedNotes) {
-        document.getElementById('notes').value = savedNotes;
-    }
-}
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const convertedDataUrl = canvas.toDataURL('image/' + format);
+        const a = document.createElement('a');
+        a.href = convertedDataUrl;
+        a.download = `converted_image.${format}`;
+        a.textContent = 'यहां क्लिक करें और इमेज डाउनलोड करें';
+        a.style.color = '#0a9396';
+        a.style.fontWeight = 'bold';
+        resultDiv.appendChild(a);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+</body>
+</html>
