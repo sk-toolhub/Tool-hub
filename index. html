@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mera Multitool Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Mera Multitool Website</h1>
+        <p>Oppo mobile se GitHub Pages pe banaya! 📱</p>
+    </header>
+    
+    <div class="container">
+        <!-- Calculator Tool -->
+        <div class="tool-card">
+            <h2>Calculator</h2>
+            <input type="number" id="num1" placeholder="Pehla number">
+            <input type="number" id="num2" placeholder="Dusra number">
+            <div class="buttons">
+                <button onclick="add()">+</button>
+                <button onclick="subtract()">-</button>
+                <button onclick="multiply()">×</button>
+                <button onclick="divide()">÷</button>
+            </div>
+            <p id="calcResult">Result: </p>
+        </div>
+
+        <!-- Unit Converter -->
+        <div class="tool-card">
+            <h2>Unit Converter</h2>
+            <input type="number" id="converterInput" placeholder="Enter value">
+            <select id="converterType">
+                <option value="cmToM">CM to Meter</option>
+                <option value="mToCm">Meter to CM</option>
+                <option value="kmToM">KM to Meter</option>
+            </select>
+            <button onclick="convertUnit()">Convert</button>
+            <p id="converterResult">Result: </p>
+        </div>
+
+        <!-- Notes Tool -->
+        <div class="tool-card">
+            <h2>Quick Notes</h2>
+            <textarea id="notes" placeholder="Yahan apne notes likhein..."></textarea>
+            <div class="notes-buttons">
+                <button onclick="saveNotes()">Save Notes</button>
+                <button onclick="clearNotes()">Clear Notes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
