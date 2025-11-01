@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDF Compressor</title>
+  <style>
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(10,35,100,0.06);
+      box-sizing: border-box;
+    }
+    h2 { color:#0066ff; margin:0 0 12px 0; text-align:center; }
+    .grid { display:flex; gap:16px; flex-wrap:wrap; }
+    .left { flex:1.2; min-width:300px; }
+    .right { flex:0.8; min-width:260px; }
+    label { display:block; font-weight:600; margin-top:10px; color:#333; }
+    input[type=file], select, input[type=number], button, input[type=text] {
+      width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px; box-sizing:border-box;
+      background:#fff;
+    }
+    .btn { background:#0066ff; color:#fff; border:none; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .btn.ghost { background:transparent; color:#0066ff; border:1px solid #e6f0ff; }
+    .note { color:#555; font-size:13px; margin-top:8px; }
+    .progress { margin-top:12px; height:10px; background:#eef6ff; border-radius:8px; overflow:hidden; }
+    .progress > i { display:block; height:100%; width:0%; background:#0066ff; transition:width .2s ease; }
+    .preview { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start; }
+    .stat { font-size:13px; color:#333; margin-top:8px; }
+    @media (max-width:780px) {
+      .grid { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📉 PDF Compressor (Client-side)</h2>
+    <div class="grid">
+      <div class="left">
+        <label>Upload PDF</label>
+        <input id="pdfFile" type="file" accept="application/pdf" />
+
+        <label>Scale (render resolution)</label>
+        <input id="scale" type="number" min="0.3" max="2" step="0.1" value="0.8" />
+
+        <label>JPEG Quality (for page images) 10–100</label>
+        <input id="quality" type="number" min="10" max="100" step="5" value="70" />
+
+        <label>Page Range (e.g., 1-3,5 or leave empty for all)</label>
+        <input id="pageRange" type="text" placeholder="1-3,5">
+
+        <div style="display:flex; gap:10px; margin-top:12px;">
+          <button id="compressBtn" class="btn">Compress PDF</button>
+          <button id="clearBtn" class="btn ghost">Reset</button>
+        </div>
+
+        <div class="progress" style="margin-top:12px;"><i id="progressBar"></i></div>
+        <div id="status" class="note"></div>
+
+        <div class="preview" id="preview"></div>
+      </div>
+
+      <div class="right">
+        <label>Original PDF</label>
+        <div id="origInfo" class="stat">—</div>
+
+        <label>Compressed PDF</label>
+        <div id="outInfo" class="stat">—</div>
+
+        <label>Options / Notes</label>
+        <div class="note">
+          • Compression rasterizes pages: text becomes image (not searchable).<br>
+          • Lower <strong>Scale</strong> and <strong>Quality</strong> → smaller file but lower clarity.<br>
+          • Works fully in browser — files are not uploaded to any server.
+        </div>
+
+        <div style="margin-top:12px;">
+          <button id="downloadBtn" class="btn" style="width:100%; display:none;">Download Compressed PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <script src="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
+    const { jsPDF } = window.jspdf;
+
+    const pdfFileInput = document.getElementById('pdfFile');
+    const scaleInput = document.getElementById('scale');
+    const qualityInput = document.getElementById('quality');
+    const pageRangeInput = document.getElementById('pageRange');
+    const compressBtn = document.getElementById('compressBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const progressBar = document.getElementById('progressBar');
+    const status = document.getElementById('status');
+    const preview = document.getElementById('preview');
+    const origInfo = document.getElementById('origInfo');
+    const outInfo = document.getElementById('outInfo');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let pdfDoc = null;
+    let originalFile = null;
+    let compressedBlobUrl = null;
+
+    function setStatus(txt){ status.textContent = txt || ''; }
+    function setProgress(p){ progressBar.style.width = (p || 0) + '%'; }
+
+    pdfFileInput.addEventListener('change', async (e) => {
+      resetAll(false);
+      const file = e.target.files[0];
+      if (!file) return;
+      originalFile = file;
+      origInfo.textContent = `${file.name} — ${(file.size/1024).toFixed(1)} KB`;
+      setStatus('Loading PDF...');
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        setStatus(`PDF loaded — ${pdfDoc.numPages} pages.`);
+      } catch (err) {
+        setStatus('Failed to load PDF: ' + err.message);
+      }
+    });
+
+    // parse page range like "1-3,5"
+    function parseRange(str, maxPage){
+      if (!str) return Array.from({length: maxPage}, (_,i)=>i+1);
+      const parts = str.split(',').map(s=>s.trim()).filter(Boolean);
+      const pages = new Set();
+      for(const p of parts){
+        if (p.includes('-')){
+          const [a,b] = p.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));
+          if (a && b){
+            for(let i=Math.max(1,a); i<=Math.min(b,maxPage); i++) pages.add(i);
+          }
+        } else {
+          const n = parseInt(p,10);
+          if (n && n>=1 && n<=maxPage) pages.add(n);
+        }
+      }
+      const arr = Array.from(pages).sort((a,b)=>a-b);
+      return arr.length ? arr : Array.from({length: maxPage}, (_,i)=>i+1);
+    }
+
+    async function renderPageToJpeg(pageNum, scale, quality) {
+      const page = await pdfDoc.getPage(pageNum);
+      const viewport = page.getViewport({ scale: scale });
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = Math.round(viewport.width);
+      canvas.height = Math.round(viewport.height);
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+      // convert to JPEG blob
+      const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality/100));
+      const url = URL.createObjectURL(blob);
+      return { blob, url, width: canvas.width, height: canvas.height };
+    }
+
+    compressBtn.addEventListener('click', async () => {
+      if (!pdfDoc) return alert('Please upload a PDF first.');
+      compressBtn.disabled = true;
+      setProgress(0);
+      setStatus('Starting compression — this may take some time for large PDFs...');
+      preview.innerHTML = '';
+      if (compressedBlobUrl){ URL.revokeObjectURL(compressedBlobUrl); compressedBlobUrl = null; downloadBtn.style.display='none'; outInfo.textContent='—'; }
+
+      const scale = Math.max(0.3, Math.min(2, parseFloat(scaleInput.value) || 0.8));
+      const quality = Math.max(10, Math.min(100, parseInt(qualityInput.value) || 70));
+      const pagesToProcess = parseRange(pageRangeInput.value, pdfDoc.numPages);
+
+      try {
+        const pdfOut = new jsPDF({ unit: 'pt', format: 'a4' }); // template size — we add images scaled in points
+        // We will set each page to the rendered image size (in points). jsPDF works with points; 1pt = 1/72 inch.
+        // We'll convert pixel dims to points using 72 dpi assumption and pixel ratio 96 dpi -> px to pt = px * 72 / 96 = px * 0.75
+        const PX_TO_PT = 0.75;
+
+        for (let i=0; i<pagesToProcess.length; i++){
+          const pnum = pagesToProcess[i];
+          setStatus(`Rendering page ${pnum} (${i+1} / ${pagesToProcess.length})...`);
+          const rendered = await renderPageToJpeg(pnum, scale, quality);
+
+          // show small preview thumbnail
+          const thumb = document.createElement('div');
+          thumb.style.width = '120px';
+          thumb.style.border = '1px solid #eef6ff';
+          thumb.style.borderRadius = '8px';
+          thumb.style.padding = '6px';
+          thumb.style.boxSizing = 'border-box';
+          thumb.innerHTML = `<img src="${rendered.url}" style="width:100%;display:block;border-radius:6px;"><div style="font-size:12px;color:#333;margin-top:6px;text-align:center;">Pg ${pnum}</div>`;
+          preview.appendChild(thumb);
+
+          // calculate image size in points for PDF (maintain aspect)
+          const imgPtW = rendered.width * PX_TO_PT;
+          const imgPtH = rendered.height * PX_TO_PT;
+
+          // if first page, set pdf size to image size
+          if (i === 0) {
+            // create new pdf with custom size equal to first image
+            // jsPDF's constructor cannot change size after creation reliably, so workaround:
+            // we'll create a fresh jsPDF with first page's size in points
+            // Note: To keep code simple, we re-create jsPDF with first page size and then addImage + addPage for others.
+            // So rebuild pdfOut variable here.
+            // Create new jsPDF (unit: pt) with page size [w,h]
+            const firstPdf = new jsPDF({ unit: 'pt', format: [imgPtW, imgPtH] });
+            // add image to first page
+            firstPdf.addImage(rendered.url, 'JPEG', 0, 0, imgPtW, imgPtH, undefined, 'FAST');
+            // replace pdfOut with firstPdf
+            pdfOut.internal = firstPdf.internal;
+            pdfOut.context = firstPdf.context;
+            pdfOut.__private__ = firstPdf.__private__;
+          } else {
+            // add page sized to this image, then add image
+            pdfOut.addPage([imgPtW, imgPtH]);
+            pdfOut.addImage(rendered.url, 'JPEG', 0, 0, imgPtW, imgPtH, undefined, 'FAST');
+          }
+
+          // revoke the temporary objectURL for rendered image to free memory (but keep if needed later)
+          URL.revokeObjectURL(rendered.url);
+
+          setProgress(Math.round(((i+1)/pagesToProcess.length)*100));
+        }
+
+        setStatus('Generating final PDF...');
+        // save PDF to blob using output arraybuffer
+        const pdfBytes = pdfOut.output('arraybuffer');
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        compressedBlobUrl = url;
+        outInfo.textContent = `Compressed ready — ${(blob.size/1024).toFixed(1)} KB`;
+        downloadBtn.style.display = 'block';
+        downloadBtn.onclick = () => {
+          const a = document.createElement('a');
+          a.href = url;
+          const origName = originalFile && originalFile.name ? originalFile.name.replace(/\.pdf$/i,'') : 'compressed';
+          a.download = origName + '-compressed.pdf';
+          a.click();
+        };
+        setStatus('Compression complete.');
+      } catch (err) {
+        console.error(err);
+        setStatus('Error: ' + (err.message || err));
+        alert('Compression failed: ' + (err.message || err));
+      } finally {
+        compressBtn.disabled = false;
+      }
+    });
+
+    clearBtn.addEventListener('click', () => resetAll(true));
+
+    function resetAll(clearInput=true){
+      if (clearInput) pdfFileInput.value = '';
+      preview.innerHTML = '';
+      setProgress(0);
+      setStatus('');
+      origInfo.textContent = '—';
+      outInfo.textContent = '—';
+      if (compressedBlobUrl){ URL.revokeObjectURL(compressedBlobUrl); compressedBlobUrl = null; downloadBtn.style.display='none'; }
+      pdfDoc = null;
+      originalFile = null;
+    }
+
+    // cleanup on unload
+    window.addEventListener('beforeunload', () => {
+      if (compressedBlobUrl) try{ URL.revokeObjectURL(compressedBlobUrl);}catch(e){}
+    });
+  </script>
+</body>
+</html>
