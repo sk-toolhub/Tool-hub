@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Resizer - Online Tool</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      width: 100%;
+      max-width: 550px;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #0066ff;
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-top: 8px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row input {
+      flex: 1;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #004ecc;
+    }
+    .preview {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .preview img {
+      width: 48%;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      object-fit: contain;
+      max-height: 220px;
+    }
+    .meta {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📏 Image Resizer</h2>
+    <label>Upload Image</label>
+    <input type="file" id="upload" accept="image/*">
+
+    <div class="row">
+      <div>
+        <label>Width (px)</label>
+        <input type="number" id="width" placeholder="Auto">
+      </div>
+      <div>
+        <label>Height (px)</label>
+        <input type="number" id="height" placeholder="Auto">
+      </div>
+    </div>
+
+    <div class="checkbox">
+      <input type="checkbox" id="aspect" checked>
+      <label for="aspect">Maintain Aspect Ratio</label>
+    </div>
+
+    <label>Output Format</label>
+    <select id="format">
+      <option value="image/jpeg">JPEG (.jpg)</option>
+      <option value="image/png">PNG (.png)</option>
+      <option value="image/webp">WebP (.webp)</option>
+    </select>
+
+    <label>Quality (JPEG/WebP only)</label>
+    <input type="range" id="quality" min="1" max="100" value="90">
+    <div class="meta" id="qualityText">Quality: 90%</div>
+
+    <button id="resizeBtn">Resize Image</button>
+
+    <div class="preview" id="preview" style="display:none;">
+      <div style="width:48%;">
+        <label style="font-size:13px;font-weight:700;">Original</label>
+        <img id="originalImg" alt="Original">
+        <div class="meta" id="originalMeta"></div>
+      </div>
+      <div style="width:48%;">
+        <label style="font-size:13px;font-weight:700;">Resized</label>
+        <img id="resizedImg" alt="Resized">
+        <div class="meta" id="resizedMeta"></div>
+      </div>
+    </div>
+
+    <button id="downloadBtn" style="display:none;">Download Resized Image</button>
+  </div>
+
+  <script>
+    const upload = document.getElementById('upload');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+    const aspect = document.getElementById('aspect');
+    const formatSelect = document.getElementById('format');
+    const qualityInput = document.getElementById('quality');
+    const qualityText = document.getElementById('qualityText');
+    const resizeBtn = document.getElementById('resizeBtn');
+    const originalImg = document.getElementById('originalImg');
+    const resizedImg = document.getElementById('resizedImg');
+    const preview = document.getElementById('preview');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const originalMeta = document.getElementById('originalMeta');
+    const resizedMeta = document.getElementById('resizedMeta');
+
+    let original = new Image();
+    let aspectRatio = 1;
+    let resizedBlob = null;
+    let resizedUrl = null;
+
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        original.src = evt.target.result;
+        originalImg.src = evt.target.result;
+        preview.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+      original.onload = () => {
+        aspectRatio = original.width / original.height;
+        widthInput.value = original.width;
+        heightInput.value = original.height;
+        originalMeta.textContent = `Size: ${(file.size/1024).toFixed(1)} KB | ${original.width}×${original.height}px`;
+      };
+    });
+
+    widthInput.addEventListener('input', () => {
+      if (aspect.checked) heightInput.value = Math.round(widthInput.value / aspectRatio);
+    });
+    heightInput.addEventListener('input', () => {
+      if (aspect.checked) widthInput.value = Math.round(heightInput.value * aspectRatio);
+    });
+
+    qualityInput.addEventListener('input', () => {
+      qualityText.textContent = `Quality: ${qualityInput.value}%`;
+    });
+
+    resizeBtn.addEventListener('click', () => {
+      if (!original.src) return alert("Please upload an image first!");
+      const width = parseInt(widthInput.value) || original.width;
+      const height = parseInt(heightInput.value) || original.height;
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      if (formatSelect.value === 'image/png') {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+      } else {
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+      }
+      ctx.drawImage(original, 0, 0, width, height);
+
+      const quality = qualityInput.value / 100;
+      canvas.toBlob((blob) => {
+        resizedBlob = blob;
+        if (resizedUrl) URL.revokeObjectURL(resizedUrl);
+        resizedUrl = URL.createObjectURL(blob);
+        resizedImg.src = resizedUrl;
+        resizedMeta.textContent = `Size: ${(blob.size/1024).toFixed(1)} KB | ${width}×${height}px`;
+        downloadBtn.style.display = "block";
+      }, formatSelect.value, quality);
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = resizedUrl;
+      const ext = formatSelect.value.split('/')[1];
+      a.download = `resized-image.${ext}`;
+      a.click();
+    });
+  </script>
+</body>
+</html>
