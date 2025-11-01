@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDF to JPG Converter</title>
+  <style>
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(10,35,100,0.06);
+    }
+    h2 { color:#0066ff; margin:0 0 12px 0; text-align:center; }
+    .controls { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    input[type=file], select, input[type=number], button {
+      padding:10px 12px; border-radius:10px; border:1px solid #e6efff; font-size:14px; background:#fff;
+    }
+    .left { flex: 1.2; min-width: 260px; }
+    .right { flex: 1; min-width: 260px; }
+    .panel { background:#fbfdff; padding:12px; border-radius:10px; border:1px solid #eef6ff; }
+    .preview-list { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .thumb {
+      width:120px; border-radius:8px; border:1px solid #e8f0ff; overflow:hidden; background:#fff;
+      display:flex; flex-direction:column; align-items:center; padding:6px; box-sizing:border-box;
+    }
+    .thumb img { width:100%; height:auto; display:block; }
+    .thumb .meta { font-size:12px; color:#333; margin-top:6px; text-align:center; }
+    .btn { background:#0066ff; color:#fff; border:none; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .btn.ghost { background:transparent; color:#0066ff; border:1px solid #e6f0ff; }
+    .small { font-size:13px; padding:8px 10px; }
+    .progress { margin-top:10px; height:8px; background:#eef6ff; border-radius:6px; overflow:hidden; }
+    .progress > i { display:block; height:100%; width:0%; background:#0066ff; transition:width .2s ease; }
+    .note { font-size:13px; color:#555; margin-top:8px; }
+    @media (max-width:780px) {
+      .controls { flex-direction:column; }
+      .left, .right { min-width:unset; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📄 → 🖼️ PDF to JPG Converter</h2>
+
+    <div class="controls">
+      <div class="left panel">
+        <label><strong>Upload PDF</strong></label>
+        <input id="pdfFile" type="file" accept="application/pdf" />
+
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <div style="flex:1;">
+            <label>Scale (render resolution)</label>
+            <input id="scale" type="number" min="0.5" max="4" step="0.1" value="1.5" />
+          </div>
+          <div style="width:150px;">
+            <label>Quality (JPEG)</label>
+            <input id="quality" type="number" min="10" max="100" step="5" value="90" />
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button id="renderAllBtn" class="btn small">Render All Pages</button>
+          <button id="downloadAllZipBtn" class="btn small ghost" disabled>Download All (ZIP)</button>
+        </div>
+
+        <div class="note">Tip: Increase <strong>Scale</strong> for higher-resolution JPG (bigger file). Quality controls JPEG compression.</div>
+
+        <div class="progress" style="margin-top:12px;"><i id="progressBar"></i></div>
+        <div id="status" class="note"></div>
+      </div>
+
+      <div class="right panel">
+        <label><strong>Pages / Preview</strong></label>
+        <div id="previewList" class="preview-list">
+          <!-- thumbnails will appear here -->
+        </div>
+        <div id="pageActions" style="margin-top:10px; display:none;">
+          <label>Selected page actions</label>
+          <div style="display:flex; gap:8px; margin-top:6px;">
+            <button id="downloadSelBtn" class="btn small" disabled>Download Selected JPG</button>
+            <button id="clearBtn" class="btn small ghost">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Dependencies: PDF.js and JSZip -->
+  <script src="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <script>
+    // PDF.js worker setup (use matching version worker)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
+
+    const pdfFileInput = document.getElementById('pdfFile');
+    const scaleInput = document.getElementById('scale');
+    const qualityInput = document.getElementById('quality');
+    const renderAllBtn = document.getElementById('renderAllBtn');
+    const previewList = document.getElementById('previewList');
+    const status = document.getElementById('status');
+    const progressBar = document.getElementById('progressBar');
+    const downloadAllZipBtn = document.getElementById('downloadAllZipBtn');
+    const pageActions = document.getElementById('pageActions');
+    const downloadSelBtn = document.getElementById('downloadSelBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    let pdfDoc = null;
+    let renderedPages = []; // {pageNumber, blobUrl, blob}
+    let selectedIndex = null;
+    let originalPdfFile = null;
+
+    function resetAll() {
+      previewList.innerHTML = '';
+      renderedPages = [];
+      selectedIndex = null;
+      pageActions.style.display = 'none';
+      downloadAllZipBtn.disabled = true;
+      downloadSelBtn.disabled = true;
+      status.textContent = '';
+      setProgress(0);
+      if (pdfDoc) { pdfDoc = null; }
+    }
+
+    function setStatus(txt) { status.textContent = txt; }
+    function setProgress(pct) { progressBar.style.width = pct + '%'; }
+
+    pdfFileInput.addEventListener('change', async (e) => {
+      resetAll();
+      const file = e.target.files[0];
+      if (!file) return;
+      originalPdfFile = file;
+      setStatus('Loading PDF...');
+      const arrayBuffer = await file.arrayBuffer();
+      try {
+        pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        setStatus(`PDF loaded — ${pdfDoc.numPages} pages. Click "Render All Pages" to convert.`);
+      } catch (err) {
+        setStatus('Failed to load PDF: ' + err.message);
+      }
+    });
+
+    // Render single page to canvas and return JPEG blob
+    async function renderPageToJpeg(pageNum, scale, quality) {
+      const page = await pdfDoc.getPage(pageNum);
+      const viewport = page.getViewport({ scale: scale });
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = Math.round(viewport.width);
+      canvas.height = Math.round(viewport.height);
+
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+      // Convert canvas to blob (JPEG)
+      const blob = await new Promise((res) => canvas.toBlob(res, 'image/jpeg', quality/100));
+      const url = URL.createObjectURL(blob);
+      return { blob, url, width: canvas.width, height: canvas.height };
+    }
+
+    renderAllBtn.addEventListener('click', async () => {
+      if (!pdfDoc) return alert('Please upload a PDF first.');
+      resetRenderedUrls();
+      renderedPages = [];
+      setProgress(0);
+      setStatus('Rendering pages — please wait...');
+      downloadAllZipBtn.disabled = true;
+
+      const total = pdfDoc.numPages;
+      const scale = parseFloat(scaleInput.value) || 1.0;
+      const quality = parseInt(qualityInput.value) || 90;
+
+      for (let p = 1; p <= total; p++) {
+        try {
+          const result = await renderPageToJpeg(p, scale, quality);
+          renderedPages.push({ pageNumber: p, blob: result.blob, url: result.url, width: result.width, height: result.height });
+          addThumbnail(renderedPages.length - 1);
+          setProgress(Math.round((p/total)*100));
+          setStatus(`Rendered page ${p} of ${total}`);
+        } catch (err) {
+          console.error('Render error page', p, err);
+        }
+      }
+
+      setStatus(`Done — ${renderedPages.length} images ready.`);
+      downloadAllZipBtn.disabled = renderedPages.length === 0;
+      pageActions.style.display = renderedPages.length > 0 ? 'block' : 'none';
+    });
+
+    function addThumbnail(index) {
+      const entry = renderedPages[index];
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.dataset.index = index;
+
+      const img = document.createElement('img');
+      img.src = entry.url;
+      img.alt = `Page ${entry.pageNumber}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.innerText = `Page ${entry.pageNumber}\n${entry.width}×${entry.height}`;
+
+      const dlBtn = document.createElement('button');
+      dlBtn.className = 'btn small';
+      dlBtn.style.marginTop = '8px';
+      dlBtn.textContent = 'Download';
+      dlBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        downloadBlob(entry.blob, `page-${entry.pageNumber}.jpg`);
+      });
+
+      div.appendChild(img);
+      div.appendChild(meta);
+      div.appendChild(dlBtn);
+
+      div.addEventListener('click', () => {
+        // select/unselect
+        document.querySelectorAll('.thumb').forEach(t => t.style.outline = 'none');
+        div.style.outline = '3px solid rgba(0,102,255,0.15)';
+        selectedIndex = index;
+        downloadSelBtn.disabled = false;
+      });
+
+      previewList.appendChild(div);
+    }
+
+    function downloadBlob(blob, filename) {
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = filename;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    downloadAllZipBtn.addEventListener('click', async () => {
+      if (!renderedPages.length) return;
+      downloadAllZipBtn.disabled = true;
+      setStatus('Preparing ZIP — please wait...');
+      const zip = new JSZip();
+      for (let i=0;i<renderedPages.length;i++) {
+        const entry = renderedPages[i];
+        // convert blob to arrayBuffer and put into zip
+        const ab = await entry.blob.arrayBuffer();
+        zip.file(`page-${entry.pageNumber}.jpg`, ab);
+      }
+      const content = await zip.generateAsync({ type: 'blob' }, (meta) => {
+        setProgress(Math.round(meta.percent));
+      });
+      const zipUrl = URL.createObjectURL(content);
+      const a = document.createElement('a');
+      a.href = zipUrl;
+      a.download = (originalPdfFile && originalPdfFile.name ? originalPdfFile.name.replace(/\.[^/.]+$/, '') : 'pdf') + '-images.zip';
+      a.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(zipUrl);
+        setStatus('ZIP downloaded.');
+        downloadAllZipBtn.disabled = false;
+      }, 1500);
+    });
+
+    downloadSelBtn.addEventListener('click', () => {
+      if (selectedIndex === null) return;
+      const entry = renderedPages[selectedIndex];
+      downloadBlob(entry.blob, `page-${entry.pageNumber}.jpg`);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      resetAll();
+      pdfFileInput.value = '';
+    });
+
+    function resetRenderedUrls() {
+      // revoke previous object URLs
+      renderedPages.forEach(e => {
+        try { URL.revokeObjectURL(e.url); } catch(e) {}
+      });
+      previewList.innerHTML = '';
+    }
+  </script>
+</body>
+</html>
