@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 Video Converter Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f9ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      color: #0066ff;
+      margin-bottom: 10px;
+    }
+    input, select {
+      margin: 10px 0;
+      padding: 10px;
+      border: 2px dashed #0066ff;
+      border-radius: 8px;
+      width: 100%;
+      background: #f0f7ff;
+      cursor: pointer;
+    }
+    button {
+      background: #0066ff;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #004fcc;
+    }
+    video {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 10px;
+    }
+    .progress {
+      margin-top: 10px;
+      color: #0066ff;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🎞️ Video Converter Tool</h2>
+    <input type="file" id="videoInput" accept="video/*" />
+    <select id="formatSelect">
+      <option value="mp4">Convert to MP4</option>
+      <option value="webm">Convert to WEBM</option>
+      <option value="avi">Convert to AVI</option>
+      <option value="mov">Convert to MOV</option>
+      <option value="mkv">Convert to MKV</option>
+    </select>
+    <button id="convertBtn">⚙️ Convert Video</button>
+    <p class="progress" id="progressText"></p>
+    <video id="preview" controls></video>
+  </div>
+
+  <script>
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: true });
+    const videoInput = document.getElementById("videoInput");
+    const formatSelect = document.getElementById("formatSelect");
+    const convertBtn = document.getElementById("convertBtn");
+    const progressText = document.getElementById("progressText");
+    const preview = document.getElementById("preview");
+
+    convertBtn.addEventListener("click", async () => {
+      if (!videoInput.files.length) {
+        alert("Please upload a video first!");
+        return;
+      }
+
+      const format = formatSelect.value;
+      const file = videoInput.files[0];
+      const fileName = file.name.split(".")[0];
+      const outputFile = `${fileName}.${format}`;
+
+      progressText.textContent = "Loading FFmpeg core...";
+      if (!ffmpeg.isLoaded()) await ffmpeg.load();
+
+      ffmpeg.FS("writeFile", file.name, await fetchFile(file));
+      progressText.textContent = `Converting to ${format.toUpperCase()}... please wait`;
+
+      await ffmpeg.run("-i", file.name, outputFile);
+
+      const data = ffmpeg.FS("readFile", outputFile);
+      const videoURL = URL.createObjectURL(new Blob([data.buffer], { type: `video/${format}` }));
+
+      preview.src = videoURL;
+      progressText.textContent = "✅ Conversion complete! Click below to download.";
+
+      const link = document.createElement("a");
+      link.href = videoURL;
+      link.download = outputFile;
+      link.textContent = "⬇ Download Converted Video";
+      link.style.display = "block";
+      link.style.marginTop = "15px";
+      link.style.color = "#0066ff";
+      link.style.fontWeight = "600";
+      document.querySelector(".container").appendChild(link);
+    });
+  </script>
+</body>
+</html>
