@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Video to GIF Converter</title>
+
+  <!-- FFmpeg.wasm -->
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(10,35,100,0.06);
+      box-sizing: border-box;
+    }
+    h2 { color:#0066ff; margin:0 0 10px 0; text-align:center; }
+    label { display:block; font-weight:600; margin-top:10px; color:#333; }
+    input[type=file], select, input[type=number], button {
+      width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px;
+      box-sizing:border-box; background:#fff;
+    }
+    .row { display:flex; gap:10px; margin-top:8px; }
+    .row .col { flex:1; }
+    button.primary { background:#0066ff; color:#fff; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:600; }
+    button.ghost { background:transparent; color:#0066ff; border:1px solid #e6f0ff; padding:10px; border-radius:10px; cursor:pointer; }
+    .note { font-size:13px; color:#555; margin-top:8px; }
+    .preview { margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+    .preview img, .preview video { max-width:100%; border-radius:10px; background:#fafafa; border:1px solid #eef6ff; }
+    .progress { margin-top:12px; height:10px; background:#eef6ff; border-radius:8px; overflow:hidden; }
+    .progress > i { display:block; height:100%; width:0%; background:#0066ff; transition:width .2s ease; }
+    .controls { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+    .small { font-size:13px; padding:8px 10px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🎞️ → GIF | Video to GIF Converter</h2>
+
+    <label>Upload Video</label>
+    <input id="videoFile" type="file" accept="video/*" />
+
+    <div class="row">
+      <div class="col">
+        <label>FPS (frames per second)</label>
+        <input id="fps" type="number" min="1" max="30" value="10" />
+      </div>
+      <div class="col">
+        <label>Width (px) — set 0 to keep original</label>
+        <input id="width" type="number" min="0" value="480" />
+      </div>
+    </div>
+
+    <label>Start Time (seconds) — optional</label>
+    <input id="start" type="number" min="0" placeholder="e.g. 5" />
+
+    <label>Duration (seconds) — optional (leave blank to use full clip)</label>
+    <input id="duration" type="number" min="1" placeholder="e.g. 4" />
+
+    <div class="controls">
+      <button id="convertBtn" class="primary small">Convert to GIF</button>
+      <button id="clearBtn" class="ghost small">Reset</button>
+    </div>
+
+    <div class="progress" style="margin-top:12px;"><i id="progressBar"></i></div>
+    <div id="status" class="note"></div>
+
+    <div class="preview" id="previewArea" style="display:none;">
+      <div style="flex:1 1 320px;">
+        <label style="font-weight:700; font-size:13px;">Preview (Original)</label>
+        <video id="origPreview" controls></video>
+      </div>
+      <div style="flex:1 1 320px;">
+        <label style="font-weight:700; font-size:13px;">Result GIF</label>
+        <img id="gifPreview" alt="Generated GIF" />
+      </div>
+    </div>
+
+    <div id="downloadWrap" style="margin-top:12px;"></div>
+  </div>
+
+  <script>
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: false }); // set log:true for debugging
+
+    const videoFileInput = document.getElementById('videoFile');
+    const fpsInput = document.getElementById('fps');
+    const widthInput = document.getElementById('width');
+    const startInput = document.getElementById('start');
+    const durationInput = document.getElementById('duration');
+    const convertBtn = document.getElementById('convertBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const progressBar = document.getElementById('progressBar');
+    const status = document.getElementById('status');
+    const previewArea = document.getElementById('previewArea');
+    const origPreview = document.getElementById('origPreview');
+    const gifPreview = document.getElementById('gifPreview');
+    const downloadWrap = document.getElementById('downloadWrap');
+
+    let currentFile = null;
+    let gifUrl = null;
+
+    videoFileInput.addEventListener('change', () => {
+      const f = videoFileInput.files[0];
+      if (!f) return resetAll(false);
+      currentFile = f;
+      origPreview.src = URL.createObjectURL(f);
+      previewArea.style.display = 'flex';
+      status.textContent = `${f.name} — ${(f.size/1024/1024).toFixed(2)} MB`;
+    });
+
+    function setProgress(p) { progressBar.style.width = (p || 0) + '%'; }
+    function setStatus(txt) { status.textContent = txt || ''; }
+
+    convertBtn.addEventListener('click', async () => {
+      if (!currentFile) return alert('Please upload a video first!');
+      convertBtn.disabled = true;
+      clearBtn.disabled = true;
+      downloadWrap.innerHTML = '';
+      if (gifUrl) { URL.revokeObjectURL(gifUrl); gifUrl = null; gifPreview.src = ''; }
+
+      const fps = Math.max(1, Math.min(30, parseInt(fpsInput.value) || 10));
+      const width = Math.max(0, parseInt(widthInput.value) || 0); // 0 => keep original
+      const start = startInput.value ? Math.max(0, parseFloat(startInput.value)) : null;
+      const duration = durationInput.value ? Math.max(0.1, parseFloat(durationInput.value)) : null;
+
+      setStatus('Loading FFmpeg core...');
+      if (!ffmpeg.isLoaded()) {
+        try {
+          await ffmpeg.load();
+        } catch (e) {
+          alert('Failed to load FFmpeg core: ' + e.message);
+          convertBtn.disabled = false;
+          clearBtn.disabled = false;
+          return;
+        }
+      }
+
+      const inName = 'input' + Date.now() + '.' + (currentFile.name.split('.').pop() || 'mp4');
+      const outName = 'output.gif';
+
+      ffmpeg.FS('writeFile', inName, await fetchFile(currentFile));
+
+      // Build filter: fps and scale
+      // scale: if width>0 -> scale=width:-1:flags=lanczos else keep original size
+      const scaleFilter = width > 0 ? `scale=${width}:-1:flags=lanczos` : 'scale=iw:-1:flags=lanczos';
+      // palettegen & paletteuse recommended for high-quality GIFs
+      // We will produce palette and then use it.
+      // Build time range args
+      const timeArgs = [];
+      if (start !== null) { timeArgs.push('-ss', String(start)); }
+      if (duration !== null) { timeArgs.push('-t', String(duration)); }
+
+      setStatus('Generating palette (step 1 of 2)...');
+      setProgress(10);
+      try {
+        // palette generation
+        await ffmpeg.run(...timeArgs, '-i', inName, '-vf', `fps=${fps},${scaleFilter},palettegen=stats_mode=diff`, '-y', 'palette.png');
+        setProgress(50);
+        setStatus('Generating GIF using palette (step 2 of 2)...');
+
+        // use palette to create gif
+        await ffmpeg.run(...timeArgs, '-i', inName, '-i', 'palette.png', '-lavfi', `fps=${fps},${scaleFilter} [x]; [x][1:v] paletteuse=dither=sierra2_4a`, '-y', outName);
+
+        // read result
+        const data = ffmpeg.FS('readFile', outName);
+        const blob = new Blob([data.buffer], { type: 'image/gif' });
+        gifUrl = URL.createObjectURL(blob);
+        gifPreview.src = gifUrl;
+        setProgress(100);
+        setStatus('Conversion complete — preview ready.');
+
+        // download link
+        const a = document.createElement('a');
+        a.href = gifUrl;
+        a.download = (currentFile.name.replace(/\.[^/.]+$/, '') || 'video') + '.gif';
+        a.textContent = '⬇ Download GIF';
+        a.style.display = 'inline-block';
+        a.style.marginTop = '10px';
+        a.style.color = '#0066ff';
+        a.style.fontWeight = '600';
+        downloadWrap.appendChild(a);
+      } catch (err) {
+        console.error(err);
+        alert('Conversion failed: ' + (err.message || err));
+        setStatus('Error: ' + (err.message || err));
+      } finally {
+        // cleanup temp files in FS
+        try { ffmpeg.FS('unlink', inName); } catch(e){}
+        try { ffmpeg.FS('unlink', 'palette.png'); } catch(e){}
+        try { ffmpeg.FS('unlink', outName); } catch(e){}
+        convertBtn.disabled = false;
+        clearBtn.disabled = false;
+      }
+    });
+
+    clearBtn.addEventListener('click', () => resetAll(true));
+
+    function resetAll(clearInput = true) {
+      if (clearInput) videoFileInput.value = '';
+      if (origPreview.src) { URL.revokeObjectURL(origPreview.src); origPreview.src = ''; }
+      if (gifUrl) { URL.revokeObjectURL(gifUrl); gifUrl = null; gifPreview.src = ''; }
+      previewArea.style.display = 'none';
+      downloadWrap.innerHTML = '';
+      setProgress(0);
+      setStatus('');
+      currentFile = null;
+    }
+
+    // cleanup on unload
+    window.addEventListener('beforeunload', () => {
+      if (gifUrl) try { URL.revokeObjectURL(gifUrl); } catch(e){}
+      if (origPreview.src) try { URL.revokeObjectURL(origPreview.src); } catch(e){}
+    });
+  </script>
+</body>
+</html>
