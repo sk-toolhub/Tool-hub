@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JPG to PDF Converter</title>
+  <style>
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 100%;
+      max-width: 980px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(10,35,100,0.06);
+      box-sizing: border-box;
+    }
+    h2 { color:#0066ff; margin:0 0 12px 0; text-align:center; }
+    .grid { display:flex; gap:16px; flex-wrap:wrap; }
+    .left { flex:1.3; min-width:300px; }
+    .right { flex:0.9; min-width:260px; }
+    label { display:block; font-weight:600; margin-top:10px; color:#333; }
+    input[type=file], select, input[type=number], button, input[type=text] {
+      width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px; box-sizing:border-box;
+      background:#fff;
+    }
+    .btn { background:#0066ff; color:#fff; border:none; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .btn.ghost { background:transparent; color:#0066ff; border:1px solid #e6f0ff; }
+    .note { color:#555; font-size:13px; margin-top:8px; }
+    .thumb-list { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .thumb {
+      width:120px; border-radius:8px; border:1px solid #eef6ff; padding:8px; background:#fbfdff;
+      display:flex; flex-direction:column; align-items:center; gap:6px; box-sizing:border-box;
+    }
+    .thumb img { width:100%; height:80px; object-fit:cover; border-radius:6px; background:#fff; }
+    .thumb .meta { font-size:12px; color:#333; text-align:center; }
+    .thumb .actions { display:flex; gap:6px; width:100%; }
+    .small { font-size:13px; padding:8px 10px; }
+    .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .inline { display:flex; gap:8px; align-items:center; }
+    @media (max-width:900px) {
+      .grid { flex-direction:column; }
+      .left, .right { min-width:unset; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🗂️ JPG → PDF Converter</h2>
+    <div class="grid">
+      <div class="left">
+        <label>Upload Images (JPG/PNG) — multiple allowed</label>
+        <input id="imagesInput" type="file" accept="image/*" multiple />
+        <div class="note">Tip: Drag & drop not required — select multiple files. You can reorder or remove thumbnails below.</div>
+
+        <label>Files / Preview</label>
+        <div id="thumbList" class="thumb-list"></div>
+
+        <div style="margin-top:12px;" class="controls">
+          <button id="clearAllBtn" class="btn small">Clear All</button>
+          <button id="generateBtn" class="btn small">Generate PDF</button>
+        </div>
+
+        <div id="status" class="note"></div>
+      </div>
+
+      <div class="right">
+        <label>Page Format</label>
+        <select id="pageFormat">
+          <option value="a4">A4 (210 × 297 mm)</option>
+          <option value="letter">Letter (216 × 279 mm)</option>
+          <option value="custom">Custom (mm)</option>
+        </select>
+
+        <div id="customSize" style="display:none; margin-top:8px;">
+          <div style="display:flex; gap:8px;">
+            <input id="customW" type="number" placeholder="Width mm" />
+            <input id="customH" type="number" placeholder="Height mm" />
+          </div>
+        </div>
+
+        <label>Orientation</label>
+        <select id="orientation">
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+
+        <label>Margins (mm)</label>
+        <input id="margin" type="number" value="10" min="0" />
+
+        <label>Image Fit Mode</label>
+        <select id="fitMode">
+          <option value="contain">Contain (no crop)</option>
+          <option value="cover">Cover (fill & crop)</option>
+        </select>
+
+        <label>Quality (JPEG) 10–100</label>
+        <input id="quality" type="number" value="90" min="10" max="100" />
+
+        <label>Filename</label>
+        <input id="filename" type="text" placeholder="output.pdf" value="converted.pdf" />
+
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <button id="downloadBtn" class="btn small" style="flex:1; display:none;">Download PDF</button>
+          <button id="helpBtn" class="btn ghost small" style="flex:1;">How it works</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    // Utilities & DOM
+    const { jsPDF } = window.jspdf;
+    const imagesInput = document.getElementById('imagesInput');
+    const thumbList = document.getElementById('thumbList');
+    const generateBtn = document.getElementById('generateBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const status = document.getElementById('status');
+
+    const pageFormat = document.getElementById('pageFormat');
+    const customSize = document.getElementById('customSize');
+    const customW = document.getElementById('customW');
+    const customH = document.getElementById('customH');
+    const orientation = document.getElementById('orientation');
+    const marginInput = document.getElementById('margin');
+    const fitMode = document.getElementById('fitMode');
+    const qualityInput = document.getElementById('quality');
+    const filenameInput = document.getElementById('filename');
+    const helpBtn = document.getElementById('helpBtn');
+
+    // store list of images: {file, url, imgElement, name}
+    let filesList = [];
+
+    // mm per px assumption (96 DPI): 25.4 mm per inch / 96 px per inch
+    const MM_PER_PX = 25.4 / 96;
+
+    pageFormat.addEventListener('change', () => {
+      customSize.style.display = pageFormat.value === 'custom' ? 'block' : 'none';
+    });
+
+    imagesInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      addFiles(files);
+      imagesInput.value = ''; // reset input
+    });
+
+    function addFiles(files) {
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          const entry = { file, url, width: img.width, height: img.height, name: file.name };
+          filesList.push(entry);
+          renderThumbs();
+        };
+      });
+    }
+
+    function renderThumbs() {
+      thumbList.innerHTML = '';
+      filesList.forEach((f, idx) => {
+        const div = document.createElement('div');
+        div.className = 'thumb';
+        div.dataset.index = idx;
+
+        const im = document.createElement('img');
+        im.src = f.url;
+        im.alt = f.name;
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.innerText = `${f.name.split('.').slice(0,-1).join('.')}\n${f.width}×${f.height}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+
+        const up = document.createElement('button'); up.className='btn small'; up.textContent='↑';
+        const down = document.createElement('button'); down.className='btn small'; down.textContent='↓';
+        const del = document.createElement('button'); del.className='btn ghost small'; del.textContent='Remove';
+
+        up.onclick = (ev) => { ev.stopPropagation(); if(idx>0){ swap(idx, idx-1); } };
+        down.onclick = (ev) => { ev.stopPropagation(); if(idx<filesList.length-1){ swap(idx, idx+1); } };
+        del.onclick = (ev) => { ev.stopPropagation(); removeAt(idx); };
+
+        actions.appendChild(up); actions.appendChild(down); actions.appendChild(del);
+
+        div.appendChild(im); div.appendChild(meta); div.appendChild(actions);
+        thumbList.appendChild(div);
+      });
+      updateStatus();
+    }
+
+    function swap(i,j){
+      const t = filesList[i]; filesList[i]=filesList[j]; filesList[j]=t;
+      renderThumbs();
+    }
+    function removeAt(i){
+      try { URL.revokeObjectURL(filesList[i].url); } catch{}
+      filesList.splice(i,1); renderThumbs();
+    }
+    clearAllBtn.addEventListener('click', () => {
+      filesList.forEach(f=>{ try{URL.revokeObjectURL(f.url);}catch{} });
+      filesList = []; renderThumbs(); downloadBtn.style.display='none';
+    });
+
+    function updateStatus(txt){
+      status.textContent = txt || `${filesList.length} image(s) selected.`;
+    }
+
+    helpBtn.addEventListener('click', () => {
+      alert('How it works:\n1. Upload images (JPG/PNG). \n2. Reorder/remove thumbs.\n3. Choose page size/orientation/margins & quality.\n4. Click Generate PDF → Download.');
+    });
+
+    // Core: convert file image to dataURL with given quality and fit to page box
+    async function imageFileToDataURL(file, targetPixW, targetPixH, mode, quality) {
+      // draw to canvas scaled to target box according to mode
+      const img = await loadImage(file);
+      // create canvas sized to target pixel dims (target mm -> px)
+      const canvas = document.createElement('canvas');
+      canvas.width = targetPixW;
+      canvas.height = targetPixH;
+      const ctx = canvas.getContext('2d');
+
+      // compute draw rect
+      const srcW = img.width, srcH = img.height;
+      let drawW = targetPixW, drawH = targetPixH, dx = 0, dy = 0;
+      const srcRatio = srcW / srcH, tgtRatio = targetPixW / targetPixH;
+
+      if (mode === 'contain') {
+        if (srcRatio > tgtRatio) {
+          drawW = targetPixW;
+          drawH = Math.round(targetPixW / srcRatio);
+          dy = Math.round((targetPixH - drawH)/2);
+        } else {
+          drawH = targetPixH;
+          drawW = Math.round(targetPixH * srcRatio);
+          dx = Math.round((targetPixW - drawW)/2);
+        }
+        // fill background white (for jpg)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img, 0,0,srcW,srcH, dx,dy, drawW, drawH);
+      } else { // cover
+        // cover: scale and crop
+        const scale = Math.max(targetPixW / srcW, targetPixH / srcH);
+        const sw = Math.round(targetPixW / scale), sh = Math.round(targetPixH / scale);
+        const sx = Math.max(0, Math.round((srcW - sw)/2));
+        const sy = Math.max(0, Math.round((srcH - sh)/2));
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetPixW, targetPixH);
+      }
+
+      const dataUrl = canvas.toDataURL('image/jpeg', quality/100);
+      return dataUrl;
+    }
+
+    function loadImage(fileOrUrl){
+      return new Promise((res, rej) => {
+        const img = new Image();
+        img.onload = () => res(img);
+        img.onerror = (e) => rej(e);
+        if (typeof fileOrUrl === 'string') img.src = fileOrUrl;
+        else img.src = URL.createObjectURL(fileOrUrl);
+      });
+    }
+
+    // Convert mm to PDF units (we will use mm units in jsPDF)
+    function getPageDimensions(format, orient, customWmm, customHmm){
+      let w=210, h=297; // A4 default
+      if (format==='a4'){ w=210; h=297; }
+      else if (format==='letter'){ w=216; h=279; }
+      else { w = Number(customWmm) || 210; h = Number(customHmm) || 297; }
+      if (orient==='landscape') [w,h] = [h,w];
+      return { w, h };
+    }
+
+    // Main PDF generation
+    generateBtn.addEventListener('click', async () => {
+      if (!filesList.length) return alert('Please add images first.');
+      generateBtn.disabled = true;
+      updateStatus('Preparing PDF — this may take a few seconds...');
+      try {
+        const fmt = pageFormat.value;
+        const orient = orientation.value;
+        const margin = Number(marginInput.value) || 10;
+        const fit = fitMode.value;
+        const quality = Math.max(10, Math.min(100, Number(qualityInput.value) || 90));
+        const filename = (filenameInput.value || 'converted.pdf').trim();
+
+        const page = getPageDimensions(fmt, orient, customW.value, customH.value);
+        const pdf = new jsPDF({ unit: 'mm', format: [page.w, page.h], orientation: orient });
+
+        // PDF page inner box in mm
+        const innerWmm = page.w - 2*margin;
+        const innerHmm = page.h - 2*margin;
+
+        // Convert inner box mm to pixels for canvas (using 96 DPI)
+        const innerPixW = Math.round(innerWmm / MM_PER_PX);
+        const innerPixH = Math.round(innerHmm / MM_PER_PX);
+
+        for (let i=0; i<filesList.length; i++){
+          updateStatus(`Processing image ${i+1} of ${filesList.length}...`);
+          const entry = filesList[i];
+          // create dataURL sized to innerPixW/innerPixH
+          const dataUrl = await imageFileToDataURL(entry.file, innerPixW, innerPixH, fit, quality);
+          // add to PDF at margin position with width innerWmm (mm) & height computed to maintain aspect ratio of the image used
+          // create a temporary image to get pixel dims
+          const imgObj = await loadImage(dataUrl);
+          // image pixel dims
+          const imgPixW = imgObj.width, imgPixH = imgObj.height;
+          // convert pixel dims to mm
+          const imgMmW = imgPixW * MM_PER_PX;
+          const imgMmH = imgPixH * MM_PER_PX;
+          // If fit=contain we might have blank bands; place at center of inner box
+          // Compute final render size in mm
+          let renderWmm = innerWmm, renderHmm = innerHmm;
+          if (fit === 'contain') {
+            const ratio = Math.min(innerWmm / imgMmW, innerHmm / imgMmH);
+            renderWmm = imgMmW * ratio;
+            renderHmm = imgMmH * ratio;
+          } else {
+            // cover: fill inner box entirely
+            renderWmm = innerWmm; renderHmm = innerHmm;
+          }
+          const x = margin + (innerWmm - renderWmm)/2;
+          const y = margin + (innerHmm - renderHmm)/2;
+
+          // add image to pdf
+          pdf.addImage(dataUrl, 'JPEG', x, y, renderWmm, renderHmm, undefined, 'FAST');
+
+          if (i < filesList.length - 1) pdf.addPage([page.w, page.h], orient);
+          // revoke object URLs if any temporary ones were created earlier (we used blobs via createObjectURL for original files)
+        }
+
+        // save pdf
+        pdf.save(filename);
+        updateStatus('PDF generated.');
+        downloadBtn.style.display = 'none';
+      } catch (err) {
+        console.error(err);
+        alert('Error generating PDF: ' + err.message);
+      } finally {
+        generateBtn.disabled = false;
+      }
+    });
+
+    // helper to revoke urls on unload
+    window.addEventListener('beforeunload', () => {
+      filesList.forEach(f=>{ try{ URL.revokeObjectURL(f.url); } catch{} });
+    });
+
+    function updateStatus(txt){ status.textContent = txt || `${filesList.length} image(s) ready.`; }
+  </script>
+</body>
+</html>
