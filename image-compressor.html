@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Compressor - Online Tool</title>
+  <title>🎞️ Video Compressor Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f4f8ff;
+      background: #f5f9ff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,183 +18,107 @@
     .container {
       background: #fff;
       padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
     }
     h2 {
-      text-align: center;
       color: #0066ff;
+      margin-bottom: 10px;
     }
-    input, button, select {
-      width: 100%;
+    input, select {
+      margin: 10px 0;
       padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 14px;
+      border: 2px dashed #0066ff;
+      border-radius: 8px;
+      width: 100%;
+      background: #f0f7ff;
+      cursor: pointer;
     }
     button {
       background: #0066ff;
-      color: white;
+      color: #fff;
       border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
+      margin-top: 15px;
     }
     button:hover {
-      background: #004ecc;
+      background: #004fcc;
     }
-    .preview {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      gap: 10px;
-    }
-    .preview img {
-      width: 48%;
+    video {
+      width: 100%;
+      margin-top: 15px;
       border-radius: 10px;
-      border: 1px solid #ddd;
-      object-fit: contain;
     }
-    label {
-      font-weight: 600;
-      color: #333;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-    .row input {
-      flex: 1;
-    }
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      margin-top: 6px;
+    .progress {
+      margin-top: 10px;
+      color: #0066ff;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🔧 Image Compressor</h2>
-    <label>Upload Image</label>
-    <input type="file" id="upload" accept="image/*">
-
-    <div class="row">
-      <div>
-        <label>Width (px)</label>
-        <input type="number" id="width" placeholder="Auto">
-      </div>
-      <div>
-        <label>Height (px)</label>
-        <input type="number" id="height" placeholder="Auto">
-      </div>
-    </div>
-
-    <div class="checkbox">
-      <input type="checkbox" id="aspect" checked>
-      <label for="aspect">Maintain Aspect Ratio</label>
-    </div>
-
-    <label>Target Size (KB / MB)</label>
-    <input type="number" id="targetSize" placeholder="e.g. 200 (in KB)">
-    <select id="unit">
-      <option value="KB">KB</option>
-      <option value="MB">MB</option>
+    <h2>💾 Video Compressor Tool</h2>
+    <input type="file" id="videoInput" accept="video/*" />
+    <select id="qualitySelect">
+      <option value="23">High Quality (Slow Compression)</option>
+      <option value="28">Medium Quality (Balanced)</option>
+      <option value="35">Low Quality (Maximum Compression)</option>
     </select>
-
-    <label>Quality (0-100%)</label>
-    <input type="range" id="quality" min="1" max="100" value="80">
-
-    <button id="compressBtn">Compress Image</button>
-
-    <div class="preview" id="preview" style="display:none;">
-      <img id="originalImg" alt="Original">
-      <img id="compressedImg" alt="Compressed">
-    </div>
-
-    <button id="downloadBtn" style="display:none;">Download Compressed Image</button>
+    <button id="compressBtn">⚙️ Compress Video</button>
+    <p class="progress" id="progressText"></p>
+    <video id="preview" controls></video>
   </div>
 
   <script>
-    const upload = document.getElementById('upload');
-    const widthInput = document.getElementById('width');
-    const heightInput = document.getElementById('height');
-    const aspect = document.getElementById('aspect');
-    const targetSizeInput = document.getElementById('targetSize');
-    const unitSelect = document.getElementById('unit');
-    const qualityInput = document.getElementById('quality');
-    const compressBtn = document.getElementById('compressBtn');
-    const preview = document.getElementById('preview');
-    const originalImg = document.getElementById('originalImg');
-    const compressedImg = document.getElementById('compressedImg');
-    const downloadBtn = document.getElementById('downloadBtn');
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: true });
+    const videoInput = document.getElementById("videoInput");
+    const qualitySelect = document.getElementById("qualitySelect");
+    const compressBtn = document.getElementById("compressBtn");
+    const progressText = document.getElementById("progressText");
+    const preview = document.getElementById("preview");
 
-    let originalImage = new Image();
-    let aspectRatio = 1;
-
-    upload.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        originalImage.src = evt.target.result;
-        originalImg.src = evt.target.result;
-        preview.style.display = "flex";
-      };
-      reader.readAsDataURL(file);
-      originalImage.onload = () => {
-        aspectRatio = originalImage.width / originalImage.height;
-        widthInput.value = originalImage.width;
-        heightInput.value = originalImage.height;
-      };
-    });
-
-    widthInput.addEventListener('input', () => {
-      if (aspect.checked) heightInput.value = Math.round(widthInput.value / aspectRatio);
-    });
-    heightInput.addEventListener('input', () => {
-      if (aspect.checked) widthInput.value = Math.round(heightInput.value * aspectRatio);
-    });
-
-    compressBtn.addEventListener('click', () => {
-      if (!originalImage.src) return alert("Please upload an image first!");
-
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const width = parseInt(widthInput.value) || originalImage.width;
-      const height = parseInt(heightInput.value) || originalImage.height;
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.drawImage(originalImage, 0, 0, width, height);
-
-      let quality = qualityInput.value / 100;
-      let compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-
-      // Adjust based on target size
-      const targetSize = parseFloat(targetSizeInput.value);
-      const unit = unitSelect.value;
-      if (targetSize) {
-        const maxBytes = unit === 'MB' ? targetSize * 1024 * 1024 : targetSize * 1024;
-        while (compressedDataUrl.length * 0.75 > maxBytes && quality > 0.1) {
-          quality -= 0.05;
-          compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-        }
+    compressBtn.addEventListener("click", async () => {
+      if (!videoInput.files.length) {
+        alert("Please upload a video first!");
+        return;
       }
 
-      compressedImg.src = compressedDataUrl;
-      downloadBtn.style.display = "block";
-    });
+      const file = videoInput.files[0];
+      const crf = qualitySelect.value;
+      const fileName = file.name.split(".")[0];
+      const outputFile = `${fileName}_compressed.mp4`;
 
-    downloadBtn.addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.download = 'compressed-image.jpg';
-      link.href = compressedImg.src;
-      link.click();
+      progressText.textContent = "Loading FFmpeg core...";
+      if (!ffmpeg.isLoaded()) await ffmpeg.load();
+
+      ffmpeg.FS("writeFile", file.name, await fetchFile(file));
+      progressText.textContent = "Compressing video... Please wait ⏳";
+
+      await ffmpeg.run("-i", file.name, "-vcodec", "libx264", "-crf", crf, "-preset", "medium", outputFile);
+
+      const data = ffmpeg.FS("readFile", outputFile);
+      const videoURL = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
+
+      preview.src = videoURL;
+      progressText.textContent = "✅ Compression complete! Click below to download.";
+
+      const link = document.createElement("a");
+      link.href = videoURL;
+      link.download = outputFile;
+      link.textContent = "⬇ Download Compressed Video";
+      link.style.display = "block";
+      link.style.marginTop = "15px";
+      link.style.color = "#0066ff";
+      link.style.fontWeight = "600";
+      document.querySelector(".container").appendChild(link);
     });
   </script>
 </body>
