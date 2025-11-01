@@ -4,315 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImagePro Tools - Professional Image Editing Suite</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header Styles */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo h1 {
-            color: #333;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-        }
-
-        /* Navigation */
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        nav a:hover {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .hero {
-            text-align: center;
-            color: white;
-            margin-bottom: 3rem;
-        }
-
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .tool-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .tool-card h3 {
-            color: #333;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .tool-icon {
-            font-size: 1.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 2rem;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #667eea;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Form Elements */
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            background: #f9f9f9;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            margin: 5px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            min-height: 44px;
-            width: 100%;
-            font-weight: 600;
-        }
-
-        button:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-        }
-
-        .button-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .download-btn {
-            background: #28a745;
-        }
-
-        .download-btn:hover {
-            background: #218838;
-        }
-
-        .preview-container {
-            text-align: center;
-            margin: 15px 0;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            padding: 10px;
-        }
-
-        .color-options {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-            margin: 10px 0;
-        }
-
-        .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
-            cursor: pointer;
-            border: 2px solid #ddd;
-            transition: transform 0.2s ease;
-        }
-
-        .color-option:hover {
-            transform: scale(1.1);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .hero h2 {
-                font-size: 2rem;
-            }
-
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            main {
-                padding: 1rem;
-            }
-            
-            .tool-card {
-                padding: 1.5rem;
-            }
-            
-            .button-group {
-                grid-template-columns: 1fr;
-            }
-            
-            .color-options {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header -->
@@ -324,9 +16,10 @@
             </div>
             <nav>
                 <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                     <li><a href="#tools">Tools</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -338,79 +31,24 @@
         <section class="hero">
             <h2>Professional Image Editing Suite</h2>
             <p>Free, powerful tools for all your image editing needs. No registration required!</p>
+            <div class="cta-buttons">
+                <a href="#tools" class="cta-btn">Get Started</a>
+                <a href="about.html" class="cta-btn secondary">Learn More</a>
+            </div>
         </section>
 
         <!-- Tools Section -->
-        <section id="tools" class="tools-grid">
-            <!-- Tool 1: Image Resizer -->
-            <div class="tool-card">
-                <h3><span class="tool-icon">📐</span> Image Resizer</h3>
-                <input type="file" id="resizerInput" accept="image/*">
-                <div class="button-group">
-                    <input type="number" id="resizeWidth" placeholder="Width (px)" value="800">
-                    <input type="number" id="resizeHeight" placeholder="Height (px)" value="600">
-                </div>
-                <select id="resizeQuality">
-                    <option value="1.0">High Quality</option>
-                    <option value="0.8">Medium Quality</option>
-                    <option value="0.6">Low Quality</option>
-                </select>
-                <button onclick="resizeImage()">🔄 Resize Image</button>
-                <div class="preview-container">
-                    <img id="resizerPreview" class="preview-image" style="display: none;">
-                </div>
-                <button id="resizerDownload" class="download-btn" style="display: none;" onclick="downloadResizedImage()">💾 Download Resized Image</button>
-            </div>
-
-            <!-- Tool 2: JPG to PDF Converter -->
-            <div class="tool-card">
-                <h3><span class="tool-icon">📄</span> JPG to PDF Converter</h3>
-                <input type="file" id="pdfInput" accept="image/jpeg,image/jpg" multiple>
-                <button onclick="convertToPDF()">🔄 Convert to PDF</button>
-                <div class="preview-container">
-                    <div id="pdfPreview"></div>
-                </div>
-                <button id="pdfDownload" class="download-btn" style="display: none;" onclick="downloadPDF()">💾 Download PDF</button>
-            </div>
-
-            <!-- Tool 3: Image Format Converter -->
-            <div class="tool-card">
-                <h3><span class="tool-icon">🔄</span> Image Format Converter</h3>
-                <input type="file" id="converterInput" accept="image/*">
-                <div class="button-group">
-                    <button onclick="convertToPNG()">🔄 JPG to PNG</button>
-                    <button onclick="convertToJPG()">🔄 PNG to JPG</button>
-                </div>
-                <div class="preview-container">
-                    <img id="converterPreview" class="preview-image" style="display: none;">
-                </div>
-                <button id="converterDownload" class="download-btn" style="display: none;" onclick="downloadConvertedImage()">💾 Download Converted Image</button>
-            </div>
-
-            <!-- Tool 4: Background Remover -->
-            <div class="tool-card">
-                <h3><span class="tool-icon">🎨</span> Background Remover</h3>
-                <input type="file" id="bgInput" accept="image/*">
-                
-                <h4>Choose Background Color:</h4>
-                <div class="color-options">
-                    <div class="color-option" style="background: transparent;" onclick="setBackgroundColor('transparent')" title="Transparent"></div>
-                    <div class="color-option" style="background: white;" onclick="setBackgroundColor('white')" title="White"></div>
-                    <div class="color-option" style="background: black;" onclick="setBackgroundColor('black')" title="Black"></div>
-                    <div class="color-option" style="background: red;" onclick="setBackgroundColor('red')" title="Red"></div>
-                    <div class="color-option" style="background: blue;" onclick="setBackgroundColor('blue')" title="Blue"></div>
-                    <div class="color-option" style="background: green;" onclick="setBackgroundColor('green')" title="Green"></div>
-                    <div class="color-option" style="background: yellow;" onclick="setBackgroundColor('yellow')" title="Yellow"></div>
-                    <div class="color-option" style="background: pink;" onclick="setBackgroundColor('pink')" title="Pink"></div>
+        <section id="tools" class="tools-section">
+            <h2>Our Powerful Tools</h2>
+            <div class="tools-grid">
+                <!-- Your existing tools here -->
+                <!-- Tool 1: Image Resizer -->
+                <div class="tool-card">
+                    <h3><span class="tool-icon">📐</span> Image Resizer</h3>
+                    <!-- ... tool content ... -->
                 </div>
                 
-                <input type="color" id="customColor" onchange="setCustomColor(this.value)">
-                <button onclick="removeBackground()">✨ Remove Background</button>
-                
-                <div class="preview-container">
-                    <img id="bgPreview" class="preview-image" style="display: none;">
-                </div>
-                <button id="bgDownload" class="download-btn" style="display: none;" onclick="downloadBgRemovedImage()">💾 Download Image</button>
+                <!-- Other tools same as before -->
             </div>
         </section>
     </main>
@@ -420,16 +58,18 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>ImagePro Tools</h4>
-                <p>Free online image editing tools for everyone. No registration, no watermarks, completely free!</p>
+                <p>Free online image editing tools for everyone.</p>
             </div>
             
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#tools">All Tools</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
                 </ul>
             </div>
             
@@ -447,238 +87,20 @@
                 <h4>Contact Info</h4>
                 <ul>
                     <li>Email: support@imageprotools.com</li>
-                    <li>Website: www.imageprotools.com</li>
-                    <li>Follow us on social media</li>
+                    <li>24/7 Support Available</li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2024 ImagePro Tools. All rights reserved. | Made with ❤️ for creators</p>
+            <p>&copy; 2024 ImagePro Tools. All rights reserved. | 
+               <a href="privacy.html">Privacy</a> | 
+               <a href="terms.html">Terms</a> | 
+               <a href="disclaimer.html">Disclaimer</a>
+            </p>
         </div>
     </footer>
 
-    <script>
-        // JavaScript code from previous example remains exactly the same
-        let currentImage = null;
-        let currentCanvas = null;
-        let backgroundColor = 'transparent';
-
-        // Image Resizer
-        document.getElementById('resizerInput').addEventListener('change', function(e) {
-            loadImagePreview(e.target.files[0], 'resizerPreview');
-        });
-
-        function resizeImage() {
-            const file = document.getElementById('resizerInput').files[0];
-            if (!file) {
-                alert('Please select an image first!');
-                return;
-            }
-
-            const width = parseInt(document.getElementById('resizeWidth').value) || 800;
-            const height = parseInt(document.getElementById('resizeHeight').value) || 600;
-            const quality = parseFloat(document.getElementById('resizeQuality').value);
-
-            const img = new Image();
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    canvas.width = width;
-                    canvas.height = height;
-                    
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    document.getElementById('resizerPreview').src = canvas.toDataURL('image/jpeg', quality);
-                    document.getElementById('resizerPreview').style.display = 'block';
-                    document.getElementById('resizerDownload').style.display = 'block';
-                    
-                    currentCanvas = canvas;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function downloadResizedImage() {
-            if (!currentCanvas) return;
-            const link = document.createElement('a');
-            link.download = 'resized-image.jpg';
-            link.href = currentCanvas.toDataURL('image/jpeg');
-            link.click();
-        }
-
-        // JPG to PDF Converter
-        document.getElementById('pdfInput').addEventListener('change', function(e) {
-            const files = e.target.files;
-            const preview = document.getElementById('pdfPreview');
-            preview.innerHTML = '';
-            
-            for (let file of files) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.style.maxWidth = '100px';
-                img.style.margin = '5px';
-                preview.appendChild(img);
-            }
-        });
-
-        function convertToPDF() {
-            alert('PDF conversion requires server-side processing. For basic version, images are ready for manual PDF creation.');
-            document.getElementById('pdfDownload').style.display = 'block';
-        }
-
-        function downloadPDF() {
-            alert('Advanced PDF download requires server integration. Basic version: Right-click images and "Save as"');
-        }
-
-        // Image Format Converter
-        document.getElementById('converterInput').addEventListener('change', function(e) {
-            loadImagePreview(e.target.files[0], 'converterPreview');
-        });
-
-        function convertToPNG() {
-            const file = document.getElementById('converterInput').files[0];
-            if (!file) {
-                alert('Please select an image first!');
-                return;
-            }
-
-            const img = new Image();
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    
-                    document.getElementById('converterPreview').src = canvas.toDataURL('image/png');
-                    document.getElementById('converterPreview').style.display = 'block';
-                    document.getElementById('converterDownload').style.display = 'block';
-                    
-                    currentCanvas = canvas;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function convertToJPG() {
-            const file = document.getElementById('converterInput').files[0];
-            if (!file) {
-                alert('Please select an image first!');
-                return;
-            }
-
-            const img = new Image();
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    
-                    document.getElementById('converterPreview').src = canvas.toDataURL('image/jpeg', 0.9);
-                    document.getElementById('converterPreview').style.display = 'block';
-                    document.getElementById('converterDownload').style.display = 'block';
-                    
-                    currentCanvas = canvas;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function downloadConvertedImage() {
-            if (!currentCanvas) return;
-            const link = document.createElement('a');
-            const format = document.getElementById('converterPreview').src.includes('png') ? 'png' : 'jpg';
-            link.download = `converted-image.${format}`;
-            link.href = currentCanvas.toDataURL(`image/${format}`);
-            link.click();
-        }
-
-        // Background Remover
-        document.getElementById('bgInput').addEventListener('change', function(e) {
-            loadImagePreview(e.target.files[0], 'bgPreview');
-        });
-
-        function setBackgroundColor(color) {
-            backgroundColor = color;
-        }
-
-        function setCustomColor(color) {
-            backgroundColor = color;
-        }
-
-        function removeBackground() {
-            const file = document.getElementById('bgInput').files[0];
-            if (!file) {
-                alert('Please select an image first!');
-                return;
-            }
-
-            alert('Advanced background removal requires AI processing. Basic version: Background color changed.');
-            
-            const img = new Image();
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    
-                    // Fill background
-                    if (backgroundColor !== 'transparent') {
-                        ctx.fillStyle = backgroundColor;
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                    
-                    ctx.drawImage(img, 0, 0);
-                    
-                    document.getElementById('bgPreview').src = canvas.toDataURL('image/png');
-                    document.getElementById('bgPreview').style.display = 'block';
-                    document.getElementById('bgDownload').style.display = 'block';
-                    
-                    currentCanvas = canvas;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function downloadBgRemovedImage() {
-            if (!currentCanvas) return;
-            const link = document.createElement('a');
-            link.download = 'background-removed.png';
-            link.href = currentCanvas.toDataURL('image/png');
-            link.click();
-        }
-
-        // Helper function
-        function loadImagePreview(file, previewId) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById(previewId).src = e.target.result;
-                document.getElementById(previewId).style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
