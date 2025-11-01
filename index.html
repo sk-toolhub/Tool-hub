@@ -3,104 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImagePro Tools - Professional Image Editing Suite</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ToolsWonder - Powerful Online Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background: #667eea;
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo i {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-category {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .tools-list {
+            list-style: none;
+        }
+
+        .tool-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .tool-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-info h4 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .use-tool-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .use-tool-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a202c;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .contact-info {
+            color: #cbd5e0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2d3748;
+            color: #cbd5e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .use-tool-btn {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .tools-section {
+                padding: 2rem 20px;
+            }
+
+            .tool-category {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">🖼️</span>
-                <h1>ImagePro Tools</h1>
+        <div class="top-bar">
+            <div class="nav-container">
+                toolswonder1@gmail.com
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+        </div>
+        <div class="nav-container">
+            <nav class="main-nav">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    ToolsWonder
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#tools">Tools</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h2>Professional Image Editing Suite</h2>
-            <p>Free, powerful tools for all your image editing needs. No registration required!</p>
-            <div class="cta-buttons">
-                <a href="#tools" class="cta-btn">Get Started</a>
-                <a href="about.html" class="cta-btn secondary">Learn More</a>
-            </div>
-        </section>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Powerful Online Tools</h1>
+            <p>Edit, convert and optimize your files with our comprehensive suite of free online tools</p>
+        </div>
+    </section>
 
-        <!-- Tools Section -->
-        <section id="tools" class="tools-section">
-            <h2>Our Powerful Tools</h2>
-            <div class="tools-grid">
-                <!-- Your existing tools here -->
-                <!-- Tool 1: Image Resizer -->
-                <div class="tool-card">
-                    <h3><span class="tool-icon">📐</span> Image Resizer</h3>
-                    <!-- ... tool content ... -->
+    <!-- Tools Section -->
+    <section class="tools-section" id="tools">
+        <div class="section-header">
+            <h2>Image Tools</h2>
+            <p>Edit, convert and optimize your images with our powerful tools</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Image Tools Category -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Image Tools</h3>
                 </div>
-                
-                <!-- Other tools same as before -->
+                <ul class="tools-list">
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image Converter</h4>
+                            <p>Convert between JPG, PNG, GIF, WEBP and more formats</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image Compressor</h4>
+                            <p>Reduce image file size without losing quality</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image Resizer</h4>
+                            <p>Resize images to any dimension while maintaining aspect ratio</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image Cropper</h4>
+                            <p>Crop images to remove unwanted areas or focus on specific parts</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                </ul>
             </div>
-        </section>
-    </main>
+
+            <!-- More Image Tools -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Advanced Tools</h3>
+                </div>
+                <ul class="tools-list">
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image to Text (OCR)</h4>
+                            <p>Extract text from images with optical character recognition</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Image Rotator/Flipper</h4>
+                            <p>Rotate or flip images horizontally and vertically</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Background Remover</h4>
+                            <p>Remove background from images with AI technology</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Watermark Remover</h4>
+                            <p>Remove watermarks and unwanted objects from images</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Document Tools -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Document Tools</h3>
+                </div>
+                <ul class="tools-list">
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>PDF to JPG</h4>
+                            <p>Convert PDF pages to high-quality JPG images</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>JPG to PDF</h4>
+                            <p>Convert multiple JPG images to a single PDF file</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>PDF Compressor</h4>
+                            <p>Reduce PDF file size while maintaining quality</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>PDF Merger</h4>
+                            <p>Combine multiple PDF files into one document</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Video Tools -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Video Tools</h3>
+                </div>
+                <ul class="tools-list">
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Video Converter</h4>
+                            <p>Convert videos between MP4, AVI, MOV, and more formats</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Video Compressor</h4>
+                            <p>Reduce video file size without quality loss</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Video to GIF</h4>
+                            <p>Convert video clips to animated GIF files</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Video Trimmer</h4>
+                            <p>Cut and trim videos to desired length</p>
+                        </div>
+                        <a href="#" class="use-tool-btn">Use Tool</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-header">
+            <h2>Why Choose ToolsWonder?</h2>
+            <p>We provide the best online tools experience</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Fast Processing</h3>
+                <p>Lightning-fast processing with our optimized algorithms</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Secure & Private</h3>
+                <p>Your files are processed securely and never stored</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3>No Installation</h3>
+                <p>Use directly in your browser without any downloads</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3>Completely Free</h3>
+                <p>All tools are free to use with no hidden charges</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>ImagePro Tools</h4>
-                <p>Free online image editing tools for everyone.</p>
+                <h4>ToolsWonder</h4>
+                <p>Your one-stop solution for all online tools needs. Fast, secure, and completely free.</p>
             </div>
-            
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tools">All Tools</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms & Conditions</a></li>
-                    <li><a href="disclaimer.html">Disclaimer</a></li>
                 </ul>
             </div>
-            
             <div class="footer-section">
-                <h4>Our Tools</h4>
+                <h4>Tool Categories</h4>
                 <ul>
-                    <li><a href="#resizer">Image Resizer</a></li>
-                    <li><a href="#pdf">JPG to PDF</a></li>
-                    <li><a href="#converter">Format Converter</a></li>
-                    <li><a href="#background">Background Remover</a></li>
+                    <li><a href="#image-tools">Image Tools</a></li>
+                    <li><a href="#document-tools">Document Tools</a></li>
+                    <li><a href="#video-tools">Video Tools</a></li>
+                    <li><a href="#audio-tools">Audio Tools</a></li>
                 </ul>
             </div>
-            
             <div class="footer-section">
                 <h4>Contact Info</h4>
-                <ul>
-                    <li>Email: support@imageprotools.com</li>
-                    <li>24/7 Support Available</li>
-                </ul>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> toolswonder1@gmail.com</p>
+                    <p><i class="fas fa-globe"></i> www.toolswonder.com</p>
+                </div>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <p>&copy; 2024 ImagePro Tools. All rights reserved. | 
-               <a href="privacy.html">Privacy</a> | 
-               <a href="terms.html">Terms</a> | 
-               <a href="disclaimer.html">Disclaimer</a>
-            </p>
+            <p>&copy; 2024 ToolsWonder. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
