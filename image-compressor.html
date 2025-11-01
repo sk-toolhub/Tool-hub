@@ -1,125 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Compressor</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #1E1E2F;
-            color: #EAEAEA;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #2B2D42;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-        }
-
-        input, select, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background: #FFD700;
-            color: #1E1E2F;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #E6C200;
-        }
-
-        img {
-            margin-top: 10px;
-            max-width: 100%;
-            border-radius: 5px;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Compressor - Online Tool</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      color: #0066ff;
+    }
+    input, button, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #004ecc;
+    }
+    .preview {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    .preview img {
+      width: 48%;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      object-fit: contain;
+    }
+    label {
+      font-weight: 600;
+      color: #333;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row input {
+      flex: 1;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Image Compressor</h2>
-        <input type="file" id="imageInput" accept="image/*">
-        <label for="quality">Select Quality:</label>
-        <select id="quality">
-            <option value="0.8">High</option>
-            <option value="0.5">Medium</option>
-            <option value="0.2">Low</option>
-        </select>
-        <button onclick="compressImage()">Compress</button>
-        <p id="status" class="hidden">Compressing image...</p>
-        <img id="preview" class="hidden">
-        <a id="download" class="hidden" download="compressed-image.jpg">
-            <button>Download</button>
-        </a>
+  <div class="container">
+    <h2>🔧 Image Compressor</h2>
+    <label>Upload Image</label>
+    <input type="file" id="upload" accept="image/*">
+
+    <div class="row">
+      <div>
+        <label>Width (px)</label>
+        <input type="number" id="width" placeholder="Auto">
+      </div>
+      <div>
+        <label>Height (px)</label>
+        <input type="number" id="height" placeholder="Auto">
+      </div>
     </div>
 
-    <script>
-        function compressImage() {
-            const fileInput = document.getElementById('imageInput');
-            const quality = parseFloat(document.getElementById('quality').value);
-            const status = document.getElementById('status');
-            const preview = document.getElementById('preview');
-            const download = document.getElementById('download');
+    <div class="checkbox">
+      <input type="checkbox" id="aspect" checked>
+      <label for="aspect">Maintain Aspect Ratio</label>
+    </div>
 
-            if (fileInput.files.length === 0) {
-                alert('Please upload an image first.');
-                return;
-            }
+    <label>Target Size (KB / MB)</label>
+    <input type="number" id="targetSize" placeholder="e.g. 200 (in KB)">
+    <select id="unit">
+      <option value="KB">KB</option>
+      <option value="MB">MB</option>
+    </select>
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(event) {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    
-                    status.classList.remove('hidden');
-                    setTimeout(() => {
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-                        preview.src = compressedDataUrl;
-                        preview.classList.remove('hidden');
-                        
-                        download.href = compressedDataUrl;
-                        download.classList.remove('hidden');
-                        status.classList.add('hidden');
-                    }, 1000);
-                };
-            };
-            
-            reader.readAsDataURL(file);
+    <label>Quality (0-100%)</label>
+    <input type="range" id="quality" min="1" max="100" value="80">
+
+    <button id="compressBtn">Compress Image</button>
+
+    <div class="preview" id="preview" style="display:none;">
+      <img id="originalImg" alt="Original">
+      <img id="compressedImg" alt="Compressed">
+    </div>
+
+    <button id="downloadBtn" style="display:none;">Download Compressed Image</button>
+  </div>
+
+  <script>
+    const upload = document.getElementById('upload');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+    const aspect = document.getElementById('aspect');
+    const targetSizeInput = document.getElementById('targetSize');
+    const unitSelect = document.getElementById('unit');
+    const qualityInput = document.getElementById('quality');
+    const compressBtn = document.getElementById('compressBtn');
+    const preview = document.getElementById('preview');
+    const originalImg = document.getElementById('originalImg');
+    const compressedImg = document.getElementById('compressedImg');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let originalImage = new Image();
+    let aspectRatio = 1;
+
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        originalImage.src = evt.target.result;
+        originalImg.src = evt.target.result;
+        preview.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+      originalImage.onload = () => {
+        aspectRatio = originalImage.width / originalImage.height;
+        widthInput.value = originalImage.width;
+        heightInput.value = originalImage.height;
+      };
+    });
+
+    widthInput.addEventListener('input', () => {
+      if (aspect.checked) heightInput.value = Math.round(widthInput.value / aspectRatio);
+    });
+    heightInput.addEventListener('input', () => {
+      if (aspect.checked) widthInput.value = Math.round(heightInput.value * aspectRatio);
+    });
+
+    compressBtn.addEventListener('click', () => {
+      if (!originalImage.src) return alert("Please upload an image first!");
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const width = parseInt(widthInput.value) || originalImage.width;
+      const height = parseInt(heightInput.value) || originalImage.height;
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.drawImage(originalImage, 0, 0, width, height);
+
+      let quality = qualityInput.value / 100;
+      let compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+      // Adjust based on target size
+      const targetSize = parseFloat(targetSizeInput.value);
+      const unit = unitSelect.value;
+      if (targetSize) {
+        const maxBytes = unit === 'MB' ? targetSize * 1024 * 1024 : targetSize * 1024;
+        while (compressedDataUrl.length * 0.75 > maxBytes && quality > 0.1) {
+          quality -= 0.05;
+          compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
         }
-    </script>
+      }
+
+      compressedImg.src = compressedDataUrl;
+      downloadBtn.style.display = "block";
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'compressed-image.jpg';
+      link.href = compressedImg.src;
+      link.click();
+    });
+  </script>
 </body>
 </html>
-
-  
