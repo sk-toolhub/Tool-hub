@@ -1,118 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Converter Tool</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Image Converter - Online Tool</title>
+  <style>
+    /* Basic layout / typography */
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: #f4f8ff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        body {
-            background: #1E1E2F;
-            color: #EAEAEA;
-            text-align: center;
-            padding: 20px;
-        }
+    .container {
+      width: 100%;
+      max-width: 560px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(10, 35, 100, 0.06);
+    }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #2B2D42;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-        }
+    h2 {
+      margin: 0 0 12px 0;
+      text-align: center;
+      color: #0066ff;
+      font-size: 20px;
+    }
 
-        input, select, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            border: none;
-        }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+    }
 
-        button {
-            background: #FFD700;
-            color: #1E1E2F;
-            cursor: pointer;
-            font-weight: bold;
-        }
+    input[type="file"], input[type="number"], select, button {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #e0e6ff;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
 
-        button:hover {
-            background: #E6C200;
-        }
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .row .col {
+      flex: 1;
+    }
 
-        .preview {
-            margin-top: 20px;
-        }
-    </style>
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .preview {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .preview img {
+      width: 48%;
+      border-radius: 10px;
+      border: 1px solid #e8eefc;
+      object-fit: contain;
+      max-height: 220px;
+      display: block;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    button.primary {
+      background: #0066ff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    button.ghost {
+      background: transparent;
+      color: #0066ff;
+      border: 1px solid #e6f0ff;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 520px) {
+      .preview img { max-height: 140px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Image Converter</h2>
-        <input type="file" id="imageInput" accept="image/*">
-        <select id="formatSelect">
-            <option value="png">PNG</option>
-            <option value="jpg">JPG</option>
-            <option value="webp">WEBP</option>
-        </select>
-        <button onclick="convertImage()">Convert Image</button>
-        <p id="status"></p>
-        <div class="preview" id="previewContainer"></div>
+  <div class="container">
+    <h2>🖼️ Image Converter</h2>
+
+    <label>Upload Image</label>
+    <input id="upload" type="file" accept="image/*" />
+
+    <div class="row">
+      <div class="col">
+        <label>Width (px)</label>
+        <input id="width" type="number" placeholder="Auto" />
+      </div>
+      <div class="col">
+        <label>Height (px)</label>
+        <input id="height" type="number" placeholder="Auto" />
+      </div>
     </div>
 
-    <script>
-        function convertImage() {
-            const fileInput = document.getElementById('imageInput');
-            const format = document.getElementById('formatSelect').value;
-            const status = document.getElementById('status');
-            const previewContainer = document.getElementById('previewContainer');
+    <div class="checkbox">
+      <input id="keepAspect" type="checkbox" checked />
+      <label for="keepAspect">Maintain Aspect Ratio</label>
+    </div>
 
-            if (!fileInput.files.length) {
-                alert('Please upload an image first.');
-                return;
-            }
+    <label>Output Format</label>
+    <select id="format">
+      <option value="image/jpeg">JPEG (.jpg)</option>
+      <option value="image/png">PNG (.png)</option>
+      <option value="image/webp">WebP (.webp)</option>
+    </select>
 
-            status.textContent = 'Processing image...';
-            const file = fileInput.files[0];
-            const reader = new FileReader();
+    <label>Quality (only for JPEG/WebP)</label>
+    <input id="quality" type="range" min="1" max="100" value="90" />
+    <div class="meta" id="qualityNote">Quality: 90%</div>
 
-            reader.onload = function (event) {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = function () {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    
-                    const convertedImage = canvas.toDataURL(`image/${format}`);
-                    previewContainer.innerHTML = `<img src="${convertedImage}" style="max-width: 100%; border-radius: 5px; margin-top: 10px;">`;
-                    const downloadBtn = document.createElement('a');
-                    downloadBtn.href = convertedImage;
-                    downloadBtn.download = `converted_image.${format}`;
-                    downloadBtn.textContent = 'Download Image';
-                    downloadBtn.style.display = 'block';
-                    downloadBtn.style.background = '#FFD700';
-                    downloadBtn.style.color = '#1E1E2F';
-                    downloadBtn.style.padding = '10px';
-                    downloadBtn.style.marginTop = '10px';
-                    downloadBtn.style.textDecoration = 'none';
-                    downloadBtn.style.borderRadius = '5px';
-                    previewContainer.appendChild(downloadBtn);
-                    status.textContent = '';
-                };
-            };
-            reader.readAsDataURL(file);
-        }
-    </script>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button id="convertBtn" class="primary" style="flex:1;">Convert Image</button>
+      <button id="resetBtn" class="ghost" style="flex:1;">Reset</button>
+    </div>
+
+    <div class="preview" id="preview" style="display:none;">
+      <div style="width:48%;">
+        <label style="font-weight:700; font-size:13px; margin-bottom:6px;">Original</label>
+        <img id="origImg" alt="Original Image" />
+        <div class="meta" id="origMeta"></div>
+      </div>
+      <div style="width:48%;">
+        <label style="font-weight:700; font-size:13px; margin-bottom:6px;">Converted</label>
+        <img id="outImg" alt="Converted Image" />
+        <div class="meta" id="outMeta"></div>
+      </div>
+    </div>
+
+    <button id="downloadBtn" class="primary" style="display:none; width:100%; margin-top:12px;">Download Converted Image</button>
+  </div>
+
+  <script>
+    const upload = document.getElementById('upload');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+    const keepAspect = document.getElementById('keepAspect');
+    const formatSelect = document.getElementById('format');
+    const qualityRange = document.getElementById('quality');
+    const qualityNote = document.getElementById('qualityNote');
+    const convertBtn = document.getElementById('convertBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const preview = document.getElementById('preview');
+    const origImg = document.getElementById('origImg');
+    const outImg = document.getElementById('outImg');
+    const origMeta = document.getElementById('origMeta');
+    const outMeta = document.getElementById('outMeta');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let original = new Image();
+    let originalFile = null;
+    let aspectRatio = 1;
+    let convertedBlob = null;
+    let convertedUrl = null;
+
+    // Update quality label
+    qualityRange.addEventListener('input', () => {
+      qualityNote.textContent = `Quality: ${qualityRange.value}%`;
+    });
+
+    // Load image
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return resetAll();
+      originalFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        original.src = reader.result;
+        origImg.src = reader.result;
+        preview.style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+
+      original.onload = () => {
+        aspectRatio = original.width / original.height;
+        widthInput.value = original.width;
+        heightInput.value = original.height;
+        origMeta.textContent = `Dimensions: ${original.width}×${original.height} • ${(file.size/1024).toFixed(1)} KB • ${file.type || 'image'}`;
+      };
+    });
+
+    // Maintain aspect ratio while editing
+    widthInput.addEventListener('input', () => {
+      const w = parseInt(widthInput.value);
+      if (keepAspect.checked && !isNaN(w)) {
+        heightInput.value = Math.round(w / aspectRatio);
+      }
+    });
+    heightInput.addEventListener('input', () => {
+      const h = parseInt(heightInput.value);
+      if (keepAspect.checked && !isNaN(h)) {
+        widthInput.value = Math.round(h * aspectRatio);
+      }
+    });
+
+    // Convert action
+    convertBtn.addEventListener('click', async () => {
+      if (!original.src) return alert('Please upload an image first!');
+      const targetFormat = formatSelect.value; // mime type
+      const targetQuality = Math.max(1, Math.min(100, parseInt(qualityRange.value)));
+      const width = parseInt(widthInput.value) || original.width;
+      const height = parseInt(heightInput.value) || original.height;
+
+      // Create canvas and draw
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      // If converting PNG with transparency, and original has it, preserve; otherwise white bg for JPEG
+      if (targetFormat === 'image/png') {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+      } else {
+        // fill white for non-transparent formats (jpeg)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+      }
+
+      ctx.drawImage(original, 0, 0, width, height);
+
+      // toBlob with correct mime & quality (quality applies to jpeg/webp)
+      const mime = targetFormat;
+      const qualityParam = (mime === 'image/png') ? undefined : (targetQuality/100);
+
+      // convert canvas to blob
+      await new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            alert('Conversion failed — your browser may not support this format.');
+            resolve();
+            return;
+          }
+          // revoke old url if exists
+          if (convertedUrl) URL.revokeObjectURL(convertedUrl);
+          convertedBlob = blob;
+          convertedUrl = URL.createObjectURL(blob);
+          outImg.src = convertedUrl;
+          outMeta.textContent = `Dimensions: ${width}×${height} • ${(blob.size/1024).toFixed(1)} KB • ${mime}`;
+          downloadBtn.style.display = 'block';
+          preview.style.display = 'flex';
+          resolve();
+        }, mime, qualityParam);
+      });
+    });
+
+    // Download the converted image
+    downloadBtn.addEventListener('click', () => {
+      if (!convertedBlob) return;
+      const extMap = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+      const mime = formatSelect.value;
+      const ext = extMap[mime] || 'img';
+      const link = document.createElement('a');
+      link.href = convertedUrl;
+      link.download = `converted-image.${ext}`;
+      link.click();
+    });
+
+    // Reset all
+    resetBtn.addEventListener('click', resetAll);
+
+    function resetAll() {
+      upload.value = '';
+      widthInput.value = '';
+      heightInput.value = '';
+      keepAspect.checked = true;
+      formatSelect.value = 'image/jpeg';
+      qualityRange.value = 90;
+      qualityNote.textContent = `Quality: 90%`;
+      original = new Image();
+      originalFile = null;
+      aspectRatio = 1;
+      origImg.src = '';
+      outImg.src = '';
+      origMeta.textContent = '';
+      outMeta.textContent = '';
+      preview.style.display = 'none';
+      downloadBtn.style.display = 'none';
+      if (convertedUrl) {
+        URL.revokeObjectURL(convertedUrl);
+        convertedUrl = null;
+        convertedBlob = null;
+      }
+    }
+  </script>
 </body>
 </html>
-
-  
