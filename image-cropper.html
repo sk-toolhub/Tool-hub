@@ -1,162 +1,462 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Cropper Tool</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f5f9ff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      background: #fff;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
-    h2 {
-      color: #0066ff;
-      margin-bottom: 15px;
-    }
-    input[type="file"] {
-      margin: 10px 0;
-      padding: 10px;
-      border: 2px dashed #0066ff;
-      border-radius: 8px;
-      width: 100%;
-      cursor: pointer;
-      background: #f0f7ff;
-    }
-    canvas {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      background: #fafafa;
-    }
-    .controls {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    button {
-      background-color: #0066ff;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #0050cc;
-    }
-  </style>
+<meta charset="utf-8" />
+<title>Multi-mode Image Cropper</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:18px;color:#111}
+  .app{max-width:920px;margin:0 auto;display:grid;grid-template-columns:360px 1fr;gap:18px}
+  .panel{background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+  h2{margin:6px 0 10px;font-size:16px}
+  input[type=file]{width:100%}
+  .controls{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  label{font-size:13px;color:#444}
+  select, input[type=range], button{width:100%}
+  #canvasWrap{background:#f6f7f9;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;height:560px}
+  canvas{background:#222;max-width:100%;max-height:100%;cursor:grab}
+  canvas:active{cursor:grabbing}
+  .overlay{
+    position:absolute;inset:0;pointer-events:none;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mask{border:2px dashed rgba(255,255,255,0.45);box-sizing:border-box}
+  .info{font-size:13px;color:#666;margin-top:8px}
+  .row{display:flex;gap:8px}
+  button{padding:8px 12px;border-radius:8px;border:1px solid #bbb;background:#fff;cursor:pointer}
+  .primary{background:#0b74ff;color:#fff;border-color:#075fcc}
+  .small{padding:6px;font-size:13px}
+  .hint{font-size:12px;color:#666}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h2>🖼️ Image Cropper Tool</h2>
-    <input type="file" id="imageInput" accept="image/*">
-    <canvas id="canvas"></canvas>
+<div class="app">
+  <div class="panel">
+    <h2>Image & Controls</h2>
+    <input id="file" type="file" accept="image/*">
     <div class="controls">
-      <button id="cropBtn">Crop Image</button>
-      <button id="downloadBtn">Download Cropped</button>
+      <label>Mode / Crop Type (Mode) — तरीका:
+        <select id="mode">
+          <option value="free">Free crop / कोई प्रतिबंध नहीं</option>
+          <option value="square">Square 1:1 / चौकोर</option>
+          <option value="wide">Wide 16:9</option>
+          <option value="circle">Circle / वृत्त (PNG with transparency)</option>
+        </select>
+      </label>
+
+      <label>Zoom (pinch / slider) — ज़ूम:
+        <input id="zoom" type="range" min="0.2" max="3" step="0.01" value="1">
+      </label>
+
+      <label>Rotate (degrees) — घुमाएँ:
+        <input id="rotate" type="range" min="-180" max="180" step="1" value="0">
+      </label>
+
+      <div class="row">
+        <button id="reset" class="small">Reset</button>
+        <button id="fit" class="small">Fit to Canvas</button>
+      </div>
+
+      <div class="row">
+        <button id="crop" class="primary">Crop & Download</button>
+        <button id="preview" class="small">Preview</button>
+      </div>
+
+      <div class="info">
+        <div class="hint">Drag image to move. Use mouse wheel or zoom slider to zoom. Rotate with slider.</div>
+      </div>
     </div>
   </div>
 
-  <script>
-    const imageInput = document.getElementById('imageInput');
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const cropBtn = document.getElementById('cropBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
+  <div class="panel">
+    <h2>Crop Area / Preview</h2>
+    <div id="canvasWrap">
+      <canvas id="cv" width="900" height="560"></canvas>
+      <div class="overlay" id="overlay"></div>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div id="outInfo" class="hint"></div>
+      <div style="margin-left:auto">
+        <button id="downloadPreview" class="small">Download Preview</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    let img = new Image();
-    let startX, startY, endX, endY, isDragging = false;
-    let cropArea = null;
+<script>
+/*
+ Multi-mode Image Cropper (pure JS + Canvas)
+ Modes: free, square (1:1), wide (16:9), circle
+ Features: load image, drag/pan, zoom, rotate, crop export (PNG/JPEG).
+*/
 
-    imageInput.addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        img.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-        };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
-    });
+const fileInput = document.getElementById('file');
+const canvas = document.getElementById('cv');
+const ctx = canvas.getContext('2d', { alpha: true });
+const overlay = document.getElementById('overlay');
+const modeSel = document.getElementById('mode');
+const zoomRange = document.getElementById('zoom');
+const rotateRange = document.getElementById('rotate');
+const resetBtn = document.getElementById('reset');
+const fitBtn = document.getElementById('fit');
+const cropBtn = document.getElementById('crop');
+const previewBtn = document.getElementById('preview');
+const downloadPreview = document.getElementById('downloadPreview');
+const outInfo = document.getElementById('outInfo');
 
-    canvas.addEventListener('mousedown', e => {
-      const rect = canvas.getBoundingClientRect();
-      startX = e.clientX - rect.left;
-      startY = e.clientY - rect.top;
-      isDragging = true;
-    });
+let img = new Image();
+let imgLoaded = false;
 
-    canvas.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      const rect = canvas.getBoundingClientRect();
-      endX = e.clientX - rect.left;
-      endY = e.clientY - rect.top;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-      ctx.strokeStyle = '#0066ff';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-    });
+// transform state
+let tx = 0, ty = 0, scale = 1, rotation = 0; // rotation in radians
+let originX = 0, originY = 0; // image origin offset (in canvas space)
+let dragging = false, lastX=0, lastY=0;
 
-    canvas.addEventListener('mouseup', () => {
-      isDragging = false;
-      cropArea = { x: startX, y: startY, width: endX - startX, height: endY - startY };
-    });
+// viewport size helpers
+function vw() { return canvas.width; }
+function vh() { return canvas.height; }
 
-    cropBtn.addEventListener('click', () => {
-      if (!cropArea) return alert('Please select an area to crop first.');
-      const croppedCanvas = document.createElement('canvas');
-      const croppedCtx = croppedCanvas.getContext('2d');
-      croppedCanvas.width = cropArea.width;
-      croppedCanvas.height = cropArea.height;
-      croppedCtx.drawImage(
-        img,
-        cropArea.x,
-        cropArea.y,
-        cropArea.width,
-        cropArea.height,
-        0,
-        0,
-        cropArea.width,
-        cropArea.height
-      );
-      canvas.width = cropArea.width;
-      canvas.height = cropArea.height;
-      ctx.drawImage(croppedCanvas, 0, 0);
-      cropArea = null;
-    });
+// default canvas fit
+function fitImage() {
+  if (!imgLoaded) return;
+  // reset transforms and fit image to canvas
+  const cW = vw(), cH = vh();
+  const ratio = Math.min(cW / img.width, cH / img.height);
+  scale = ratio;
+  rotation = 0;
+  tx = (cW - img.width * scale) / 2;
+  ty = (cH - img.height * scale) / 2;
+  zoomRange.value = scale.toFixed(2);
+  rotateRange.value = 0;
+  draw();
+}
 
-    downloadBtn.addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.download = 'cropped-image.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  </script>
+// draw function
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if (!imgLoaded) {
+    ctx.fillStyle = "#eee";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "#666";
+    ctx.font = "16px sans-serif";
+    ctx.fillText("Load an image to start", 16, 30);
+    overlay.innerHTML = "";
+    return;
+  }
+
+  ctx.save();
+  // translate to top-left plus pan
+  ctx.translate(tx, ty);
+  // apply scale and rotation around image center
+  const cx = img.width * scale / 2;
+  const cy = img.height * scale / 2;
+  ctx.translate(cx, cy);
+  ctx.rotate(rotation);
+  ctx.translate(-cx, -cy);
+  ctx.drawImage(img, 0, 0, img.width * scale, img.height * scale);
+  ctx.restore();
+
+  // draw dim overlay except crop area for UX
+  renderCropMask();
+  updateInfo();
+}
+
+function renderCropMask() {
+  overlay.innerHTML = "";
+  // create mask element that matches mode area
+  const mode = modeSel.value;
+  // mask size will be based on canvas size and mode aspect
+  const wrapRect = canvas.getBoundingClientRect();
+  const W = canvas.width, H = canvas.height;
+  // compute crop rectangle in canvas coords
+  let cropW = Math.floor(W * 0.8);
+  let cropH = Math.floor(H * 0.8);
+  if (mode === 'square') {
+    const m = Math.min(cropW, cropH);
+    cropW = cropH = m;
+  } else if (mode === 'wide') {
+    // maintain 16:9 within 80% area
+    const targetRatio = 16/9;
+    if (cropW / cropH > targetRatio) cropW = Math.floor(cropH * targetRatio);
+    else cropH = Math.floor(cropW / targetRatio);
+  } else if (mode === 'circle') {
+    const m = Math.min(cropW, cropH);
+    cropW = cropH = m;
+  }
+  // position center
+  const left = Math.floor((W - cropW)/2);
+  const top = Math.floor((H - cropH)/2);
+
+  // overlay style element
+  const mask = document.createElement('div');
+  mask.className = 'mask';
+  mask.style.width = cropW + 'px';
+  mask.style.height = cropH + 'px';
+  mask.style.boxSizing = 'border-box';
+  mask.style.pointerEvents = 'none';
+  // dashed border is fine; for circle make border-radius
+  if (mode === 'circle') mask.style.borderRadius = '50%';
+  mask.style.outline = 'rgba(0,0,0,0.35) solid 9999px';
+  // Transparent "hole" effect: use outline large trick; position in center
+  mask.style.position = 'absolute';
+  mask.style.left = left + 'px';
+  mask.style.top = top + 'px';
+  overlay.appendChild(mask);
+}
+
+// update info text
+function updateInfo() {
+  outInfo.textContent = `Scale: ${Number(scale).toFixed(2)} | Rotate: ${(rotation*180/Math.PI).toFixed(0)}° | Tx: ${Math.round(tx)}, Ty: ${Math.round(ty)}`;
+}
+
+// load image
+fileInput.addEventListener('change', e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    img = new Image();
+    img.onload = () => {
+      imgLoaded = true;
+      // set canvas to a comfortable preview size keeping aspect
+      const maxW = 900, maxH = 560;
+      // keep canvas size fixed but you can adapt if you want (we keep it)
+      fitImage();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(f);
+});
+
+// zoom and rotate controls
+zoomRange.addEventListener('input', e => {
+  // zoom about canvas center (approx)
+  const oldScale = scale;
+  scale = parseFloat(e.target.value);
+  // adjust tx/ty so image zooms about canvas center
+  const cX = canvas.width/2, cY = canvas.height/2;
+  tx = cX - ((cX - tx) * (scale / oldScale));
+  ty = cY - ((cY - ty) * (scale / oldScale));
+  draw();
+});
+
+rotateRange.addEventListener('input', e => {
+  rotation = parseFloat(e.target.value) * Math.PI/180;
+  draw();
+});
+
+// pan / drag support (mouse + touch)
+canvas.addEventListener('mousedown', e => {
+  dragging = true; lastX = e.offsetX; lastY = e.offsetY;
+});
+canvas.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const dx = e.offsetX - lastX, dy = e.offsetY - lastY;
+  tx += dx; ty += dy;
+  lastX = e.offsetX; lastY = e.offsetY;
+  draw();
+});
+window.addEventListener('mouseup', ()=>dragging=false);
+
+// touch
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    const t = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    dragging = true;
+    lastX = t.clientX - rect.left;
+    lastY = t.clientY - rect.top;
+  }
+}, {passive:false});
+canvas.addEventListener('touchmove', e => {
+  if (!dragging) return;
+  if (e.touches.length !== 1) return;
+  const t = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const x = t.clientX - rect.left, y = t.clientY - rect.top;
+  const dx = x - lastX, dy = y - lastY;
+  tx += dx; ty += dy;
+  lastX = x; lastY = y;
+  e.preventDefault();
+  draw();
+}, {passive:false});
+window.addEventListener('touchend', ()=>dragging=false);
+
+// wheel to zoom
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const delta = -e.deltaY;
+  const zoomFactor = delta > 0 ? 1.05 : 0.95;
+  const oldScale = scale;
+  const newScale = Math.max(0.2, Math.min(3, scale * zoomFactor));
+  // zoom around mouse position
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  tx = mx - ((mx - tx) * (newScale / oldScale));
+  ty = my - ((my - ty) * (newScale / oldScale));
+  scale = newScale;
+  zoomRange.value = scale.toFixed(2);
+  draw();
+}, {passive:false});
+
+// reset and fit
+resetBtn.addEventListener('click', ()=> {
+  if (!imgLoaded) return;
+  scale = 1; rotation = 0; tx = 0; ty = 0;
+  zoomRange.value = scale.toFixed(2); rotateRange.value = 0;
+  fitImage();
+});
+fitBtn.addEventListener('click', fitImage);
+
+// compute crop rect in canvas coordinates (according to mode)
+function computeCropRect() {
+  const W = canvas.width, H = canvas.height;
+  let cropW = Math.floor(W * 0.8);
+  let cropH = Math.floor(H * 0.8);
+  const mode = modeSel.value;
+  if (mode === 'square' || mode === 'circle') {
+    const m = Math.min(cropW, cropH); cropW = cropH = m;
+  } else if (mode === 'wide') {
+    const target = 16/9;
+    if (cropW / cropH > target) cropW = Math.floor(cropH * target);
+    else cropH = Math.floor(cropW / target);
+  }
+  const left = Math.floor((W - cropW)/2);
+  const top = Math.floor((H - cropH)/2);
+  return {left, top, width: cropW, height: cropH};
+}
+
+// Convert canvas-space crop rect to original image pixel coordinates after transforms
+function cropToImagePixels(cropRect) {
+  // We need to invert the transform applied during draw:
+  // draw: ctx.translate(tx,ty); ctx.translate(cx,cy); rotate(rotation); ctx.translate(-cx,-cy); drawImage(img, 0,0, img.width*scale, img.height*scale)
+  // So a point p_canvas -> convert to p_image (in original image px)
+  // steps: subtract tx,ty; translate to center; rotate by -rotation; translate back; then divide by scale
+  const {left, top, width, height} = cropRect;
+  // map top-left and bottom-right
+  function mapPoint(x, y) {
+    // remove pan
+    let X = x - tx;
+    let Y = y - ty;
+    // center used in draw
+    const cx = (img.width * scale) / 2;
+    const cy = (img.height * scale) / 2;
+    // translate to center
+    X -= cx; Y -= cy;
+    // rotate by -rotation
+    const cos = Math.cos(-rotation), sin = Math.sin(-rotation);
+    const rx = X * cos - Y * sin;
+    const ry = X * sin + Y * cos;
+    // translate back
+    let bx = rx + cx;
+    let by = ry + cy;
+    // convert to original image px coordinates
+    const imgX = bx / scale;
+    const imgY = by / scale;
+    return {imgX, imgY};
+  }
+  const p1 = mapPoint(left, top);
+  const p2 = mapPoint(left + width, top + height);
+  // compute bounding box in original image coordinates
+  const xMin = Math.min(p1.imgX, p2.imgX);
+  const yMin = Math.min(p1.imgY, p2.imgY);
+  const xMax = Math.max(p1.imgX, p2.imgX);
+  const yMax = Math.max(p1.imgY, p2.imgY);
+  // clamp to image bounds
+  const sx = Math.max(0, Math.floor(xMin));
+  const sy = Math.max(0, Math.floor(yMin));
+  const sw = Math.max(1, Math.floor(xMax - xMin));
+  const sh = Math.max(1, Math.floor(yMax - yMin));
+  return {sx, sy, sw, sh};
+}
+
+// create cropped blob (PNG/JPEG)
+function createCroppedBlob(asCircle=false, callback) {
+  if (!imgLoaded) return;
+  const cropRect = computeCropRect();
+  const ip = cropToImagePixels(cropRect);
+
+  // create temp canvas sized to target pixel area (we choose original image px size of crop)
+  const outCanvas = document.createElement('canvas');
+  outCanvas.width = ip.sw;
+  outCanvas.height = ip.sh;
+  const outCtx = outCanvas.getContext('2d', {alpha:true});
+  // draw part of original image onto out canvas
+  outCtx.drawImage(img, ip.sx, ip.sy, ip.sw, ip.sh, 0, 0, ip.sw, ip.sh);
+
+  if (asCircle) {
+    // create circular clipping mask and return PNG with transparent background
+    const size = Math.min(ip.sw, ip.sh);
+    const circCanvas = document.createElement('canvas');
+    circCanvas.width = size; circCanvas.height = size;
+    const cctx = circCanvas.getContext('2d', {alpha:true});
+    cctx.beginPath();
+    cctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+    cctx.closePath();
+    cctx.clip();
+    // center the source into circle canvas
+    const sx = Math.floor((ip.sw - size)/2);
+    const sy = Math.floor((ip.sh - size)/2);
+    cctx.drawImage(outCanvas, sx, sy, size, size, 0, 0, size, size);
+    circCanvas.toBlob(blob => callback(blob), 'image/png');
+  } else {
+    // default: export jpeg to save size, but keep PNG option
+    outCanvas.toBlob(blob => callback(blob), 'image/jpeg', 0.92);
+  }
+}
+
+// cropping + download
+cropBtn.addEventListener('click', () => {
+  if (!imgLoaded) return alert('Please load an image first.');
+  const mode = modeSel.value;
+  const asCircle = (mode === 'circle');
+  createCroppedBlob(asCircle, blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = asCircle ? 'crop_circle.png' : 'crop.jpg';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+});
+
+// preview (draw crop onto a preview canvas and show in new window)
+previewBtn.addEventListener('click', () => {
+  if (!imgLoaded) return;
+  const mode = modeSel.value;
+  const asCircle = (mode === 'circle');
+  createCroppedBlob(asCircle, blob => {
+    const url = URL.createObjectURL(blob);
+    const w = window.open('');
+    if (!w) return alert('Popup blocked — allow popups for preview.');
+    w.document.title = 'Crop Preview';
+    const imgEl = w.document.createElement('img');
+    imgEl.src = url;
+    imgEl.style.maxWidth = '100%';
+    w.document.body.style.margin = '10px';
+    w.document.body.appendChild(imgEl);
+  });
+});
+
+// download preview button (saves the whole canvas as seen — helpful sometimes)
+downloadPreview.addEventListener('click', () => {
+  const url = canvas.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = url; a.download = 'canvas_preview.png';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+// redraw at interval to keep overlay etc in sync
+(function loop(){
+  draw();
+  requestAnimationFrame(loop);
+})();
+
+// initial draw
+draw();
+
+</script>
 </body>
 </html>
