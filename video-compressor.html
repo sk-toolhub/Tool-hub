@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎬 Video Converter Tool</title>
+  <title>🎞️ Video Compressor Tool</title>
   <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
   <style>
     body {
@@ -64,16 +64,14 @@
 </head>
 <body>
   <div class="container">
-    <h2>🎞️ Video Converter Tool</h2>
+    <h2>💾 Video Compressor Tool</h2>
     <input type="file" id="videoInput" accept="video/*" />
-    <select id="formatSelect">
-      <option value="mp4">Convert to MP4</option>
-      <option value="webm">Convert to WEBM</option>
-      <option value="avi">Convert to AVI</option>
-      <option value="mov">Convert to MOV</option>
-      <option value="mkv">Convert to MKV</option>
+    <select id="qualitySelect">
+      <option value="23">High Quality (Slow Compression)</option>
+      <option value="28">Medium Quality (Balanced)</option>
+      <option value="35">Low Quality (Maximum Compression)</option>
     </select>
-    <button id="convertBtn">⚙️ Convert Video</button>
+    <button id="compressBtn">⚙️ Compress Video</button>
     <p class="progress" id="progressText"></p>
     <video id="preview" controls></video>
   </div>
@@ -82,40 +80,40 @@
     const { createFFmpeg, fetchFile } = FFmpeg;
     const ffmpeg = createFFmpeg({ log: true });
     const videoInput = document.getElementById("videoInput");
-    const formatSelect = document.getElementById("formatSelect");
-    const convertBtn = document.getElementById("convertBtn");
+    const qualitySelect = document.getElementById("qualitySelect");
+    const compressBtn = document.getElementById("compressBtn");
     const progressText = document.getElementById("progressText");
     const preview = document.getElementById("preview");
 
-    convertBtn.addEventListener("click", async () => {
+    compressBtn.addEventListener("click", async () => {
       if (!videoInput.files.length) {
         alert("Please upload a video first!");
         return;
       }
 
-      const format = formatSelect.value;
       const file = videoInput.files[0];
+      const crf = qualitySelect.value;
       const fileName = file.name.split(".")[0];
-      const outputFile = `${fileName}.${format}`;
+      const outputFile = `${fileName}_compressed.mp4`;
 
       progressText.textContent = "Loading FFmpeg core...";
       if (!ffmpeg.isLoaded()) await ffmpeg.load();
 
       ffmpeg.FS("writeFile", file.name, await fetchFile(file));
-      progressText.textContent = `Converting to ${format.toUpperCase()}... please wait`;
+      progressText.textContent = "Compressing video... Please wait ⏳";
 
-      await ffmpeg.run("-i", file.name, outputFile);
+      await ffmpeg.run("-i", file.name, "-vcodec", "libx264", "-crf", crf, "-preset", "medium", outputFile);
 
       const data = ffmpeg.FS("readFile", outputFile);
-      const videoURL = URL.createObjectURL(new Blob([data.buffer], { type: `video/${format}` }));
+      const videoURL = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
 
       preview.src = videoURL;
-      progressText.textContent = "✅ Conversion complete! Click below to download.";
+      progressText.textContent = "✅ Compression complete! Click below to download.";
 
       const link = document.createElement("a");
       link.href = videoURL;
       link.download = outputFile;
-      link.textContent = "⬇ Download Converted Video";
+      link.textContent = "⬇ Download Compressed Video";
       link.style.display = "block";
       link.style.marginTop = "15px";
       link.style.color = "#0066ff";
