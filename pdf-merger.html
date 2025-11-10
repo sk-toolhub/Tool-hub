@@ -5,6 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PDF Merger Tool</title>
   <meta name="description" content="Merge multiple PDF files into one easily. Free online PDF merger — combine, rearrange, and download PDFs instantly.">
+  <link rel="canonical" href="https://www.sktoolhub.in/pdf-merger.html"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f9ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      color: #0066ff;
+      margin-bottom: 10px;
+    }
+    input[type="file"] {
+      margin: 10px 0;
+      padding: 10px;
+      border: 2px dashed #0066ff;
+      border-radius: 8px;
+      width: 100%;
+      background: #f0f7ff;
+      cursor: pointer;
+    }
+    button {
+      background: #0066ff;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #004fcc;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+      text-align: left;
+      font-size: 14px;
+      color: #333;
+    }
+    li {
+      background: #f9f9f9;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📚 PDF Merger Tool</h2>
+    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+    <ul id="fileList"></ul>
+    <button id="mergeBtn">🔗 Merge PDFs</button>
+  </div>
+
+  <script>
+    const pdfInput = document.getElementById("pdfInput");
+    const mergeBtn = document.getElementById("mergeBtn");
+    const fileList = document.getElementById("fileList");
+    let pdfFiles = [];
+
+    pdfInput.addEventListener("change", (e) => {
+      pdfFiles = Array.from(e.target.files);
+      displayFileList();
+    });
+
+    function displayFileList() {
+      fileList.innerHTML = "";
+      pdfFiles.forEach((file, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${index + 1}. ${file.name}`;
+        fileList.appendChild(li);
+      });
+    }
+
+    mergeBtn.addEventListener("click", async () => {
+      if (pdfFiles.length < 2) {
+        alert("Please upload at least 2 PDF files to merge.");
+        return;
+      }
+
+      const mergedPdf = await PDFLib.PDFDocument.create();
+
+      for (const file of pdfFiles) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach((page) => mergedPdf.addPage(page));
+      }
+
+      const mergedPdfBytes = await mergedPdf.save();
+      const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "merged.pdf";
+      link.click();
+    });
+  </script>
+</body>
+</html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <style>
     body {
