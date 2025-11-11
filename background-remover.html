@@ -61,29 +61,49 @@ DOCTYPE html>
   </style>
 </head>
 <body>
-  <!-- 🌐 SK ToolHub Navigation Bar -->
-<nav style="background:#ffffff; border-bottom:2px solid #eee; padding:12px 10px; text-align:center; font-family:Arial, sans-serif; position:sticky; top:0; z-index:1000;">
-  <a href="index.html" style="margin:0 10px; text-decoration:none; color:#0078D7; font-weight:bold;">🏠 Home</a>
-  <a href="image-converter.html" style="margin:0 10px; text-decoration:none; color:#333;">Image Converter</a>
-  <a href="image-compressor.html" style="margin:0 10px; text-decoration:none; color:#333;">Image Compressor</a>
-  <a href="image-resizer.html" style="margin:0 10px; text-decoration:none; color:#333;">Image Resizer</a>
-  <a href="image-to-text.html" style="margin:0 10px; text-decoration:none; color:#333;">Image to Text</a>
-  <a href="image-rotator.html" style="margin:0 10px; text-decoration:none; color:#333;">Image Rotator / Flipper</a>
-  <a href="background-remover.html" style="margin:0 10px; text-decoration:none; color:#333;">Background Remover</a>
-  <a href="watermark-remover.html" style="margin:0 10px; text-decoration:none; color:#333;">Watermark Remover</a>
-  <a href="pdf-to-jpg.html" style="margin:0 10px; text-decoration:none; color:#333;">PDF to JPG</a>
-  <a href="jpg-to-pdf.html" style="margin:0 10px; text-decoration:none; color:#333;">JPG to PDF</a>
-  <a href="pdf-compressor.html" style="margin:0 10px; text-decoration:none; color:#333;">PDF Compressor</a>
-  <a href="pdf-merger.html" style="margin:0 10px; text-decoration:none; color:#333;">PDF Merger</a>
-  <a href="video-converter.html" style="margin:0 10px; text-decoration:none; color:#333;">Video Converter</a>
-  <a href="video-compressor.html" style="margin:0 10px; text-decoration:none; color:#333;">Video Compressor</a>
-  <a href="video-to-gif.html" style="margin:0 10px; text-decoration:none; color:#333;">Video to GIF</a>
-  <a href="video-trimmer.html" style="margin:0 10px; text-decoration:none; color:#333;">Video Trimmer</a>
-  <a href="about-us.html" style="margin:0 10px; text-decoration:none; color:#333;">About Us</a>
-  <a href="contact-us.html" style="margin:0 10px; text-decoration:none; color:#333;">Contact Us</a>
-  <a href="privacy-policy.html" style="margin:0 10px; text-decoration:none; color:#333;">Privacy Policy</a>
-  <a href="terms-and-conditions.html" style="margin:0 10px; text-decoration:none; color:#333;">Terms & Conditions</a>
-</nav>
+  <!-- 🏠 Back to Home Navigation Bar -->
+<style>
+  .back-home {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+    padding: 12px 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .back-home a {
+    text-decoration: none;
+    color: #0078D7;
+    font-weight: 600;
+    font-size: 16px;
+    border: 2px solid #0078D7;
+    padding: 6px 16px;
+    border-radius: 25px;
+    transition: 0.3s ease;
+    display: inline-block;
+  }
+
+  .back-home a:hover {
+    background: #0078D7;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,120,215,0.3);
+  }
+
+  @media (max-width: 600px) {
+    .back-home a {
+      font-size: 15px;
+      padding: 6px 14px;
+    }
+  }
+</style>
+
+<div class="back-home">
+  <a href="index.html">← Back to Home</a>
+</div>
   <div class="tool-container">
     <h2>🪄 Image Background Remover</h2>
     <label for="upload">Upload Image</label>
