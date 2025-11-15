@@ -1,11 +1,15 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Remove image background instantly using SK ToolHub’s free online tool. Upload your photo and get a clean, transparent background in seconds — fast, easy and 100% free.">
+  <meta name="description"
+    content="Remove image background instantly using SK ToolHub’s free online tool. Upload your photo and get a clean, transparent background in seconds — fast, easy and 100% free.">
   <link rel="canonical" href="https://www.sktoolhub.in/tools/image-background-remover.html">
+
   <title>Sk Toolhub's Image Background Remover is free and easy to use</title>
+
   <style>
     body {
       font-family: "Poppins", sans-serif;
@@ -13,10 +17,9 @@ DOCTYPE html>
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       padding: 20px;
     }
+
     .tool-container {
       background: #fff;
       padding: 25px;
@@ -25,14 +28,13 @@ DOCTYPE html>
       width: 100%;
       max-width: 500px;
       text-align: center;
+      margin-top: 20px;
     }
-    h2 {
-      margin-bottom: 15px;
-      color: #333;
-    }
+
     input[type="file"] {
       display: none;
     }
+
     label {
       background: #007bff;
       color: #fff;
@@ -41,12 +43,15 @@ DOCTYPE html>
       cursor: pointer;
       font-weight: 500;
     }
-    canvas, img {
+
+    canvas,
+    img {
       margin-top: 15px;
       max-width: 100%;
       border-radius: 10px;
       display: none;
     }
+
     button {
       margin-top: 15px;
       padding: 10px 20px;
@@ -58,106 +63,99 @@ DOCTYPE html>
       cursor: pointer;
       display: none;
     }
+
+    /* BACK TO HOME BAR */
+    .back-home {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      padding: 12px 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .back-home a {
+      text-decoration: none;
+      color: #0078D7;
+      font-weight: 600;
+      font-size: 16px;
+      border: 2px solid #0078D7;
+      padding: 6px 16px;
+      border-radius: 25px;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+
+    .back-home a:hover {
+      background: #0078D7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 120, 215, 0.3);
+    }
   </style>
 </head>
+
 <body>
-  <!-- 🏠 Back to Home Navigation Bar -->
-<style>
-  .back-home {
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: center;
-    padding: 12px 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
 
-  .back-home a {
-    text-decoration: none;
-    color: #0078D7;
-    font-weight: 600;
-    font-size: 16px;
-    border: 2px solid #0078D7;
-    padding: 6px 16px;
-    border-radius: 25px;
-    transition: 0.3s ease;
-    display: inline-block;
-  }
+  <!-- BACK TO HOME BAR -->
+  <div class="back-home">
+    <a href="index.html">← Back to Home</a>
+  </div>
 
-  .back-home a:hover {
-    background: #0078D7;
-    color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,120,215,0.3);
-  }
-
-  @media (max-width: 600px) {
-    .back-home a {
-      font-size: 15px;
-      padding: 6px 14px;
-    }
-  }
-</style>
-
-<div class="back-home">
-  <a href="index.html">← Back to Home</a>
-</div>
   <div class="tool-container">
     <h1>Background Remover - Remove Image Background Online</h1>
-<h2>Make Background Transparent or Replace with Custom Colors Instantly</h2>
+    <h2>Make Background Transparent Instantly</h2>
+
     <label for="upload">Upload Image</label>
     <input type="file" id="upload" accept="image/*" />
+
+    <img id="preview" />
     <canvas id="canvas"></canvas>
+
     <button id="downloadBtn">Download Transparent Image</button>
   </div>
 
-  <script type="module">
-    import * as bodySegmentation from "https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation";
-    import "@tensorflow/tfjs-backend-webgl";
+  <!-- Background remover script -->
+  <script src="https://cdn.jsdelivr.net/gh/canaries-team/smart-mask/smartmask.min.js"></script>
 
+  <script>
     const upload = document.getElementById("upload");
+    const preview = document.getElementById("preview");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const downloadBtn = document.getElementById("downloadBtn");
 
-    async function loadModel() {
-      return await bodySegmentation.createSegmenter(
-        bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,
-        { runtime: "tfjs", modelType: "general" }
-      );
-    }
-
     upload.addEventListener("change", async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+
       const img = new Image();
       img.src = URL.createObjectURL(file);
+
       img.onload = async () => {
+        preview.src = img.src;
+        preview.style.display = "block";
+
         canvas.width = img.width;
         canvas.height = img.height;
-        const segmenter = await loadModel();
-        const segmentation = await segmenter.segmentPeople(img);
 
-        const mask = bodySegmentation.toBinaryMask(segmentation);
-        ctx.putImageData(mask, 0, 0);
+        // SmartMask Background Removal (no API, no tensorflow)
+        const mask = await window.smartMask(img);
+
+        ctx.drawImage(img, 0, 0);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
 
-        const tempCanvas = document.createElement("canvas");
-        tempCanvas.width = img.width;
-        tempCanvas.height = img.height;
-        const tctx = tempCanvas.getContext("2d");
-        tctx.drawImage(img, 0, 0);
-        const imgData = tctx.getImageData(0, 0, img.width, img.height);
-
-        for (let i = 0; i < data.length; i += 4) {
-          if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0)
-            imgData.data[i + 3] = 0; // make background transparent
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          if (mask.data[i] === 0) {
+            imageData.data[i + 3] = 0; // transparent
+          }
         }
 
-        ctx.putImageData(imgData, 0, 0);
+        ctx.putImageData(imageData, 0, 0);
+
         canvas.style.display = "block";
         downloadBtn.style.display = "inline-block";
       };
@@ -170,5 +168,6 @@ DOCTYPE html>
       link.click();
     });
   </script>
+
 </body>
 </html>
