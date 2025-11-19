@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sk Toolhub Image Rotator – Rotate or Flip Images Online in One Click Easily</title>
   <meta name="description" content="Rotate or flip images online for free. Instantly turn photos left, right, or upside down with SK ToolHub’s image rotator tool.">
+
   <meta property="og:title" content="Sk Toolhub Image Rotator – Rotate or Flip Images Online in One Click Easily">
-<meta property="og:description" content="Rotate or flip images online instantly using the Sk Toolhub Image Rotator. Turn photos left, right, horizontally or vertically in one click without losing quality. Fast and free tool.">
-<meta property="og:image" content="https://www.sktoolhub.in/assets/image-rotator-og.jpg">
-<meta property="og:url" content="https://www.sktoolhub.in/image-rotator.html">
-<meta property="og:type" content="website">
-  <script type="application/ld+json">
+  <meta property="og:description" content="Rotate or flip images online instantly using the Sk Toolhub Image Rotator. Turn photos left, right, horizontally or vertically in one click without losing quality. Fast and free tool.">
+  <meta property="og:image" content="https://www.sktoolhub.in/assets/image-rotator-og.jpg">
+  <meta property="og:url" content="https://www.sktoolhub.in/image-rotator.html">
+  <meta property="og:type" content="website">
+
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
@@ -22,7 +24,9 @@
   "image": "https://www.sktoolhub.in/assets/image-rotator-og.jpg"
 }
 </script>
+
   <link rel="canonical" href="https://www.sktoolhub.in/image-rotator-flipper.html"/>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -33,6 +37,8 @@
       min-height: 100vh;
       margin: 0;
     }
+
+    /* ⭐ ONLY THIS PART UPDATED */
     .container {
       background: #fff;
       padding: 25px;
@@ -41,11 +47,22 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
+      display: flex;              /* NEW */
+      flex-direction: column;     /* NEW */
+      align-items: center;        /* NEW */
     }
-    h2 {
-      color: #0066ff;
-      margin-bottom: 10px;
+
+    /* ⭐ New SEO Paragraph Style */
+    .seo-text {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 580px;
+      text-align: center;
     }
+
+    h2 { color: #0066ff; margin-bottom: 10px; }
+
     input[type="file"] {
       margin: 10px 0;
       padding: 10px;
@@ -77,13 +94,13 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    button:hover {
-      background: #004fcc;
-    }
+    button:hover { background: #004fcc; }
   </style>
 </head>
+
 <body>
-  <!-- 🏠 Back to Home Navigation Bar -->
+
+<!-- Back button same -->
 <style>
   .back-home {
     background: #ffffff;
@@ -96,7 +113,6 @@
     z-index: 1000;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
-
   .back-home a {
     text-decoration: none;
     color: #0078D7;
@@ -108,27 +124,22 @@
     transition: 0.3s ease;
     display: inline-block;
   }
-
   .back-home a:hover {
     background: #0078D7;
     color: #ffffff;
     box-shadow: 0 2px 6px rgba(0,120,215,0.3);
-  }
-
-  @media (max-width: 600px) {
-    .back-home a {
-      font-size: 15px;
-      padding: 6px 14px;
-    }
   }
 </style>
 
 <div class="back-home">
   <a href="index.html">← Back to Home</a>
 </div>
-  <div class="container">
+
+<div class="container">
+
     <h1>Free Online Image Rotator and Flipper Tool</h1>
-<h2>Rotate or Flip Your Images Instantly Without Losing Quality</h2>
+    <h2>Rotate or Flip Your Images Instantly Without Losing Quality</h2>
+
     <input type="file" id="imageInput" accept="image/*" />
     <canvas id="canvas"></canvas>
 
@@ -139,83 +150,80 @@
       <button id="flipVerticalBtn">↕ Flip Vertical</button>
       <button id="downloadBtn">⬇ Download Image</button>
     </div>
-  </div>
-<p style="margin-top:20px; font-size:15px; line-height:1.6;">
-Sk Toolhub Image Rotator allows you to rotate or flip any image instantly without losing quality. 
-This free online tool supports JPG, PNG, and WebP formats and works directly in your browser 
-without downloading any software. Whether you want to rotate your photo left, right, upside down, 
-or flip it horizontally or vertically, this tool gives accurate results with a single click. Ideal 
-for students, creators, and professionals who need quick image adjustments. Upload your picture, 
-rotate or flip it as needed, and download the corrected image instantly.
-</p>
-  <script>
-    const imageInput = document.getElementById("imageInput");
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
 
-    let img = new Image();
-    let angle = 0;
-    let flipH = 1;
-    let flipV = 1;
+    <!-- ⭐ MOVED PARAGRAPH INSIDE CONTAINER + SEO CLASS ADDED -->
+    <p class="seo-text">
+    Sk Toolhub Image Rotator allows you to rotate or flip any image instantly without losing quality. 
+    This free online tool supports JPG, PNG, and WebP formats and works directly in your browser 
+    without downloading any software. Whether you want to rotate your photo left, right, upside down, 
+    or flip it horizontally or vertically, this tool gives accurate results with a single click. Ideal 
+    for students, creators, and professionals who need quick image adjustments. Upload your picture, 
+    rotate or flip it as needed, and download the corrected image instantly.
+    </p>
 
-    imageInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        img.onload = () => {
-          angle = 0;
-          flipH = 1;
-          flipV = 1;
-          drawImage();
-        };
-        img.src = reader.result;
+</div>
+
+<script>
+  const imageInput = document.getElementById("imageInput");
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  let img = new Image();
+  let angle = 0;
+  let flipH = 1;
+  let flipV = 1;
+
+  imageInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      img.onload = () => {
+        angle = 0;
+        flipH = 1;
+        flipV = 1;
+        drawImage();
       };
-      reader.readAsDataURL(file);
-    });
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
 
-    function drawImage() {
-      const w = img.width;
-      const h = img.height;
+  function drawImage() {
+    const w = img.width;
+    const h = img.height;
 
-      // Reset canvas
-      canvas.width = (angle % 180 === 0) ? w : h;
-      canvas.height = (angle % 180 === 0) ? h : w;
+    canvas.width = (angle % 180 === 0) ? w : h;
+    canvas.height = (angle % 180 === 0) ? h : w;
 
-      ctx.save();
-      ctx.translate(canvas.width / 2, canvas.height / 2);
-      ctx.rotate((angle * Math.PI) / 180);
-      ctx.scale(flipH, flipV);
-      ctx.drawImage(img, -w / 2, -h / 2);
-      ctx.restore();
-    }
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate((angle * Math.PI) / 180);
+    ctx.scale(flipH, flipV);
+    ctx.drawImage(img, -w / 2, -h / 2);
+    ctx.restore();
+  }
 
-    document.getElementById("rotateLeftBtn").addEventListener("click", () => {
-      angle -= 90;
-      drawImage();
-    });
+  document.getElementById("rotateLeftBtn")
+    .addEventListener("click", () => { angle -= 90; drawImage(); });
 
-    document.getElementById("rotateRightBtn").addEventListener("click", () => {
-      angle += 90;
-      drawImage();
-    });
+  document.getElementById("rotateRightBtn")
+    .addEventListener("click", () => { angle += 90; drawImage(); });
 
-    document.getElementById("flipHorizontalBtn").addEventListener("click", () => {
-      flipH *= -1;
-      drawImage();
-    });
+  document.getElementById("flipHorizontalBtn")
+    .addEventListener("click", () => { flipH *= -1; drawImage(); });
 
-    document.getElementById("flipVerticalBtn").addEventListener("click", () => {
-      flipV *= -1;
-      drawImage();
-    });
+  document.getElementById("flipVerticalBtn")
+    .addEventListener("click", () => { flipV *= -1; drawImage(); });
 
-    document.getElementById("downloadBtn").addEventListener("click", () => {
+  document.getElementById("downloadBtn")
+    .addEventListener("click", () => {
       const link = document.createElement("a");
       link.download = "rotated-image.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     });
-  </script>
+</script>
+
 </body>
 </html>
