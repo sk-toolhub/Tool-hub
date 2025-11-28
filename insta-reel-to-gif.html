@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<title>Insta Reel to GIF Converter Online | Convert Reels to GIF – Sk ToolHub</title>
+<meta name="description" content="Convert Instagram Reels to GIF for free. Fast and secure online Insta Reel to GIF converter. No watermark, works on all devices – Sk ToolHub.">
+<meta name="keywords" content="insta reel to gif, reel gif converter, instagram reel gif, convert reel to gif, reel converter tool, Sk ToolHub">
+
+<meta property="og:title" content="Insta Reel to GIF Converter – Sk ToolHub">
+<meta property="og:description" content="Turn Instagram Reels into animated GIF online instantly with free secure processing. No app needed!">
+<meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg">
+<meta property="og:url" content="https://www.sktoolhub.in/insta-reel-to-gif.html">
+<meta property="og:type" content="website">
+
+<link rel="canonical" href="https://www.sktoolhub.in/insta-reel-to-gif.html"/>
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "Insta Reel to GIF Converter",
+ "operatingSystem": "All",
+ "applicationCategory": "Multimedia",
+ "url": "https://www.sktoolhub.in/insta-reel-to-gif.html",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "Sk ToolHub",
+  "url": "https://www.sktoolhub.in"
+ }
+}
+</script>
+
+<!-- FFmpeg -->
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
+
+<style>
+body{font-family:'Poppins',sans-serif;background:#f4f8ff;margin:0;min-height:100vh;padding:18px}
+.card{max-width:680px;margin:auto;background:#fff;padding:20px;border-radius:14px;box-shadow:0 10px 30px rgba(10,35,100,0.06)}
+h1,h2{text-align:center;color:#0066ff;margin:8px 0}
+label {font-weight:600;margin-top:10px;color:#333;display:block}
+input,select,button{width:100%;padding:10px;margin-top:8px;border-radius:10px;border:1px solid #e6efff;background:#fff;box-sizing:border-box}
+button.primary{background:#0066ff;color:#fff;font-weight:600;border:none;cursor:pointer}
+button.ghost{background:#fff;color:#0066ff;border:1px solid #cde}
+.preview img,.preview video{max-width:100%;border-radius:10px;margin-top:10px}
+.progress{height:10px;background:#eee;border-radius:8px;margin-top:10px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:#0066ff;transition:.2s}
+</style>
+
+</head>
+
+<body>
+
+<!-- 🏠 Back Home Navigation -->
+<div class="back-home" style="text-align:center;margin-bottom:15px;">
+ <a href="index.html" style="padding:6px 16px;border-radius:25px;border:2px solid #0078D7;color:#0078D7;font-weight:600;text-decoration:none;">← Back to Home</a>
+</div>
+
+<div class="card">
+<h1>Insta Reel to GIF Converter</h1>
+<h2>Download & Convert Instagram Reel into GIF Easily</h2>
+
+<label>Select Reel Video</label>
+<input id="videoFile" type="file" accept="video/*"/>
+
+<label>FPS (Frames per Second)</label>
+<input id="fps" type="number" min="1" max="30" value="12"/>
+
+<label>Width (Optional)</label>
+<input id="width" type="number" min="0" value="500"/>
+
+<button id="convertBtn" class="primary">Convert Reel to GIF</button>
+<button id="clearBtn" class="ghost">Reset</button>
+
+<div class="progress"><i id="progressBar"></i></div>
+<p id="status" style="font-size:13px;color:#555;"></p>
+
+<div id="previewArea" class="preview" style="display:none;"></div>
+<div id="downloadWrap" style="margin-top:10px;"></div>
+</div>
+
+<div style="text-align:center;margin-top:35px;">
+<h3 style="color:#0066ff;">✨ More Tools</h3>
+<ul style="list-style:none;padding:0;line-height:1.8">
+<li><a href="/video-to-gif.html">Video to GIF</a></li>
+<li><a href="/video-compressor.html">Video Compressor</a></li>
+<li><a href="/pdf-compressor.html">PDF Compressor</a></li>
+<li><a href="/image-compressor.html">Image Compressor</a></li>
+<li><a href="/image-to-text.html">Image to Text</a></li>
+<li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
+</ul>
+</div>
+
+<script>
+const { createFFmpeg, fetchFile } = FFmpeg;
+const ffmpeg = createFFmpeg({ log:false });
+
+const videoFile=document.getElementById('videoFile');
+const fps=document.getElementById('fps');
+const width=document.getElementById('width');
+const convertBtn=document.getElementById('convertBtn');
+const clearBtn=document.getElementById('clearBtn');
+const bar=document.getElementById('progressBar');
+const status=document.getElementById('status');
+const preview=document.getElementById('previewArea');
+const downloadWrap=document.getElementById('downloadWrap');
+
+let file=null,gif=null;
+
+videoFile.addEventListener('change',()=>{
+ file=videoFile.files[0];
+ if(!file)return;
+ preview.style.display='block';
+ preview.innerHTML=`<video src="${URL.createObjectURL(file)}" controls></video>`;
+ status.textContent=file.name;
+});
+
+function progress(p){bar.style.width=p+'%';}
+
+convertBtn.addEventListener('click',async()=>{
+ if(!file)return alert('Select reel first!');
+ convertBtn.disabled=true;
+ clearBtn.disabled=true;
+ status.textContent='Processing...';
+
+ if(!ffmpeg.isLoaded()) await ffmpeg.load();
+
+ const input='input.mp4', output='out.gif';
+ ffmpeg.FS('writeFile', input, await fetchFile(file));
+
+ let cmd=['-i',input,'-vf',`fps=${fps.value},scale=${width.value || -1}:-1:flags=lanczos`,'-y',output];
+ await ffmpeg.run(...cmd);
+ const data=ffmpeg.FS('readFile',output);
+
+ const blob=new Blob([data.buffer],{type:'image/gif'});
+ gif=URL.createObjectURL(blob);
+ preview.innerHTML+=`<img src="${gif}"/>`;
+ downloadWrap.innerHTML=`<a href="${gif}" download="ReelGIF.gif" style="font-weight:600;color:#0066ff">⬇ Download GIF</a>`;
+
+ progress(100);
+ status.textContent='Done!';
+ convertBtn.disabled=false;
+ clearBtn.disabled=false;
+});
+
+clearBtn.addEventListener('click',()=>{
+ videoFile.value='';
+ preview.style.display='none';
+ preview.innerHTML='';
+ progress(0);
+ status.textContent='';
+ downloadWrap.innerHTML='';
+ file=null;
+});
+</script>
+
+</body>
+</html>
