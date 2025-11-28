@@ -397,6 +397,105 @@
                 padding: 1.5rem;
             }
         }
+   /* ===== SK TOOLHUB RESPONSIVE CSS START ===== */
+
+/* Tablet and Medium Screens */
+@media (max-width: 992px) {
+  .nav-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .main-nav {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .top-bar {
+    font-size: 14px;
+    padding: 6px 5px;
+  }
+
+  .logo img {
+    width: 140px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 15px !important;
+  }
+
+  .tools-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+  }
+
+  footer {
+    text-align: center;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .top-bar {
+    font-size: 12px;
+  }
+
+  .main-nav a {
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    width: 100% !important;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  
+  .container {
+    padding: 10px !important;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 400px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo img {
+    width: 95px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
+
+/* ===== SK TOOLHUB RESPONSIVE CSS END ===== */
     </style>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RMR7WDYG2"></script>
