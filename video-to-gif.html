@@ -4,75 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Video to GIF Converter Online | Convert Video to GIF – Sk ToolHub</title>
-<meta name="description" content="Turn videos into GIFs instantly. Free online video to GIF converter — easy, fast, and works on all devices.">
+  <meta name="description" content="Turn videos into GIFs instantly. Free online video to GIF converter — easy, fast, and works on all devices.">
   <meta name="keywords" content="video to gif, video to gif converter, mp4 to gif, convert video to gif, gif maker online, Sk ToolHub">
   <meta property="og:title" content="Online Video to GIF Converter – Sk ToolHub">
-<meta property="og:description" content="Convert MP4, MOV, AVI videos to GIF instantly with fast, secure online processing.">
-<meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg">
-<meta property="og:url" content="https://www.sktoolhub.in/video-to-gif">
-<meta property="og:type" content="website">
+  <meta property="og:description" content="Convert MP4, MOV, AVI videos to GIF instantly with fast, secure online processing.">
+  <meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg">
+  <meta property="og:url" content="https://www.sktoolhub.in/video-to-gif">
+  <meta property="og:type" content="website">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "WebPage",
-  "name": "Video to GIF Converter",
-  "url": "https://www.sktoolhub.in/video-to-gif",
-  "description": "Convert video files into GIF format online instantly using Sk ToolHub Video to GIF Converter. Supports MP4, MOV, AVI and more.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Sk ToolHub",
-    "url": "https://www.sktoolhub.in",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.sktoolhub.in/logo.png"
-    }
-  },
-  "mainEntity": {
-    "@type": "SoftwareApplication",
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebPage",
     "name": "Video to GIF Converter",
-    "applicationCategory": "Multimedia",
-    "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+    "url": "https://www.sktoolhub.in/video-to-gif",
+    "description": "Convert video files into GIF format online instantly using Sk ToolHub Video to GIF Converter. Supports MP4, MOV, AVI and more.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sk ToolHub",
+      "url": "https://www.sktoolhub.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.sktoolhub.in/logo.png"
+      }
+    },
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": "Video to GIF Converter",
+      "applicationCategory": "Multimedia",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
   }
-}
-</script>
+  </script>
 
   <link rel="canonical" href="https://www.sktoolhub.in/video-to-gif.html"/>
-  <!-- FFmpeg.wasm -->
   <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
 
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f4f8ff;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      box-sizing: border-box;
-    }
-    .card {
-      width: 100%;
-      max-width: 680px;
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(10,35,100,0.06);
-      box-sizing: border-box;
-    }
+    body { font-family:'Poppins',sans-serif; background:#f4f8ff; margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:18px; box-sizing:border-box;}
+    .card { width:100%; max-width:680px; background:#fff; border-radius:14px; padding:20px; box-shadow:0 10px 30px rgba(10,35,100,0.06); box-sizing:border-box; }
     h2 { color:#0066ff; margin:0 0 10px 0; text-align:center; }
     label { display:block; font-weight:600; margin-top:10px; color:#333; }
-    input[type=file], select, input[type=number], button {
-      width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px;
-      box-sizing:border-box; background:#fff;
-    }
+    input[type=file], select, input[type=number], button { width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px; box-sizing:border-box; background:#fff; }
     .row { display:flex; gap:10px; margin-top:8px; }
     .row .col { flex:1; }
     button.primary { background:#0066ff; color:#fff; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:600; }
@@ -87,50 +65,26 @@
     .small { font-size:13px; padding:8px 10px; }
 
     /* Back to Home */
-    .back-home {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: center;
-      padding: 12px 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    }
-
-    .back-home a {
-      text-decoration: none;
-      color: #0078D7;
-      font-weight: 600;
-      font-size: 16px;
-      border: 2px solid #0078D7;
-      padding: 6px 16px;
-      border-radius: 25px;
-      transition: 0.3s ease;
-      display: inline-block;
-    }
-
-    .back-home a:hover {
-      background: #0078D7;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0,120,215,0.3);
-    }
-
-    @media (max-width: 600px) {
-      .back-home a { font-size: 15px; padding: 6px 14px; }
-    }
+    .back-home { background:#ffffff; border-bottom:1px solid #e5e7eb; text-align:center; padding:12px 0; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+    .back-home a { text-decoration:none; color:#0078D7; font-weight:600; font-size:16px; border:2px solid #0078D7; padding:6px 16px; border-radius:25px; transition:0.3s ease; display:inline-block;}
+    .back-home a:hover { background:#0078D7; color:#fff; box-shadow:0 2px 6px rgba(0,120,215,0.3);}
+    @media(max-width:600px){ .back-home a { font-size:15px; padding:6px 14px; } }
 
     /* Modal */
     #gifModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:10000; }
     #gifModal img { max-width:90%; max-height:90%; border-radius:12px; }
     #gifModal span { position:absolute; top:20px; right:30px; font-size:30px; color:#fff; cursor:pointer; font-weight:bold; }
+
+    /* Tool Links */
+    .more-tools { margin-top:35px; text-align:center; }
+    .more-tools ul { list-style:none; padding:0; line-height:2; }
+    .more-tools ul li a { text-decoration:none; color:#0066ff; font-weight:500; transition:0.2s; }
+    .more-tools ul li a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
 
-<div class="back-home">
-  <a href="index.html">← Back to Home</a>
-</div>
+<div class="back-home"><a href="index.html">← Back to Home</a></div>
 
 <div class="card">
 <h1>Video to GIF Converter - Create Animated GIFs Online</h1>
@@ -185,6 +139,22 @@
 <div id="gifModal">
   <span id="closeModal">&times;</span>
   <img id="modalGif">
+</div>
+
+<div class="more-tools">
+  <h3 style="color:#0066ff; font-size:20px;">✨ More Useful Tools</h3>
+  <ul>
+    <li><a href="/video-compressor.html">Video Compressor</a></li>
+    <li><a href="/video-trimmer.html">Video Trimmer</a></li>
+    <li><a href="/pdf-compressor.html">PDF Compressor</a></li>
+    <li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
+    <li><a href="/pdf-to-jpg.html">PDF to JPG</a></li>
+    <li><a href="/image-compressor.html">Image Compressor</a></li>
+    <li><a href="/image-converter.html">Image Converter</a></li>
+    <li><a href="/image-cropper.html">Image Cropper</a></li>
+    <li><a href="/image-rotator.html">Image Rotator / Flipper</a></li>
+    <li><a href="/image-to-text.html">Image to Text</a></li>
+  </ul>
 </div>
 
 <script>
@@ -242,19 +212,18 @@ convertBtn.addEventListener('click', async () => {
 
   setStatus('Loading FFmpeg core...');
   if (!ffmpeg.isLoaded()) {
-    ffmpeg.setProgress(({ratio})=>setProgress(ratio*70)); // FFmpeg internal progress
+    ffmpeg.setProgress(({ratio})=>setProgress(ratio*70));
     await ffmpeg.load();
   }
 
   const inName = 'input' + Date.now() + '.' + (currentFile.name.split('.').pop() || 'mp4');
   const outName = 'output.gif';
-
   ffmpeg.FS('writeFile', inName, await fetchFile(currentFile));
 
-  const scaleFilter = width > 0 ? `scale=${width}:-1:flags=lanczos` : 'scale=iw:-1:flags=lanczos';
+  const scaleFilter = width>0 ? `scale=${width}:-1:flags=lanczos` : 'scale=iw:-1:flags=lanczos';
   const timeArgs = [];
-  if (start !== null) timeArgs.push('-ss', String(start));
-  if (duration !== null) timeArgs.push('-t', String(duration));
+  if(start!==null) timeArgs.push('-ss',String(start));
+  if(duration!==null) timeArgs.push('-t',String(duration));
 
   try {
     setStatus('Generating palette...');
@@ -265,8 +234,8 @@ convertBtn.addEventListener('click', async () => {
     setProgress(50);
     await ffmpeg.run(...timeArgs,'-i',inName,'-i','palette.png','-lavfi',`fps=${fps},${scaleFilter}[x];[x][1:v] paletteuse=dither=sierra2_4a`,'-y',outName);
 
-    const data = ffmpeg.FS('readFile', outName);
-    const blob = new Blob([data.buffer], { type:'image/gif' });
+    const data = ffmpeg.FS('readFile',outName);
+    const blob = new Blob([data.buffer],{type:'image/gif'});
     gifUrl = URL.createObjectURL(blob);
     gifPreview.src = gifUrl;
     setProgress(100);
@@ -275,45 +244,44 @@ convertBtn.addEventListener('click', async () => {
     // Download button
     const a = document.createElement('a');
     a.href = gifUrl;
-    a.download = (currentFile.name.replace(/\.[^/.]+$/, '') || 'video') + '.gif';
-    a.textContent = '⬇ Download GIF';
+    a.download = (currentFile.name.replace(/\.[^/.]+$/,'')||'video')+'.gif';
+    a.textContent='⬇ Download GIF';
+    a.style.cssText='display:inline-block;margin-right:10px;margin-top:10px;padding:8px 14px;background:#0066ff;color:#fff;border-radius:8px;font-weight:600;text-decoration:none;cursor:pointer;';
     downloadWrap.appendChild(a);
 
     // Review button
     const reviewBtn = document.createElement('button');
-    reviewBtn.textContent = '👁 Review GIF';
-    reviewBtn.onclick = ()=>{ modalGif.src = gifUrl; gifModal.style.display='flex'; };
+    reviewBtn.textContent='👁 Review GIF';
+    reviewBtn.style.cssText='display:inline-block;margin-top:10px;padding:8px 14px;background:#fff;color:#0066ff;border:1px solid #0066ff;border-radius:8px;font-weight:600;cursor:pointer;';
+    reviewBtn.onclick=()=>{ modalGif.src=gifUrl; gifModal.style.display='flex'; };
     downloadWrap.appendChild(reviewBtn);
 
   } catch(err){
     console.error(err);
-    alert('Conversion failed: ' + (err.message || err));
-    setStatus('Error: ' + (err.message || err));
+    alert('Conversion failed: '+(err.message||err));
+    setStatus('Error: '+(err.message||err));
   } finally {
-    convertBtn.disabled = false;
-    clearBtn.disabled = false;
-    try{ ffmpeg.FS('unlink', inName); } catch(e){}
-    try{ ffmpeg.FS('unlink', 'palette.png'); } catch(e){}
-    try{ ffmpeg.FS('unlink', outName); } catch(e){}
+    convertBtn.disabled=false; clearBtn.disabled=false;
+    try{ ffmpeg.FS('unlink',inName); }catch(e){}
+    try{ ffmpeg.FS('unlink','palette.png'); }catch(e){}
+    try{ ffmpeg.FS('unlink',outName); }catch(e){}
   }
 });
 
-clearBtn.addEventListener('click', ()=>resetAll(true));
-function resetAll(clearInput = true){
+clearBtn.addEventListener('click',()=>resetAll(true));
+function resetAll(clearInput=true){
   if(clearInput) videoFileInput.value='';
-  if(origPreview.src) { URL.revokeObjectURL(origPreview.src); origPreview.src=''; }
-  if(gifUrl) { URL.revokeObjectURL(gifUrl); gifUrl=null; gifPreview.src=''; }
-  previewArea.style.display='none';
-  downloadWrap.innerHTML='';
-  setProgress(0); setStatus('');
-  currentFile = null;
+  if(origPreview.src){ URL.revokeObjectURL(origPreview.src); origPreview.src=''; }
+  if(gifUrl){ URL.revokeObjectURL(gifUrl); gifUrl=null; gifPreview.src=''; }
+  previewArea.style.display='none'; downloadWrap.innerHTML='';
+  setProgress(0); setStatus(''); currentFile=null;
 }
 
 // GIF Modal
-closeModal.addEventListener('click', ()=>{ gifModal.style.display='none'; modalGif.src=''; });
+closeModal.addEventListener('click',()=>{ gifModal.style.display='none'; modalGif.src=''; });
 gifModal.addEventListener('click',(e)=>{ if(e.target===gifModal){ gifModal.style.display='none'; modalGif.src=''; } });
 
-window.addEventListener('beforeunload', ()=>{
+window.addEventListener('beforeunload',()=>{
   if(origPreview.src) try{ URL.revokeObjectURL(origPreview.src); }catch(e){}
   if(gifUrl) try{ URL.revokeObjectURL(gifUrl); }catch(e){}
 });
