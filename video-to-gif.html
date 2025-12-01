@@ -1,54 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Video to GIF</title>
-<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
-<style>
-body { font-family:sans-serif; padding:20px; }
-video, img { max-width:300px; display:block; margin:10px 0; }
-button, a { margin:5px; padding:8px 12px; cursor:pointer; }
-#downloadWrap a, #downloadWrap button { display:inline-block; }
-.progress { width:300px; background:#eee; height:15px; margin-top:10px; position:relative; }
-.progress > i { display:block; height:100%; width:0%; background:blue; transition:width .2s; }
-.progress span { position:absolute; top:0; left:50%; transform:translateX(-50%); color:#fff; font-size:12px; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Video to GIF Converter Online | Convert Video to GIF – Sk ToolHub</title>
+<meta name="description" content="Turn videos into GIFs instantly. Free online video to GIF converter — easy, fast, and works on all devices.">
+  <meta name="keywords" content="video to gif, video to gif converter, mp4 to gif, convert video to gif, gif maker online, Sk ToolHub">
+  <meta property="og:title" content="Online Video to GIF Converter – Sk ToolHub">
+<meta property="og:description" content="Convert MP4, MOV, AVI videos to GIF instantly with fast, secure online processing.">
+<meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg">
+<meta property="og:url" content="https://www.sktoolhub.in/video-to-gif">
+<meta property="og:type" content="website">
+  <link rel="canonical" href="https://www.sktoolhub.in/video-to-gif.html"/>
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
+
+  <style>
+    body { font-family:'Poppins',sans-serif; background:#f4f8ff; margin:0; min-height:100vh; padding:18px; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; }
+    .card { width:100%; max-width:680px; background:#fff; border-radius:14px; padding:20px; box-shadow:0 10px 30px rgba(10,35,100,0.06); box-sizing:border-box; }
+    h2 { color:#0066ff; margin:0 0 10px 0; text-align:center; }
+    label { display:block; font-weight:600; margin-top:10px; color:#333; }
+    input[type=file], select, input[type=number], button { width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1px solid #e6efff; font-size:14px; box-sizing:border-box; background:#fff; }
+    .row { display:flex; gap:10px; margin-top:8px; }
+    .row .col { flex:1; }
+    button.primary { background:#0066ff; color:#fff; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:600; }
+    button.ghost { background:transparent; color:#0066ff; border:1px solid #e6f0ff; padding:10px; border-radius:10px; cursor:pointer; }
+    .note { font-size:13px; color:#555; margin-top:8px; }
+    .preview { margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+    .preview img, .preview video { max-width:100%; border-radius:10px; background:#fafafa; border:1px solid #eef6ff; }
+    .progress { margin-top:12px; height:15px; background:#eef6ff; border-radius:8px; overflow:hidden; position:relative; }
+    .progress > i { display:block; height:100%; width:0%; background:#0066ff; transition:width .2s ease; }
+    .progress span { position:absolute; top:0; left:50%; transform:translateX(-50%); font-size:12px; color:#fff; font-weight:600; }
+    .controls { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+    .small { font-size:13px; padding:8px 10px; }
+    .back-home { background:#ffffff; border-bottom:1px solid #e5e7eb; text-align:center; padding:12px 0; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+    .back-home a { text-decoration:none; color:#0078D7; font-weight:600; font-size:16px; border:2px solid #0078D7; padding:6px 16px; border-radius:25px; transition:.3s ease; display:inline-block; }
+    .back-home a:hover { background:#0078D7; color:#fff; box-shadow:0 2px 6px rgba(0,120,215,0.3); }
+    @media (max-width:600px){ .back-home a{ font-size:15px; padding:6px 14px; } }
+    #downloadWrap a, #downloadWrap button { margin-top:10px; margin-right:8px; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:10px; cursor:pointer; }
+    #downloadWrap a{ background:#0066ff; color:#fff; } 
+    #downloadWrap button{ background:#fff; color:#0066ff; border:1px solid #0066ff; }
+
+    /* GIF Review Modal */
+    #gifModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:10000; }
+    #gifModalContent { position:relative; max-width:90%; max-height:90%; }
+    #closeModal { position:absolute; top:-10px; right:-10px; font-size:30px; color:#fff; cursor:pointer; font-weight:bold; }
+    #modalGif { max-width:100%; max-height:100%; border-radius:10px; }
+  </style>
 </head>
 <body>
 
-<h2>Test Video to GIF</h2>
-<input type="file" id="videoFile" accept="video/*"><br>
-<video id="origPreview" controls></video>
-<img id="gifPreview"><br>
+<div class="back-home"><a href="index.html">← Back to Home</a></div>
 
-<div class="progress"><i id="progressBar"></i><span id="progressText">0%</span></div>
-<div id="downloadWrap"></div>
+<div class="card">
+  <h1>Video to GIF Converter - Create Animated GIFs Online</h1>
+  <h2>Turn Your Favorite Videos into High-Quality GIF Animations Instantly</h2>
 
-<button id="convertBtn">Convert to GIF</button>
-<button id="clearBtn">Reset</button>
+  <label>Upload Video</label>
+  <input id="videoFile" type="file" accept="video/*" />
+
+  <div class="row">
+    <div class="col">
+      <label>FPS (frames per second)</label>
+      <input id="fps" type="number" min="1" max="30" value="10" />
+    </div>
+    <div class="col">
+      <label>Width (px) — set 0 to keep original</label>
+      <input id="width" type="number" min="0" value="480" />
+    </div>
+  </div>
+
+  <label>Start Time (seconds) — optional</label>
+  <input id="start" type="number" min="0" placeholder="e.g. 5" />
+
+  <label>Duration (seconds) — optional (leave blank to use full clip)</label>
+  <input id="duration" type="number" min="1" placeholder="e.g. 4" />
+
+  <div class="controls">
+    <button id="convertBtn" class="primary small">Convert to GIF</button>
+    <button id="clearBtn" class="ghost small">Reset</button>
+  </div>
+
+  <div class="progress"><i id="progressBar"></i><span id="progressText">0%</span></div>
+  <div id="status" class="note"></div>
+
+  <div class="preview" id="previewArea" style="display:none;">
+    <div style="flex:1 1 320px;">
+      <label style="font-weight:700; font-size:13px;">Preview (Original)</label>
+      <video id="origPreview" controls></video>
+    </div>
+    <div style="flex:1 1 320px;">
+      <label style="font-weight:700; font-size:13px;">Result GIF</label>
+      <img id="gifPreview" alt="Generated GIF" />
+    </div>
+  </div>
+
+  <div id="downloadWrap"></div>
+</div>
+
+<div style="margin-top: 35px;">
+  <h3 style="color:#0066ff; font-size:20px; text-align:center;">✨ More Useful Tools</h3>
+  <ul style="list-style:none; padding:0; text-align:center; line-height:2;">
+      <li><a href="/video-compressor.html">Video Compressor</a></li>
+      <li><a href="/video-trimmer.html">Video Trimmer</a></li>
+      <li><a href="/pdf-compressor.html">PDF Compressor</a></li>
+      <li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
+      <li><a href="/pdf-to-jpg.html">PDF to JPG</a></li>
+      <li><a href="/image-compressor.html">Image Compressor</a></li>
+      <li><a href="/image-converter.html">Image Converter</a></li>
+      <li><a href="/image-cropper.html">Image Cropper</a></li>
+      <li><a href="/image-rotator.html">Image Rotator / Flipper</a></li>
+      <li><a href="/image-to-text.html">Image to Text</a></li>
+  </ul>
+</div>
+
+<!-- GIF Review Modal -->
+<div id="gifModal">
+  <div id="gifModalContent">
+    <span id="closeModal">&times;</span>
+    <img id="modalGif"/>
+  </div>
+</div>
 
 <script>
 const { createFFmpeg, fetchFile } = FFmpeg;
 const ffmpeg = createFFmpeg({ log:true });
+
 const videoFileInput = document.getElementById('videoFile');
-const origPreview = document.getElementById('origPreview');
-const gifPreview = document.getElementById('gifPreview');
+const fpsInput = document.getElementById('fps');
+const widthInput = document.getElementById('width');
+const startInput = document.getElementById('start');
+const durationInput = document.getElementById('duration');
 const convertBtn = document.getElementById('convertBtn');
 const clearBtn = document.getElementById('clearBtn');
 const progressBar = document.getElementById('progressBar');
 const progressText = document.getElementById('progressText');
+const status = document.getElementById('status');
+const previewArea = document.getElementById('previewArea');
+const origPreview = document.getElementById('origPreview');
+const gifPreview = document.getElementById('gifPreview');
 const downloadWrap = document.getElementById('downloadWrap');
+
+const gifModal = document.getElementById('gifModal');
+const modalGif = document.getElementById('modalGif');
+const closeModal = document.getElementById('closeModal');
 
 let currentFile = null;
 let gifUrl = null;
 
-videoFileInput.addEventListener('change', ()=>{
-  const file = videoFileInput.files[0];
-  if(file){
-    currentFile = file;
-    origPreview.src = URL.createObjectURL(file);
-  }
+videoFileInput.addEventListener('change', () => {
+  const f = videoFileInput.files[0];
+  if(!f) return resetAll(false);
+  currentFile = f;
+  origPreview.src = URL.createObjectURL(f);
+  previewArea.style.display = 'flex';
+  status.textContent = `${f.name} — ${(f.size/1024/1024).toFixed(2)} MB`;
 });
 
 function setProgress(p){
@@ -56,48 +161,80 @@ function setProgress(p){
   progressText.textContent = p + '%';
 }
 
-convertBtn.addEventListener('click', async ()=>{
-  if(!currentFile) return alert('Upload video first!');
+function setStatus(txt){
+  status.textContent = txt || '';
+}
+
+convertBtn.addEventListener('click', async () => {
+  if(!currentFile) return alert('Please upload a video first!');
   convertBtn.disabled = true; clearBtn.disabled = true;
   downloadWrap.innerHTML = '';
   if(gifUrl){ URL.revokeObjectURL(gifUrl); gifUrl=null; gifPreview.src=''; }
 
+  const fps = Math.max(1, Math.min(30, parseInt(fpsInput.value)||10));
+  const width = Math.max(0, parseInt(widthInput.value)||320);
+  const start = startInput.value?Math.max(0, parseFloat(startInput.value)):null;
+  const duration = durationInput.value?Math.max(0.1, parseFloat(durationInput.value)):null;
+
+  setStatus('Loading FFmpeg core...');
   if(!ffmpeg.isLoaded()) await ffmpeg.load();
+
   const inName = 'input.mp4';
-  const outName = 'out.gif';
+  const outName = 'output.gif';
   ffmpeg.FS('writeFile', inName, await fetchFile(currentFile));
 
-  ffmpeg.setProgress(({ratio})=>setProgress(Math.floor(ratio*80)));
+  ffmpeg.setProgress(({ratio})=>setProgress(Math.floor(ratio*70)));
 
   try{
-    await ffmpeg.run('-i', inName, '-t', '3', '-vf', 'fps=10,scale=320:-1:flags=lanczos,palettegen', 'palette.png');
-    await ffmpeg.run('-i', inName, '-i', 'palette.png', '-lavfi', 'fps=10,scale=320:-1:flags=lanczos[x];[x][1:v] paletteuse', outName);
+    const vfScale = width>0?`scale=${width}:-1:flags=lanczos`:'scale=iw:-1:flags=lanczos';
+    const timeArgs = [];
+    if(start!==null) timeArgs.push('-ss', String(start));
+    if(duration!==null) timeArgs.push('-t', String(duration));
+
+    setStatus('Generating palette...');
+    await ffmpeg.run(...timeArgs,'-i',inName,'-vf',`fps=${fps},${vfScale},palettegen=stats_mode=diff`,'-y','palette.png');
+    setProgress(80);
+    setStatus('Generating GIF...');
+    await ffmpeg.run(...timeArgs,'-i',inName,'-i','palette.png','-lavfi',`fps=${fps},${vfScale} [x]; [x][1:v] paletteuse=dither=sierra2_4a`,'-y',outName);
+
     const data = ffmpeg.FS('readFile', outName);
     const blob = new Blob([data.buffer], {type:'image/gif'});
     gifUrl = URL.createObjectURL(blob);
     gifPreview.src = gifUrl;
     setProgress(100);
+    setStatus('Conversion complete — preview ready.');
 
     // Download button
     const a = document.createElement('a');
     a.href = gifUrl;
-    a.download = 'video.gif';
-    a.textContent = '⬇ Download GIF';
+    a.download = (currentFile.name.replace(/\.[^/.]+$/,'')||'video')+'.gif';
+    a.textContent='⬇ Download GIF';
     downloadWrap.appendChild(a);
 
     // Review button
-    const btn = document.createElement('button');
-    btn.textContent = '👁 Review GIF';
-    btn.onclick = ()=>{ window.open(gifUrl); };
-    downloadWrap.appendChild(btn);
+    const reviewBtn = document.createElement('button');
+    reviewBtn.textContent='👁 Review GIF';
+    reviewBtn.onclick = ()=>{
+      modalGif.src = gifUrl;
+      gifModal.style.display = 'flex';
+    };
+    downloadWrap.appendChild(reviewBtn);
 
-  }catch(e){ alert('Error: '+e.message); }
-  convertBtn.disabled=false; clearBtn.disabled=false;
+  }catch(err){ console.error(err); alert('Conversion failed: '+err.message); setStatus('Error: '+err.message); }
+  finally{ convertBtn.disabled=false; clearBtn.disabled=false; }
 });
 
-clearBtn.addEventListener('click', ()=>{
-  videoFileInput.value=''; origPreview.src=''; gifPreview.src=''; downloadWrap.innerHTML=''; gifUrl=null; setProgress(0);
+clearBtn.addEventListener('click', ()=>{ 
+  videoFileInput.value=''; 
+  if(origPreview.src) URL.revokeObjectURL(origPreview.src); origPreview.src='';
+  if(gifUrl) URL.revokeObjectURL(gifUrl); gifUrl=null; gifPreview.src='';
+  previewArea.style.display='none'; downloadWrap.innerHTML=''; setProgress(0); setStatus(''); 
 });
+
+// Modal close
+closeModal.onclick = ()=>{ gifModal.style.display='none'; }
+gifModal.onclick = (e)=>{ if(e.target===gifModal) gifModal.style.display='none'; }
 </script>
+
 </body>
 </html>
