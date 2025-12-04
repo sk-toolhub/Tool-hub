@@ -123,51 +123,58 @@ videoFile.addEventListener('change',()=>{
 
 function progress(p){bar.style.width=p+'%';}
 
-convertBtn.addEventListener('click', async () => {
-    if (!file) return alert('Select reel first!');
+convertBtn.addEventListener("click", async () => {
+    if (!file) return alert("Select a video first!");
+
+    // Size limit for mobile browser safety
+    if (file.size > 25000000) {
+        alert("Video is too large! Please upload a video under 25MB.");
+        return;
+    }
+
     convertBtn.disabled = true;
     clearBtn.disabled = true;
     progress(10);
-    status.textContent = 'Loading... Please wait...';
+    status.textContent = "Loading... Please wait...";
 
     if (!ffmpeg.isLoaded()) await ffmpeg.load();
     progress(25);
 
-    const input = 'input.mp4';
-    const palette = 'palette.png';
-    const output = 'out.gif';
+    const input = "input.mp4";
+    const palette = "palette.png";
+    const output = "out.gif";
 
-    ffmpeg.FS('writeFile', input, await fetchFile(file));
+    ffmpeg.FS("writeFile", input, await fetchFile(file));
 
     const fpsVal = fps.value;
     const widthVal = width.value || 480;
 
-    status.textContent = 'Generating Palette...';
+    status.textContent = "Generating Palette...";
     await ffmpeg.run(
-        '-i', input,
-        '-vf', `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos,palettegen=stats_mode=full`,
-        '-y', palette
+        "-i", input,
+        "-vf", `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos,palettegen=stats_mode=full`,
+        "-y", palette
     );
     progress(60);
 
-    status.textContent = 'Creating GIF...';
+    status.textContent = "Creating GIF...";
     await ffmpeg.run(
-        '-i', input,
-        '-i', palette,
-        '-lavfi', `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos [x]; [x][1:v] paletteuse=dither=bayer`,
-        '-y', output
+        "-i", input,
+        "-i", palette,
+        "-lavfi", `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos [x]; [x][1:v] paletteuse=dither=bayer`,
+        "-y", output
     );
-    progress(95);
+    progress(90);
 
-    const data = ffmpeg.FS('readFile', output);
-    const blob = new Blob([data.buffer], { type: 'image/gif' });
-    gif = URL.createObjectURL(blob);
+    const data = ffmpeg.FS("readFile", output);
+    const blob = new Blob([data.buffer], { type: "image/gif" });
+    const url = URL.createObjectURL(blob);
 
-    preview.innerHTML += `<img src="${gif}" />`;
-    downloadWrap.innerHTML = `<a href="${gif}" download="ReelGIF.gif" style="font-weight:600;color:#0066ff">⬇ Download GIF</a>`;
+    preview.innerHTML = `<img src="${url}" />`;
+    download.innerHTML = `<a href="${url}" download="ReelGIF.gif" style="font-weight:600;color:#0066ff">⬇ Download GIF</a>`;
 
+    status.textContent = "Completed Successfully 🎉";
     progress(100);
-    status.textContent = 'Completed Successfully! 🎉';
     convertBtn.disabled = false;
     clearBtn.disabled = false;
 });
