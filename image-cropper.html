@@ -54,7 +54,7 @@
   <link rel="canonical" href="https://www.sktoolhub.in/image-cropper.html"/>
   
   <style>
-    /* EXACT SAME STYLING AS YOUR OTHER TOOLS */
+    /* FIXED VISIBILITY - DARKER TEXT COLORS */
     body {
       font-family: 'Poppins', sans-serif;
       background: #f4f8ff;
@@ -79,7 +79,7 @@
     }
     
     .subtitle {
-      color: #555;
+      color: #444;  /* DARKER FOR BETTER VISIBILITY */
       font-size: 18px;
       margin-bottom: 25px;
       max-width: 700px;
@@ -115,7 +115,7 @@
     }
     
     .feature-desc {
-      color: #666;
+      color: #444;  /* DARKER FOR BETTER VISIBILITY */
       font-size: 14px;
     }
     
@@ -161,6 +161,10 @@
       font-weight: bold;
     }
     
+    .step div:not(.step-number) {
+      color: #444;  /* DARKER STEP TEXT */
+    }
+    
     .container {
       background: #fff;
       padding: 25px;
@@ -176,6 +180,26 @@
       color: #0066ff;
       margin-top: 0;
       margin-bottom: 20px;
+    }
+    
+    /* FORM LABELS - IMPROVED VISIBILITY */
+    .container label {
+      font-weight: 600;
+      color: #222;  /* DARKER FOR BETTER VISIBILITY */
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+    
+    .form-section-title {
+      font-weight: 700;
+      color: #111;  /* VERY DARK FOR CLEAR VISIBILITY */
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-bottom: 2px solid #0066ff;
+      padding-bottom: 5px;
     }
     
     input, button, select {
@@ -214,13 +238,6 @@
       max-height: 300px;
     }
     
-    label {
-      font-weight: 600;
-      color: #333;
-      display: block;
-      margin-top: 12px;
-    }
-    
     .row {
       display: flex;
       gap: 10px;
@@ -236,6 +253,7 @@
       gap: 8px;
       font-size: 14px;
       margin-top: 6px;
+      color: #444;  /* DARKER CHECKBOX TEXT */
     }
     
     .preset-buttons {
@@ -254,11 +272,13 @@
       font-size: 12px;
       transition: all 0.3s ease;
       text-align: center;
+      color: #333;  /* DARK BUTTON TEXT */
     }
     
     .preset-btn:hover {
       background: #e1ebff;
       border-color: #0066ff;
+      color: #0066ff;
     }
     
     .preset-btn.active {
@@ -369,6 +389,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: #222;  /* DARKER FAQ TEXT */
     }
     
     .faq-answer {
@@ -376,6 +397,7 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease;
+      color: #444;  /* DARKER FAQ ANSWER TEXT */
     }
     
     .faq-answer.active {
@@ -463,6 +485,12 @@
       width: 100%;
       max-height: 250px;
       border-radius: 8px;
+    }
+    
+    .preview-box div {
+      font-size: 12px;
+      color: #444;  /* DARKER PREVIEW TEXT */
+      margin-bottom: 5px;
     }
     
     @media (max-width: 768px) {
@@ -579,11 +607,11 @@
     
     <div class="row">
       <div style="flex: 1;">
-        <label>Upload Image</label>
+        <div class="form-section-title">Upload Image</div>
         <input type="file" id="upload" accept="image/*" style="width: 100%;">
       </div>
       <div style="flex: 1;">
-        <label>Output Format</label>
+        <div class="form-section-title">Output Format</div>
         <select id="format" style="width: 100%;">
           <option value="image/jpeg">JPEG (.jpg)</option>
           <option value="image/png">PNG (.png)</option>
@@ -592,12 +620,12 @@
       </div>
     </div>
 
-    <label>Quick Aspect Ratios</label>
+    <div class="form-section-title">Quick Aspect Ratios</div>
     <div class="preset-buttons" id="presetButtons">
       <!-- Preset buttons will be added by JavaScript -->
     </div>
 
-    <label>Custom Dimensions</label>
+    <div class="form-section-title">Custom Dimensions</div>
     <div class="crop-controls">
       <div>
         <label>Width (px)</label>
@@ -609,6 +637,7 @@
       </div>
     </div>
 
+    <div class="form-section-title">Crop Area Selection</div>
     <div class="crop-container" id="cropContainer">
       <canvas id="cropperCanvas"></canvas>
       <div class="crop-selection" id="cropSelection" style="display: none;"></div>
@@ -621,14 +650,14 @@
     </div>
 
     <div class="preview-area" id="previewArea">
-      <h3 style="text-align: center; margin: 20px 0 15px 0;">Preview Results</h3>
+      <div class="form-section-title" style="text-align: center; border-bottom: none;">Preview Results</div>
       <div class="preview-grid">
         <div class="preview-box">
-          <div style="font-size:12px; color:#666; margin-bottom:5px;">Original Image</div>
+          <div>Original Image</div>
           <img id="originalImg" alt="Original Image">
         </div>
         <div class="preview-box">
-          <div style="font-size:12px; color:#666; margin-bottom:5px;">Cropped Image</div>
+          <div>Cropped Image</div>
           <img id="croppedImg" alt="Cropped Image">
         </div>
       </div>
@@ -779,8 +808,8 @@
       { width: 1080, height: 1080, label: 'Instagram Post' },
       { width: 1080, height: 1350, label: 'Instagram Story' },
       { width: 1200, height: 630, label: 'Facebook Post' },
-      { width: 180, height: 180, label: 'Profile Pic' },
-      { width: 800, height: 800, label: 'YouTube Thumb' },
+      { width: 180, height: 180, label: 'Profile Picture' },
+      { width: 800, height: 800, label: 'YouTube Thumbnail' },
       { width: 1500, height: 500, label: 'Twitter Header' }
     ];
 
@@ -811,7 +840,7 @@
       const socialDiv = document.createElement('div');
       socialDiv.style.gridColumn = '1 / -1';
       socialDiv.style.marginTop = '10px';
-      socialDiv.innerHTML = '<label style="display: block; margin-bottom: 5px; color: #666;">Social Media Sizes</label>';
+      socialDiv.innerHTML = '<div class="form-section-title" style="border-bottom: none; margin-bottom: 5px;">Social Media Sizes</div>';
       
       const socialGrid = document.createElement('div');
       socialGrid.style.display = 'grid';
@@ -829,6 +858,13 @@
       
       socialDiv.appendChild(socialGrid);
       presetButtons.appendChild(socialDiv);
+      
+      // Activate first button
+      const firstBtn = document.querySelector('.preset-btn');
+      if (firstBtn) {
+        firstBtn.classList.add('active');
+        selection.ratio = presets[0].ratio;
+      }
     }
 
     // Setup event listeners
@@ -885,35 +921,18 @@
           // Setup canvas
           setupCanvas();
           
-          // Set initial selection
-          const containerWidth = cropContainer.clientWidth - 4;
-          const containerHeight = cropContainer.clientHeight - 4;
-          const scale = Math.min(
-            containerWidth / originalImage.width,
-            containerHeight / originalImage.height
-          );
-          
-          canvasScale = scale;
-          cropperCanvas.width = originalImage.width * scale;
-          cropperCanvas.height = originalImage.height * scale;
-          
           // Draw image
           drawImageOnCanvas();
           
-          // Set initial selection (center, 200x200 or smaller if needed)
+          // Set initial selection
           const size = Math.min(200, cropperCanvas.width * 0.5, cropperCanvas.height * 0.5);
           selection.x = (cropperCanvas.width - size) / 2;
           selection.y = (cropperCanvas.height - size) / 2;
           selection.width = size;
           selection.height = size;
-          selection.ratio = '1:1';
           
           updateSelectionDisplay();
           updateInputsFromSelection();
-          
-          // Activate first preset
-          const firstBtn = document.querySelector('.preset-btn');
-          if (firstBtn) selectPreset(firstBtn, presets[0]);
         };
         originalImage.src = event.target.result;
       };
@@ -1141,12 +1160,6 @@
           selection.height = selection.width / ratio;
         }
         
-        // Keep center position
-        const oldX = selection.x;
-        const oldY = selection.y;
-        selection.x = oldX + (selection.width - selection.width) / 2;
-        selection.y = oldY + (selection.height - selection.height) / 2;
-        
         updateSelectionDisplay();
         updateInputsFromSelection();
       }
@@ -1205,9 +1218,7 @@
       let cropHeight = actualHeight;
       
       if (rotation !== 0) {
-        // For simplicity, we'll handle common rotations
         if (rotation === 90 || rotation === 270) {
-          // Swap dimensions for 90/270 degree rotations
           [cropWidth, cropHeight] = [cropHeight, cropWidth];
         }
       }
