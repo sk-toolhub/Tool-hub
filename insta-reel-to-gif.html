@@ -1,194 +1,1161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-
-<title>Insta Reel to GIF Converter Online | Convert Reels to GIF – Sk ToolHub</title>
-<meta name="description" content="Convert Instagram Reels to GIF for free. Fast and secure online Insta Reel to GIF converter. No watermark, works on all devices – Sk ToolHub.">
-<meta name="keywords" content="insta reel to gif, reel gif converter, instagram reel gif, convert reel to gif, reel converter tool, Sk ToolHub">
-
-<meta property="og:title" content="Insta Reel to GIF Converter – Sk ToolHub">
-<meta property="og:description" content="Turn Instagram Reels into animated GIF online instantly with free secure processing. No app needed!">
-<meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg">
-<meta property="og:url" content="https://www.sktoolhub.in/insta-reel-to-gif.html">
-<meta property="og:type" content="website">
-
-<link rel="canonical" href="https://www.sktoolhub.in/insta-reel-to-gif.html"/>
-
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "SoftwareApplication",
- "name": "Insta Reel to GIF Converter",
- "operatingSystem": "All",
- "applicationCategory": "Multimedia",
- "url": "https://www.sktoolhub.in/insta-reel-to-gif.html",
- "offers": {
-  "@type": "Offer",
-  "price": "0",
-  "priceCurrency": "USD"
- },
- "publisher": {
-  "@type": "Organization",
-  "name": "Sk ToolHub",
-  "url": "https://www.sktoolhub.in"
- }
-}
-</script>
-
-<!-- FFmpeg -->
-<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js"></script>
-
-<style>
-body{font-family:'Poppins',sans-serif;background:#f4f8ff;margin:0;min-height:100vh;padding:18px}
-.card{max-width:680px;margin:auto;background:#fff;padding:20px;border-radius:14px;box-shadow:0 10px 30px rgba(10,35,100,0.06)}
-h1,h2{text-align:center;color:#0066ff;margin:8px 0}
-label {font-weight:600;margin-top:10px;color:#333;display:block}
-input,select,button{width:100%;padding:10px;margin-top:8px;border-radius:10px;border:1px solid #e6efff;background:#fff;box-sizing:border-box}
-button.primary{background:#0066ff;color:#fff;font-weight:600;border:none;cursor:pointer}
-button.ghost{background:#fff;color:#0066ff;border:1px solid #cde}
-.preview img,.preview video{max-width:100%;border-radius:10px;margin-top:10px}
-.progress{height:10px;background:#eee;border-radius:8px;margin-top:10px;overflow:hidden}
-.progress i{display:block;height:100%;width:0;background:#0066ff;transition:.2s}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Insta Reel to GIF Converter - Convert Instagram Reels to GIF Online | SK Toolhub</title>
+  <meta name="description" content="Convert Instagram Reels to animated GIFs online for free. Fast, high-quality reel to GIF conversion with custom FPS, width, and optimization. No watermark, 100% secure.">
+  <meta name="keywords" content="insta reel to gif, convert instagram reel to gif, reel to gif converter, instagram gif maker, video to gif, social media gif converter, free reel converter, online gif maker, instagram story to gif, reel downloader to gif">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Free Insta Reel to GIF Converter - Convert Instagram Reels Online">
+  <meta property="og:description" content="Turn Instagram Reels into animated GIFs instantly. Customize FPS, width, and quality. Perfect for WhatsApp, social media, and memes. 100% free.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sktoolhub.in/insta-reel-to-gif.html">
+  <meta property="og:site_name" content="SK Tool Hub">
+  <meta property="og:image" content="https://www.sktoolhub.in/assets/insta-reel-gif-og.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Insta Reel to GIF Converter - Convert Reels Online">
+  <meta name="twitter:description" content="Free online tool to convert Instagram Reels to animated GIFs. Custom FPS, resize, and optimize for social media.">
+  <meta name="twitter:image" content="https://www.sktoolhub.in/assets/insta-reel-gif-og.jpg">
+  
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Insta Reel to GIF Converter",
+    "url": "https://www.sktoolhub.in/insta-reel-to-gif.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "description": "Convert Instagram Reels to animated GIF files online. Customize frame rate, dimensions, and quality for perfect GIFs.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "SK Toolhub"
+    },
+    "mainEntity": {
+      "@type": "HowTo",
+      "name": "How to Convert Instagram Reels to GIF",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Upload Reel Video",
+          "text": "Select your Instagram Reel video file from your device or drag & drop."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Adjust Settings",
+          "text": "Set FPS (frames per second), width, and optimization options."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Convert to GIF",
+          "text": "Click convert and wait for processing to complete."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Download GIF",
+          "text": "Download your animated GIF file instantly."
+        }
+      ]
+    }
+  }
+  </script>
+  
+  <link rel="canonical" href="https://www.sktoolhub.in/insta-reel-to-gif.html"/>
+  
+  <!-- FFmpeg for browser-based video processing -->
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8ff;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .content-header {
+      max-width: 900px;
+      margin: 20px auto 30px;
+      padding: 0 20px;
+      text-align: center;
+    }
+    
+    .main-title {
+      color: #0066ff;
+      font-size: 32px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    
+    .subtitle {
+      color: #444;
+      font-size: 18px;
+      margin-bottom: 25px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #0066ff;
+    }
+    
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    
+    .feature-desc {
+      color: #444;
+      font-size: 14px;
+    }
+    
+    .how-to-steps {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin: 30px auto;
+      max-width: 800px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .how-to-steps h2 {
+      text-align: center;
+      color: #0066ff;
+      margin-bottom: 20px;
+    }
+    
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .step {
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      padding: 15px;
+    }
+    
+    .step-number {
+      background: #0066ff;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+    }
+    
+    .step div:not(.step-number) {
+      color: #444;
+    }
+    
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #0066ff;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    
+    .container label {
+      font-weight: 600;
+      color: #222;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+    
+    .form-section-title {
+      font-weight: 700;
+      color: #111;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-bottom: 2px solid #0066ff;
+      padding-bottom: 5px;
+    }
+    
+    input, button, select {
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+    
+    button:hover {
+      background: #004ecc;
+    }
+    
+    #fileInputArea {
+      border: 3px dashed #0066ff;
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      background: #f0f7ff;
+      cursor: pointer;
+      margin: 15px 0;
+    }
+    
+    #fileInputArea:hover {
+      background: #e6f0ff;
+    }
+    
+    #fileInputArea.drag-over {
+      background: #d9e8ff;
+      border-color: #004ecc;
+    }
+    
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .setting-group {
+      background: #f8faff;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    
+    .setting-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    
+    .range-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+    }
+    
+    .range-value {
+      font-weight: bold;
+      color: #0066ff;
+    }
+    
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 30px 0;
+      justify-content: center;
+    }
+    
+    .preview-box {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+      background: #f8faff;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    
+    .preview-title {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 16px;
+    }
+    
+    .media-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background: #f0f0f0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .media-container video, 
+    .media-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0066ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .progress-container {
+      margin: 20px 0;
+      background: #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 12px;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #0066ff, #00cc88);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .progress-text {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+    
+    .action-buttons button {
+      flex: 1;
+    }
+    
+    #convertBtn {
+      background: #00cc88;
+    }
+    
+    #convertBtn:hover {
+      background: #00b377;
+    }
+    
+    #convertBtn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    #resetBtn {
+      background: #6c757d;
+    }
+    
+    #resetBtn:hover {
+      background: #5a6268;
+    }
+    
+    #downloadBtn {
+      background: #0066ff;
+      display: none;
+    }
+    
+    .file-info {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .back-home {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      padding: 12px 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    
+    .back-home a {
+      text-decoration: none;
+      color: #0078D7;
+      font-weight: 600;
+      font-size: 16px;
+      border: 2px solid #0078D7;
+      padding: 6px 16px;
+      border-radius: 25px;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+    
+    .back-home a:hover {
+      background: #0078D7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,120,215,0.3);
+    }
+    
+    .more-tools {
+      margin-top: 35px;
+      text-align: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 20px;
+    }
+    
+    .more-tools h3 {
+      color: #0066ff;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .more-tools ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .more-tools li {
+      margin: 5px;
+    }
+    
+    .more-tools a {
+      text-decoration: none;
+      color: #0078D7;
+      background: white;
+      padding: 8px 16px;
+      border-radius: 25px;
+      border: 1px solid #0078D7;
+      transition: 0.3s;
+      display: inline-block;
+    }
+    
+    .more-tools a:hover {
+      background: #0078D7;
+      color: white;
+    }
+    
+    .faq-section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .faq-section h2 {
+      text-align: center;
+      color: #0066ff;
+      margin-bottom: 25px;
+    }
+    
+    .faq-item {
+      background: white;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .faq-question {
+      padding: 15px 20px;
+      background: #f8faff;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #222;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      color: #444;
+    }
+    
+    .faq-answer.active {
+      padding: 15px 20px;
+      max-height: 500px;
+    }
+    
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 24px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .steps {
+        flex-direction: column;
+      }
+      
+      .more-tools ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .more-tools li {
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      .container {
+        width: 95%;
+        padding: 20px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .preview-container {
+        flex-direction: column;
+      }
+      
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="back-home">
+    <a href="index.html">← Back to Home</a>
+  </div>
 
-<!-- 🏠 Back Home Navigation -->
-<div class="back-home" style="text-align:center;margin-bottom:15px;">
- <a href="index.html" style="padding:6px 16px;border-radius:25px;border:2px solid #0078D7;color:#0078D7;font-weight:600;text-decoration:none;">← Back to Home</a>
-</div>
+  <div class="content-header">
+    <h1 class="main-title">Free Insta Reel to GIF Converter</h1>
+    <p class="subtitle">Convert Instagram Reels to animated GIFs instantly. Perfect for WhatsApp, social media, memes, and more. 100% free and secure.</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Fast Conversion</div>
+        <div class="feature-desc">Convert Instagram Reels to GIF in seconds with optimized FFmpeg processing in your browser.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎛️</div>
+        <div class="feature-title">Custom Settings</div>
+        <div class="feature-desc">Adjust FPS, width, quality, and optimization for perfect GIF output every time.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">100% Private</div>
+        <div class="feature-desc">All processing happens in your browser. Your videos never leave your device.</div>
+      </div>
+    </div>
+    
+    <div class="how-to-steps">
+      <h2>Convert Reel to GIF in 4 Simple Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div><strong>Upload Reel</strong></div>
+          <div>Select your Instagram Reel video file (MP4, MOV, etc.)</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div><strong>Adjust Settings</strong></div>
+          <div>Set FPS, width, and optimization options</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div><strong>Convert</strong></div>
+          <div>Click convert and wait for processing to complete</div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div><strong>Download</strong></div>
+          <div>Get your animated GIF file instantly</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
-<h1>Insta Reel to GIF Converter</h1>
-<h2>Download & Convert Instagram Reel into GIF Easily</h2>
+  <div class="container">
+    <h2>Insta Reel to GIF Converter Tool</h2>
+    
+    <div class="form-section-title">Upload Your Instagram Reel</div>
+    <div id="fileInputArea">
+      <div style="font-size: 48px; margin-bottom: 15px;">📁</div>
+      <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px;">Drop video here or click to browse</div>
+      <div style="color: #666; margin-bottom: 15px;">Supports MP4, MOV, AVI, WebM, MKV (Max 50MB)</div>
+      <input type="file" id="videoFile" accept="video/*" hidden>
+    </div>
+    
+    <div class="settings-grid">
+      <div class="setting-group">
+        <label>FPS (Frames Per Second)</label>
+        <div class="range-display">
+          <span>Quality:</span>
+          <span id="fpsValue" class="range-value">12 FPS</span>
+        </div>
+        <input type="range" id="fpsSlider" min="5" max="30" value="12" step="1">
+        <div class="range-display">
+          <span>5 (Smaller file)</span>
+          <span>30 (Smoother)</span>
+        </div>
+        <div class="file-info">Higher FPS = smoother but larger file</div>
+      </div>
+      
+      <div class="setting-group">
+        <label>Width (Pixels)</label>
+        <div class="range-display">
+          <span>Size:</span>
+          <span id="widthValue" class="range-value">500px</span>
+        </div>
+        <input type="range" id="widthSlider" min="200" max="1280" value="500" step="10">
+        <div class="range-display">
+          <span>200px</span>
+          <span>1280px</span>
+        </div>
+        <div class="file-info">Height adjusts automatically to maintain aspect ratio</div>
+      </div>
+      
+      <div class="setting-group">
+        <label>Optimization</label>
+        <select id="optimization">
+          <option value="balanced">Balanced (Recommended)</option>
+          <option value="quality">Best Quality</option>
+          <option value="size">Smallest Size</option>
+          <option value="speed">Fastest Processing</option>
+        </select>
+        <div class="file-info">Optimizes for quality, size, or speed</div>
+      </div>
+    </div>
+    
+    <div class="preview-container">
+      <div class="preview-box">
+        <div class="preview-title">Original Reel</div>
+        <div class="media-container">
+          <video id="originalVideo" controls style="display: none;"></video>
+          <div id="noOriginal" style="color: #999; padding: 20px;">No video uploaded</div>
+        </div>
+      </div>
+      
+      <div class="preview-box">
+        <div class="preview-title">Converted GIF</div>
+        <div class="media-container">
+          <img id="resultGif" alt="Converted GIF result" style="display: none;">
+          <div id="noResult" style="color: #999; padding: 20px;">GIF will appear here</div>
+          <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner"></div>
+            <div id="loadingText">Processing video...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">Ready to convert</div>
+    
+    <div class="action-buttons">
+      <button id="resetBtn">🗑️ Reset All</button>
+      <button id="convertBtn">⚡ Convert to GIF</button>
+      <button id="downloadBtn">💾 Download GIF</button>
+    </div>
+  </div>
 
-<label>Select Reel Video</label>
-<input id="videoFile" type="file" accept="video/*"/>
+  <div class="faq-section">
+    <h2>Frequently Asked Questions (Insta Reel to GIF)</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>What's the best FPS setting for GIFs?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p><strong>10-15 FPS</strong> is ideal for most Instagram Reels. This balances smooth animation with reasonable file size. Higher FPS (20-30) creates smoother animation but larger files. Lower FPS (5-10) creates smaller files but choppier animation.</p>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>What video formats are supported?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p>We support all common video formats:
+          <br>• MP4, MOV, AVI, WebM, MKV, FLV
+          <br>• Instagram Reel downloads (usually MP4)
+          <br>• Screen recordings and camera videos
+          <br>• Maximum file size: 50MB for optimal performance</p>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>How do I download Instagram Reels for conversion?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p>To download Instagram Reels:
+          <br>1. Open Instagram app and find the Reel
+          <br>2. Tap the three dots (•••) on the Reel
+          <br>3. Select "Save" or use a downloader app
+          <br>4. The video will save to your device gallery
+          <br>5. Upload that file to our converter tool</p>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>Why is my GIF file large?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p>GIF file size depends on:
+          <br>• <strong>Duration:</strong> Longer videos = larger GIFs
+          <br>• <strong>FPS:</strong> Higher frame rate = larger files
+          <br>• <strong>Dimensions:</strong> Larger width/height = larger files
+          <br>• <strong>Colors:</strong> More colors = larger files
+          <br>Use lower FPS (10-12) and smaller width (400-600px) for smaller files.</p>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>Is there a watermark on the converted GIF?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p>No! Our tool adds no watermarks, logos, or branding to your converted GIFs. You get clean, professional GIFs ready for sharing on any platform.</p>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        <span>Can I convert long Reels to GIF?</span>
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        <p>For best results, keep Reels under 30 seconds. GIF format works best for short clips. For longer videos:
+          <br>• Trim to the best 10-15 seconds
+          <br>• Use lower FPS (8-10)
+          <br>• Reduce width to 400px
+          <br>• Select "Smallest Size" optimization</p>
+      </div>
+    </div>
+  </div>
 
-<label>FPS (Frames per Second)</label>
-<input id="fps" type="number" min="1" max="30" value="12"/>
+  <div class="more-tools">
+    <h3>✨ More Useful Tools on SK Toolhub</h3>
+    <ul>
+      <li><a href="/video-to-gif.html">Video to GIF Converter</a></li>
+      <li><a href="/video-compressor.html">Video Compressor</a></li>
+      <li><a href="/video-converter.html">Video Converter</a></li>
+      <li><a href="/video-trimmer.html">Video Trimmer</a></li>
+      <li><a href="/image-converter.html">Image Converter</a></li>
+      <li><a href="/image-compressor.html">Image Compressor</a></li>
+      <li><a href="/image-resizer.html">Image Resizer</a></li>
+      <li><a href="/image-cropper.html">Image Cropper</a></li>
+      <li><a href="/background-remover.html">Background Remover</a></li>
+      <li><a href="/image-to-text.html">Image to Text (OCR)</a></li>
+      <li><a href="/pdf-compressor.html">PDF Compressor</a></li>
+    </ul>
+  </div>
 
-<label>Width (Optional)</label>
-<input id="width" type="number" min="0" value="500"/>
+  <script>
+    // DOM Elements
+    const fileInputArea = document.getElementById('fileInputArea');
+    const videoFileInput = document.getElementById('videoFile');
+    const originalVideo = document.getElementById('originalVideo');
+    const noOriginal = document.getElementById('noOriginal');
+    const resultGif = document.getElementById('resultGif');
+    const noResult = document.getElementById('noResult');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+    const fpsSlider = document.getElementById('fpsSlider');
+    const fpsValue = document.getElementById('fpsValue');
+    const widthSlider = document.getElementById('widthSlider');
+    const widthValue = document.getElementById('widthValue');
+    const optimizationSelect = document.getElementById('optimization');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const resetBtn = document.getElementById('resetBtn');
+    const convertBtn = document.getElementById('convertBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
 
-<button id="convertBtn" class="primary">Convert Reel to GIF</button>
-<button id="clearBtn" class="ghost">Reset</button>
+    // Initialize FFmpeg
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ 
+      log: true,
+      corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+    });
 
-<div class="progress"><i id="progressBar"></i></div>
-<p id="status" style="font-size:13px;color:#555;"></p>
+    // Application State
+    let uploadedVideo = null;
+    let convertedGifUrl = null;
+    let isFFmpegLoaded = false;
 
-<div id="previewArea" class="preview" style="display:none;"></div>
-<div id="downloadWrap" style="margin-top:10px;"></div>
-</div>
-
-<div style="text-align:center;margin-top:35px;">
-<h3 style="color:#0066ff;">✨ More Tools</h3>
-<ul style="list-style:none;padding:0;line-height:1.8">
-<li><a href="/video-to-gif.html">Video to GIF</a></li>
-<li><a href="/video-compressor.html">Video Compressor</a></li>
-<li><a href="/pdf-compressor.html">PDF Compressor</a></li>
-<li><a href="/image-compressor.html">Image Compressor</a></li>
-<li><a href="/image-to-text.html">Image to Text</a></li>
-<li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
-</ul>
-</div>
-
-<script>
-const { createFFmpeg, fetchFile } = FFmpeg;
-const ffmpeg = createFFmpeg({ log:false });
-
-const videoFile=document.getElementById('videoFile');
-const fps=document.getElementById('fps');
-const width=document.getElementById('width');
-const convertBtn=document.getElementById('convertBtn');
-const clearBtn=document.getElementById('clearBtn');
-const bar=document.getElementById('progressBar');
-const status=document.getElementById('status');
-const preview=document.getElementById('previewArea');
-const downloadWrap=document.getElementById('downloadWrap');
-
-let file=null,gif=null;
-
-videoFile.addEventListener('change',()=>{
- file=videoFile.files[0];
- if(!file)return;
- preview.style.display='block';
- preview.innerHTML=`<video src="${URL.createObjectURL(file)}" controls></video>`;
- status.textContent=file.name;
-});
-
-function progress(p){bar.style.width=p+'%';}
-
-convertBtn.addEventListener("click", async () => {
-    if (!file) return alert("Select a video first!");
-
-    // Size limit for mobile browser safety
-    if (file.size > 25000000) {
-        alert("Video is too large! Please upload a video under 25MB.");
-        return;
+    // Initialize
+    async function init() {
+      setupEventListeners();
+      updateSliders();
+      
+      // Pre-load FFmpeg for faster first conversion
+      setTimeout(async () => {
+        if (!isFFmpegLoaded) {
+          progressText.textContent = "Loading converter engine...";
+          try {
+            await ffmpeg.load();
+            isFFmpegLoaded = true;
+            progressText.textContent = "Ready to convert";
+          } catch (error) {
+            console.error("FFmpeg loading error:", error);
+            progressText.textContent = "Converter ready (limited)";
+          }
+        }
+      }, 1000);
     }
 
-    convertBtn.disabled = true;
-    clearBtn.disabled = true;
-    progress(10);
-    status.textContent = "Loading... Please wait...";
+    // Setup event listeners
+    function setupEventListeners() {
+      // File input click
+      fileInputArea.addEventListener('click', () => videoFileInput.click());
+      
+      // File input change
+      videoFileInput.addEventListener('change', handleFileSelect);
+      
+      // Drag and drop
+      fileInputArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileInputArea.classList.add('drag-over');
+      });
+      
+      fileInputArea.addEventListener('dragleave', () => {
+        fileInputArea.classList.remove('drag-over');
+      });
+      
+      fileInputArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileInputArea.classList.remove('drag-over');
+        if (e.dataTransfer.files.length) {
+          videoFileInput.files = e.dataTransfer.files;
+          handleFileSelect({ target: videoFileInput });
+        }
+      });
+      
+      // Slider updates
+      fpsSlider.addEventListener('input', updateSliders);
+      widthSlider.addEventListener('input', updateSliders);
+      
+      // Button events
+      resetBtn.addEventListener('click', resetAll);
+      convertBtn.addEventListener('click', convertToGif);
+      downloadBtn.addEventListener('click', downloadGif);
+    }
 
-    if (!ffmpeg.isLoaded()) await ffmpeg.load();
-    progress(25);
+    // Update slider displays
+    function updateSliders() {
+      fpsValue.textContent = `${fpsSlider.value} FPS`;
+      widthValue.textContent = `${widthSlider.value}px`;
+    }
 
-    const input = "input.mp4";
-    const palette = "palette.png";
-    const output = "out.gif";
+    // Handle file select
+    function handleFileSelect(e) {
+      if (!e.target.files.length) return;
+      
+      const file = e.target.files[0];
+      
+      // Check file size (50MB limit)
+      if (file.size > 50 * 1024 * 1024) {
+        alert('Please upload a video smaller than 50MB for optimal performance.');
+        return;
+      }
+      
+      // Check file type
+      if (!file.type.startsWith('video/')) {
+        alert('Please upload a video file (MP4, MOV, AVI, etc.)');
+        return;
+      }
+      
+      const url = URL.createObjectURL(file);
+      uploadedVideo = file;
+      
+      // Show original video
+      originalVideo.src = url;
+      originalVideo.style.display = 'block';
+      noOriginal.style.display = 'none';
+      
+      // Reset result
+      resultGif.src = '';
+      resultGif.style.display = 'none';
+      noResult.style.display = 'block';
+      downloadBtn.style.display = 'none';
+      
+      // Update progress
+      progressText.textContent = `Ready: ${formatFileSize(file.size)}`;
+    }
 
-    ffmpeg.FS("writeFile", input, await fetchFile(file));
+    // Convert video to GIF
+    async function convertToGif() {
+      if (!uploadedVideo) {
+        alert('Please upload a video first!');
+        return;
+      }
+      
+      // Show loading state
+      loadingOverlay.style.display = 'flex';
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+      progressBar.style.width = '5%';
+      progressText.textContent = 'Starting conversion...';
+      
+      try {
+        // Load FFmpeg if not loaded
+        if (!isFFmpegLoaded) {
+          loadingText.textContent = 'Loading converter engine...';
+          await ffmpeg.load();
+          isFFmpegLoaded = true;
+        }
+        
+        // Set conversion parameters
+        const fps = parseInt(fpsSlider.value);
+        const width = parseInt(widthSlider.value);
+        const inputName = 'input.mp4';
+        const paletteName = 'palette.png';
+        const outputName = 'output.gif';
+        
+        // Write video file to FFmpeg FS
+        progressBar.style.width = '15%';
+        progressText.textContent = 'Reading video file...';
+        ffmpeg.FS('writeFile', inputName, await fetchFile(uploadedVideo));
+        
+        // Generate palette
+        progressBar.style.width = '40%';
+        loadingText.textContent = 'Generating color palette...';
+        progressText.textContent = 'Step 1/2: Creating palette...';
+        
+        await ffmpeg.run(
+          '-i', inputName,
+          '-vf', `fps=${fps},scale=${width}:-1:flags=lanczos,palettegen=stats_mode=diff`,
+          '-y', paletteName
+        );
+        
+        // Create GIF using palette
+        progressBar.style.width = '70%';
+        loadingText.textContent = 'Creating animated GIF...';
+        progressText.textContent = 'Step 2/2: Encoding GIF...';
+        
+        // Apply optimization settings
+        let optimizationArgs = [];
+        switch(optimizationSelect.value) {
+          case 'quality':
+            optimizationArgs = ['-b:v', '2M', '-gifflags', '+transdiff'];
+            break;
+          case 'size':
+            optimizationArgs = ['-b:v', '512k', '-gifflags', '+offsetting'];
+            break;
+          case 'speed':
+            optimizationArgs = ['-b:v', '1M', '-gifflags', '+offsetting'];
+            break;
+          default: // balanced
+            optimizationArgs = ['-b:v', '1M', '-gifflags', '+transdiff'];
+        }
+        
+        await ffmpeg.run(
+          '-i', inputName,
+          '-i', paletteName,
+          '-lavfi', `fps=${fps},scale=${width}:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3`,
+          ...optimizationArgs,
+          '-y', outputName
+        );
+        
+        // Read result
+        progressBar.style.width = '90%';
+        loadingText.textContent = 'Finalizing...';
+        progressText.textContent = 'Finalizing GIF file...';
+        
+        const data = ffmpeg.FS('readFile', outputName);
+        const blob = new Blob([data.buffer], { type: 'image/gif' });
+        convertedGifUrl = URL.createObjectURL(blob);
+        
+        // Show result
+        resultGif.src = convertedGifUrl;
+        resultGif.style.display = 'block';
+        noResult.style.display = 'none';
+        
+        // Update UI
+        progressBar.style.width = '100%';
+        progressText.textContent = `Conversion complete! GIF size: ${formatFileSize(blob.size)}`;
+        convertBtn.disabled = false;
+        convertBtn.textContent = '⚡ Convert to GIF';
+        loadingOverlay.style.display = 'none';
+        downloadBtn.style.display = 'block';
+        
+      } catch (error) {
+        console.error('Conversion error:', error);
+        alert('Conversion failed. Please try a smaller video or different settings.');
+        
+        // Reset UI
+        convertBtn.disabled = false;
+        convertBtn.textContent = '⚡ Convert to GIF';
+        loadingOverlay.style.display = 'none';
+        progressBar.style.width = '0%';
+        progressText.textContent = 'Conversion failed. Please try again.';
+      }
+    }
 
-    const fpsVal = fps.value;
-    const widthVal = width.value || 480;
+    // Download GIF
+    function downloadGif() {
+      if (!convertedGifUrl) {
+        alert('No GIF to download! Please convert first.');
+        return;
+      }
+      
+      const link = document.createElement('a');
+      link.download = `instagram-reel-gif-${Date.now()}.gif`;
+      link.href = convertedGifUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
 
-    status.textContent = "Generating Palette...";
-    await ffmpeg.run(
-        "-i", input,
-        "-vf", `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos,palettegen=stats_mode=full`,
-        "-y", palette
-    );
-    progress(60);
+    // Reset all
+    function resetAll() {
+      // Reset file input
+      videoFileInput.value = '';
+      
+      // Reset videos
+      originalVideo.src = '';
+      originalVideo.style.display = 'none';
+      noOriginal.style.display = 'block';
+      
+      resultGif.src = '';
+      resultGif.style.display = 'none';
+      noResult.style.display = 'block';
+      
+      // Reset buttons
+      convertBtn.disabled = false;
+      convertBtn.textContent = '⚡ Convert to GIF';
+      downloadBtn.style.display = 'none';
+      
+      // Hide loading
+      loadingOverlay.style.display = 'none';
+      
+      // Reset progress
+      progressBar.style.width = '0%';
+      progressText.textContent = 'Ready to convert';
+      
+      // Reset sliders to defaults
+      fpsSlider.value = 12;
+      widthSlider.value = 500;
+      optimizationSelect.value = 'balanced';
+      updateSliders();
+      
+      // Revoke URLs
+      if (convertedGifUrl) {
+        URL.revokeObjectURL(convertedGifUrl);
+      }
+      
+      // Reset state
+      uploadedVideo = null;
+      convertedGifUrl = null;
+    }
 
-    status.textContent = "Creating GIF...";
-    await ffmpeg.run(
-        "-i", input,
-        "-i", palette,
-        "-lavfi", `fps=${fpsVal},scale=${widthVal}:-1:flags=lanczos [x]; [x][1:v] paletteuse=dither=bayer`,
-        "-y", output
-    );
-    progress(90);
+    // Format file size
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
 
-    const data = ffmpeg.FS("readFile", output);
-    const blob = new Blob([data.buffer], { type: "image/gif" });
-    const url = URL.createObjectURL(blob);
+    // FAQ Functionality
+    function toggleFAQ(element) {
+      const answer = element.parentElement.querySelector('.faq-answer');
+      const icon = element.querySelector('span:last-child');
+      
+      answer.classList.toggle('active');
+      icon.textContent = answer.classList.contains('active') ? '−' : '+';
+    }
 
-    preview.innerHTML = `<img src="${url}" />`;
-    download.innerHTML = `<a href="${url}" download="ReelGIF.gif" style="font-weight:600;color:#0066ff">⬇ Download GIF</a>`;
-
-    status.textContent = "Completed Successfully 🎉";
-    progress(100);
-    convertBtn.disabled = false;
-    clearBtn.disabled = false;
-});
-
-clearBtn.addEventListener('click',()=>{
- videoFile.value='';
- preview.style.display='none';
- preview.innerHTML='';
- progress(0);
- status.textContent='';
- downloadWrap.innerHTML='';
- file=null;
-});
-</script>
-
+    // Initialize on load
+    window.addEventListener('load', init);
+  </script>
 </body>
 </html>
