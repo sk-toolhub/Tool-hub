@@ -4,98 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free QR Code Generator Online | Custom Colors – SK Toolhub</title>
+<title>Free QR Code Generator Online | Text, WiFi, WhatsApp QR – SK Toolhub</title>
 
-<meta name="description" content="Generate QR codes with custom colors for text, URL, WiFi, WhatsApp, Email & more. Free online QR code generator by SK Toolhub.">
+<meta name="description" content="Generate QR codes for text, URL, WiFi, email, phone, WhatsApp and Facebook. Free online QR code generator with instant download. No signup required.">
 
 <link rel="canonical" href="https://www.sktoolhub.in/qr-code-generator.html">
+
+<meta property="og:title" content="Free Online QR Code Generator – SK Toolhub">
+<meta property="og:description" content="Create QR codes for URL, WiFi, WhatsApp, Email & more instantly. 100% free and secure.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.sktoolhub.in/qr-code-generator.html">
+<meta property="og:site_name" content="SK Toolhub">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Generator",
+  "url": "https://www.sktoolhub.in/qr-code-generator.html",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "SK Toolhub"
+  }
+}
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-body{
-  font-family:Poppins,Arial,sans-serif;
-  background:#f4f8ff;
-  margin:0;
-}
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-.header{
-  text-align:center;
-  margin-bottom:30px;
-}
-.header h1{
-  color:#0066ff;
-}
-.tool-box{
-  background:#fff;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 4px 18px rgba(0,0,0,.08);
-}
-label{
-  font-weight:600;
-  margin-top:12px;
-  display:block;
-}
-select,input,button{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-.color-row{
-  display:flex;
-  gap:10px;
-}
-.color-row div{
-  flex:1;
-}
-button{
-  background:#0066ff;
-  color:#fff;
-  border:none;
-  font-weight:600;
-  cursor:pointer;
-  margin-top:15px;
-}
-button:hover{
-  background:#004ecc;
-}
-#qrcode{
-  text-align:center;
-  margin-top:25px;
-}
-#downloadBtn{
-  display:none;
-}
-.more-tools{
-  text-align:center;
-  margin-top:40px;
-}
-.more-tools ul{
-  list-style:none;
-  padding:0;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:15px;
-}
-.more-tools a{
-  text-decoration:none;
-  border:1px solid #0066ff;
-  padding:8px 18px;
-  border-radius:25px;
-  color:#0066ff;
-}
-.more-tools a:hover{
-  background:#0066ff;
-  color:#fff;
-}
+body{font-family:Poppins,Arial,sans-serif;background:#f4f8ff;margin:0}
+.container{max-width:900px;margin:auto;padding:20px}
+.header{text-align:center;margin-bottom:30px}
+.header h1{color:#0066ff}
+.tool-box{background:#fff;padding:25px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+select,input,button{width:100%;padding:10px;margin-top:10px;border-radius:10px;border:1px solid #ccc}
+button{background:#0066ff;color:#fff;border:none;font-weight:600;cursor:pointer}
+button:hover{background:#004ecc}
+#qrcode{text-align:center;margin-top:20px}
+.more-tools{text-align:center;margin-top:40px}
+.more-tools ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:15px}
+.more-tools a{text-decoration:none;border:1px solid #0066ff;padding:8px 18px;border-radius:25px;color:#0066ff}
+.more-tools a:hover{background:#0066ff;color:#fff}
+.article{margin-top:40px;line-height:1.7;color:#333}
+.faq{margin-top:40px}
+.faq-item{background:#fff;margin-bottom:10px;padding:15px;border-radius:10px;cursor:pointer}
+.answer{display:none;font-size:14px;color:#555}
 </style>
 </head>
 
@@ -103,98 +65,108 @@ button:hover{
 <div class="container">
 
 <div class="header">
-  <h1>Free QR Code Generator</h1>
-  <p>Create QR codes with custom colors – fast & free</p>
+<h1>Free QR Code Generator Online</h1>
+<p>Create QR codes for Text, URL, WiFi, WhatsApp, Email & more – instantly and free</p>
 </div>
 
 <div class="tool-box">
-
 <label>Select QR Type</label>
 <select id="type">
-  <option value="text">Text</option>
-  <option value="url">URL</option>
-  <option value="wifi">WiFi (SSID)</option>
-  <option value="email">Email</option>
-  <option value="phone">Phone</option>
-  <option value="whatsapp">WhatsApp</option>
-  <option value="facebook">Facebook</option>
+<option value="text">Text</option>
+<option value="url">URL</option>
+<option value="wifi">WiFi</option>
+<option value="email">Email</option>
+<option value="phone">Phone</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="facebook">Facebook</option>
 </select>
 
-<label>Enter Value</label>
-<input type="text" id="data" placeholder="Enter text, URL, number or username">
-
-<div class="color-row">
-  <div>
-    <label>QR Code Color</label>
-    <input type="color" id="qrColor" value="#000000">
-  </div>
-  <div>
-    <label>Background Color</label>
-    <input type="color" id="bgColor" value="#ffffff">
-  </div>
+<div id="inputs">
+<input type="text" id="data" placeholder="Enter value">
 </div>
 
 <button onclick="generateQR()">Generate QR Code</button>
 
 <div id="qrcode"></div>
-<button id="downloadBtn" onclick="downloadQR()">Download QR Code</button>
+<button onclick="downloadQR()" style="display:none" id="downloadBtn">Download QR Code</button>
+</div>
 
+<div class="article">
+<h2>Free QR Code Generator by SK Toolhub</h2>
+<p>
+SK Toolhub QR Code Generator is a free online tool that allows you to create QR codes instantly for multiple purposes. You can generate QR codes for text, website URLs, WiFi credentials, email addresses, phone numbers, WhatsApp chats, and Facebook profiles without any registration.
+</p>
+
+<p>
+QR codes are widely used in digital marketing, business cards, product packaging, education, and social media. With our QR code generator online, you can quickly convert any information into a scannable QR code that works on all smartphones.
+</p>
+
+<p>
+This free QR code maker works entirely in your browser. No data is sent to any server, ensuring complete privacy and security. Whether you are a student, marketer, blogger, or business owner, this tool helps you save time and improve accessibility.
+</p>
+
+<p>
+Our QR code generator for websites and social media platforms like WhatsApp and Facebook is optimized for fast performance and SEO-friendly usage. You can download your QR code instantly and use it anywhere.
+</p>
+
+<p>
+SK Toolhub focuses on providing reliable and easy-to-use online tools. This QR code generator is part of our growing collection of productivity tools designed to help users worldwide.
+</p>
+</div>
+
+<div class="faq">
+<h2>FAQs</h2>
+<div class="faq-item" onclick="toggle(this)">
+<strong>Is this QR code generator free?</strong>
+<div class="answer">Yes, it is 100% free with no limits.</div>
+</div>
+<div class="faq-item" onclick="toggle(this)">
+<strong>Can I generate WhatsApp QR codes?</strong>
+<div class="answer">Yes, you can create WhatsApp chat QR codes easily.</div>
+</div>
 </div>
 
 <div class="more-tools">
-  <h3>More Useful Tools</h3>
-  <ul>
-    <li><a href="/image-resizer.html">Image Resizer</a></li>
-    <li><a href="/image-compressor.html">Image Compressor</a></li>
-    <li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
-    <li><a href="/pdf-to-jpg.html">PDF to JPG</a></li>
-  </ul>
+<h3>More Useful Tools</h3>
+<ul>
+<li><a href="/image-resizer.html">Image Resizer</a></li>
+<li><a href="/image-compressor.html">Image Compressor</a></li>
+<li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
+<li><a href="/pdf-to-jpg.html">PDF to JPG</a></li>
+</ul>
 </div>
 
 </div>
 
 <script>
 let qr;
-
 function generateQR(){
-  const type = document.getElementById("type").value;
-  const data = document.getElementById("data").value.trim();
-  const qrColor = document.getElementById("qrColor").value;
-  const bgColor = document.getElementById("bgColor").value;
+const type=document.getElementById("type").value;
+const data=document.getElementById("data").value;
+let text=data;
 
-  if(!data){
-    alert("Please enter a value");
-    return;
-  }
+if(type==="wifi") text=`WIFI:T:WPA;S:${data};P:password;;`;
+if(type==="email") text=`mailto:${data}`;
+if(type==="phone") text=`tel:${data}`;
+if(type==="whatsapp") text=`https://wa.me/${data}`;
+if(type==="facebook") text=`https://facebook.com/${data}`;
 
-  let text = data;
-  if(type==="wifi") text = `WIFI:T:WPA;S:${data};P:password;;`;
-  if(type==="email") text = `mailto:${data}`;
-  if(type==="phone") text = `tel:${data}`;
-  if(type==="whatsapp") text = `https://wa.me/${data}`;
-  if(type==="facebook") text = `https://facebook.com/${data}`;
-
-  const qrBox = document.getElementById("qrcode");
-  qrBox.innerHTML = "";
-
-  qr = new QRCode(qrBox,{
-    text: text,
-    width: 220,
-    height: 220,
-    colorDark: qrColor,
-    colorLight: bgColor,
-    correctLevel: QRCode.CorrectLevel.H
-  });
-
-  document.getElementById("downloadBtn").style.display="block";
+document.getElementById("qrcode").innerHTML="";
+qr=new QRCode("qrcode",{text,width:200,height:200});
+document.getElementById("downloadBtn").style.display="block";
 }
 
 function downloadQR(){
-  const img = document.querySelector("#qrcode img");
-  const a = document.createElement("a");
-  a.href = img.src;
-  a.download = "sktoolhub-qr-code.png";
-  a.click();
+const img=document.querySelector("#qrcode img");
+const a=document.createElement("a");
+a.href=img.src;
+a.download="qr-code.png";
+a.click();
+}
+
+function toggle(el){
+el.querySelector(".answer").style.display=
+el.querySelector(".answer").style.display==="block"?"none":"block";
 }
 </script>
 
