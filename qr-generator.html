@@ -1,425 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free QR Code Generator Online | Sk Toolhub</title>
-    <meta name="description" content="Free QR Code Generator by Sk Toolhub. Create custom QR codes for URLs, WhatsApp, WiFi, contact info. Download PNG/SVG instantly.">
-    
-    <!-- QR Code Library - MUST BE FIRST -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; }
-        
-        .header { background: white; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo { font-size: 24px; font-weight: bold; color: #2563eb; text-decoration: none; }
-        .logo span { color: #7c3aed; }
-        
-        .main-content { padding: 30px 0; }
-        .hero { text-align: center; background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; }
-        .hero h1 { font-size: 32px; margin-bottom: 10px; color: #1f2937; }
-        .hero p { color: #6b7280; max-width: 700px; margin: 0 auto 20px; }
-        
-        .tool-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        @media (max-width: 768px) { .tool-container { grid-template-columns: 1fr; } }
-        
-        .input-section, .preview-section { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #374151; }
-        input, select { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; }
-        input:focus, select:focus { outline: none; border-color: #2563eb; }
-        
-        .color-row { display: flex; gap: 15px; }
-        .color-row div { flex: 1; }
-        input[type="color"] { height: 45px; padding: 0; cursor: pointer; }
-        
-        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; }
-        .option-btn { 
-            padding: 12px; 
-            text-align: center; 
-            background: #f3f4f6; 
-            border: 2px solid #e5e7eb; 
-            border-radius: 8px; 
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .option-btn.active { background: #2563eb; color: white; border-color: #2563eb; }
-        
-        .generate-btn { 
-            width: 100%; 
-            padding: 15px; 
-            background: linear-gradient(135deg, #2563eb, #7c3aed); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 18px; 
-            font-weight: 600; 
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
-        
-        .qr-preview { 
-            min-height: 300px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #f8fafc; 
-            border-radius: 10px; 
-            border: 2px dashed #d1d5db;
-            margin-bottom: 20px;
-        }
-        
-        #qrcode { padding: 20px; background: white; border-radius: 10px; }
-        #qrcode img { display: block; margin: 0 auto; }
-        
-        .download-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .download-btn { 
-            padding: 14px; 
-            text-align: center; 
-            background: #10b981; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .download-btn:hover { background: #059669; }
-        .download-btn.svg { background: #3b82f6; }
-        .download-btn.svg:hover { background: #2563eb; }
-        
-        .message { 
-            position: fixed; 
-            top: 20px; 
-            right: 20px; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            color: white; 
-            font-weight: 500;
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-        .message.success { background: #10b981; }
-        .message.error { background: #ef4444; }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .footer { background: #1f2937; color: white; padding: 40px 0 20px; margin-top: 50px; }
-        .copyright { text-align: center; padding-top: 20px; border-top: 1px solid #374151; color: #9ca3af; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free QR Code Generator Online | Text, WiFi, WhatsApp QR – SK Toolhub</title>
+
+<meta name="description" content="Generate QR codes for text, URL, WiFi, email, phone, WhatsApp and Facebook. Free online QR code generator with instant download. No signup required.">
+
+<link rel="canonical" href="https://www.sktoolhub.in/qr-code-generator.html">
+
+<meta property="og:title" content="Free Online QR Code Generator – SK Toolhub">
+<meta property="og:description" content="Create QR codes for URL, WiFi, WhatsApp, Email & more instantly. 100% free and secure.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.sktoolhub.in/qr-code-generator.html">
+<meta property="og:site_name" content="SK Toolhub">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Generator",
+  "url": "https://www.sktoolhub.in/qr-code-generator.html",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "SK Toolhub"
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+body{font-family:Poppins,Arial,sans-serif;background:#f4f8ff;margin:0}
+.container{max-width:900px;margin:auto;padding:20px}
+.header{text-align:center;margin-bottom:30px}
+.header h1{color:#0066ff}
+.tool-box{background:#fff;padding:25px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+select,input,button{width:100%;padding:10px;margin-top:10px;border-radius:10px;border:1px solid #ccc}
+button{background:#0066ff;color:#fff;border:none;font-weight:600;cursor:pointer}
+button:hover{background:#004ecc}
+#qrcode{text-align:center;margin-top:20px}
+.more-tools{text-align:center;margin-top:40px}
+.more-tools ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:15px}
+.more-tools a{text-decoration:none;border:1px solid #0066ff;padding:8px 18px;border-radius:25px;color:#0066ff}
+.more-tools a:hover{background:#0066ff;color:#fff}
+.article{margin-top:40px;line-height:1.7;color:#333}
+.faq{margin-top:40px}
+.faq-item{background:#fff;margin-bottom:10px;padding:15px;border-radius:10px;cursor:pointer}
+.answer{display:none;font-size:14px;color:#555}
+</style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">Sk <span>Toolhub</span></a>
-        </div>
-    </header>
+<div class="container">
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Hero Section -->
-            <section class="hero">
-                <h1>Free QR Code Generator</h1>
-                <p>Create custom QR codes for websites, WhatsApp, WiFi, contact information, and more. Powered by Sk Toolhub - No registration required.</p>
-            </section>
+<div class="header">
+<h1>Free QR Code Generator Online</h1>
+<p>Create QR codes for Text, URL, WiFi, WhatsApp, Email & more – instantly and free</p>
+</div>
 
-            <!-- Tool Container -->
-            <div class="tool-container">
-                <!-- Input Section -->
-                <div class="input-section">
-                    <h2 style="margin-bottom: 20px; color: #1f2937;">Create QR Code</h2>
-                    
-                    <div class="form-group">
-                        <label for="qrText">Enter Text or URL:</label>
-                        <input type="text" id="qrText" placeholder="https://example.com or any text" value="https://www.sktoolhub.in">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>QR Code Type:</label>
-                        <div class="options-grid">
-                            <div class="option-btn active" data-type="url">Website</div>
-                            <div class="option-btn" data-type="whatsapp">WhatsApp</div>
-                            <div class="option-btn" data-type="contact">Contact</div>
-                            <div class="option-btn" data-type="wifi">WiFi</div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Custom Colors:</label>
-                        <div class="color-row">
-                            <div>
-                                <label for="fgColor">Foreground</label>
-                                <input type="color" id="fgColor" value="#000000">
-                            </div>
-                            <div>
-                                <label for="bgColor">Background</label>
-                                <input type="color" id="bgColor" value="#ffffff">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="qrSize">Size:</label>
-                        <select id="qrSize">
-                            <option value="200">Small (200×200)</option>
-                            <option value="250" selected>Medium (250×250)</option>
-                            <option value="300">Large (300×300)</option>
-                            <option value="350">Extra Large (350×350)</option>
-                        </select>
-                    </div>
-                    
-                    <button class="generate-btn" id="generateBtn">
-                        Generate QR Code
-                    </button>
-                </div>
-                
-                <!-- Preview Section -->
-                <div class="preview-section">
-                    <h2 style="margin-bottom: 20px; color: #1f2937;">Preview & Download</h2>
-                    
-                    <div class="qr-preview">
-                        <div id="qrcode"></div>
-                    </div>
-                    
-                    <div class="download-btns">
-                        <button class="download-btn" id="downloadPngBtn">
-                            <span>📥</span> Download PNG
-                        </button>
-                        <button class="download-btn svg" id="downloadSvgBtn">
-                            <span>📥</span> Download SVG
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+<div class="tool-box">
+<label>Select QR Type</label>
+<select id="type">
+<option value="text">Text</option>
+<option value="url">URL</option>
+<option value="wifi">WiFi</option>
+<option value="email">Email</option>
+<option value="phone">Phone</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="facebook">Facebook</option>
+</select>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="copyright">
-                <p>&copy; 2024 Sk Toolhub. All rights reserved.</p>
-                <p style="margin-top: 5px; font-size: 14px;">Free QR Code Generator - No registration required</p>
-            </div>
-        </div>
-    </footer>
+<div id="inputs">
+<input type="text" id="data" placeholder="Enter value">
+</div>
 
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, initializing QR Code Generator...');
-            
-            // Elements
-            const qrText = document.getElementById('qrText');
-            const fgColor = document.getElementById('fgColor');
-            const bgColor = document.getElementById('bgColor');
-            const qrSize = document.getElementById('qrSize');
-            const generateBtn = document.getElementById('generateBtn');
-            const downloadPngBtn = document.getElementById('downloadPngBtn');
-            const downloadSvgBtn = document.getElementById('downloadSvgBtn');
-            const qrcodeDiv = document.getElementById('qrcode');
-            const optionBtns = document.querySelectorAll('.option-btn');
-            
-            let qrCodeInstance = null;
-            
-            // Show message function
-            function showMessage(text, type = 'success') {
-                const message = document.createElement('div');
-                message.className = `message ${type}`;
-                message.textContent = text;
-                document.body.appendChild(message);
-                
-                setTimeout(() => {
-                    message.style.opacity = '0';
-                    setTimeout(() => {
-                        if (message.parentNode) {
-                            message.parentNode.removeChild(message);
-                        }
-                    }, 300);
-                }, 3000);
-            }
-            
-            // Generate QR Code
-            function generateQRCode() {
-                const text = qrText.value.trim();
-                if (!text) {
-                    showMessage('Please enter text or URL', 'error');
-                    return;
-                }
-                
-                // Clear previous QR code
-                qrcodeDiv.innerHTML = '';
-                
-                // Generate new QR code
-                try {
-                    qrCodeInstance = new QRCode(qrcodeDiv, {
-                        text: text,
-                        width: parseInt(qrSize.value),
-                        height: parseInt(qrSize.value),
-                        colorDark: fgColor.value,
-                        colorLight: bgColor.value,
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                    
-                    console.log('QR Code generated successfully');
-                    showMessage('QR Code generated successfully!');
-                    
-                } catch (error) {
-                    console.error('QR Code generation error:', error);
-                    showMessage('Error generating QR code. Please try again.', 'error');
-                    
-                    // Fallback: Create a simple QR code
-                    qrcodeDiv.innerHTML = `
-                        <div style="text-align: center; padding: 20px;">
-                            <div style="color: #ef4444; font-size: 48px; margin-bottom: 10px;">⚠️</div>
-                            <p style="color: #6b7280;">QR Code generation failed</p>
-                            <p style="color: #6b7280; font-size: 14px;">Please refresh the page and try again</p>
-                        </div>
-                    `;
-                }
-            }
-            
-            // Download PNG
-            function downloadPNG() {
-                const qrImg = qrcodeDiv.querySelector('img');
-                if (!qrImg) {
-                    showMessage('Please generate QR code first', 'error');
-                    return;
-                }
-                
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const size = parseInt(qrSize.value);
-                
-                canvas.width = size;
-                canvas.height = size;
-                
-                // Fill background
-                ctx.fillStyle = bgColor.value;
-                ctx.fillRect(0, 0, size, size);
-                
-                // Create a temporary image to draw
-                const img = new Image();
-                img.onload = function() {
-                    ctx.drawImage(img, 0, 0, size, size);
-                    
-                    // Download
-                    const link = document.createElement('a');
-                    link.download = `qr-code-${Date.now()}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    
-                    showMessage('PNG downloaded successfully!');
-                };
-                
-                img.src = qrImg.src;
-            }
-            
-            // Download SVG
-            function downloadSVG() {
-                const text = qrText.value.trim();
-                if (!text) {
-                    showMessage('Please generate QR code first', 'error');
-                    return;
-                }
-                
-                const size = parseInt(qrSize.value);
-                const dark = fgColor.value.substring(1); // Remove #
-                const light = bgColor.value.substring(1); // Remove #
-                
-                // Create SVG QR code using API as fallback
-                const svgUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}&size=${size}x${size}&color=${dark}&bgcolor=${light}&format=svg`;
-                
-                const link = document.createElement('a');
-                link.download = `qr-code-${Date.now()}.svg`;
-                link.href = svgUrl;
-                link.click();
-                
-                showMessage('SVG download started!');
-            }
-            
-            // Option buttons
-            optionBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    optionBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const type = this.getAttribute('data-type');
-                    switch(type) {
-                        case 'url':
-                            qrText.value = 'https://www.sktoolhub.in';
-                            break;
-                        case 'whatsapp':
-                            qrText.value = 'https://wa.me/919876543210';
-                            break;
-                        case 'contact':
-                            qrText.value = 'BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:+919876543210\nEMAIL:contact@example.com\nEND:VCARD';
-                            break;
-                        case 'wifi':
-                            qrText.value = 'WIFI:S:MyNetwork;T:WPA;P:Password123;;';
-                            break;
-                    }
-                    
-                    // Auto-generate after 500ms
-                    setTimeout(generateQRCode, 500);
-                });
-            });
-            
-            // Event Listeners
-            generateBtn.addEventListener('click', generateQRCode);
-            downloadPngBtn.addEventListener('click', downloadPNG);
-            downloadSvgBtn.addEventListener('click', downloadSVG);
-            
-            fgColor.addEventListener('change', generateQRCode);
-            bgColor.addEventListener('change', generateQRCode);
-            qrSize.addEventListener('change', generateQRCode);
-            
-            // Auto-generate on Enter key
-            qrText.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    generateQRCode();
-                }
-            });
-            
-            // Initial generation
-            console.log('Generating initial QR code...');
-            setTimeout(generateQRCode, 1000);
-            
-            // Check if QRCode library is loaded
-            if (typeof QRCode === 'undefined') {
-                console.error('QRCode library not loaded!');
-                showMessage('Loading QR Code library...', 'error');
-                
-                // Load library dynamically
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
-                script.onload = function() {
-                    console.log('QRCode library loaded dynamically');
-                    showMessage('Library loaded! Generating QR code...');
-                    setTimeout(generateQRCode, 500);
-                };
-                document.head.appendChild(script);
-            }
-        });
-    </script>
+<button onclick="generateQR()">Generate QR Code</button>
+
+<div id="qrcode"></div>
+<button onclick="downloadQR()" style="display:none" id="downloadBtn">Download QR Code</button>
+</div>
+
+<div class="article">
+<h2>Free QR Code Generator by SK Toolhub</h2>
+<p>
+SK Toolhub QR Code Generator is a free online tool that allows you to create QR codes instantly for multiple purposes. You can generate QR codes for text, website URLs, WiFi credentials, email addresses, phone numbers, WhatsApp chats, and Facebook profiles without any registration.
+</p>
+
+<p>
+QR codes are widely used in digital marketing, business cards, product packaging, education, and social media. With our QR code generator online, you can quickly convert any information into a scannable QR code that works on all smartphones.
+</p>
+
+<p>
+This free QR code maker works entirely in your browser. No data is sent to any server, ensuring complete privacy and security. Whether you are a student, marketer, blogger, or business owner, this tool helps you save time and improve accessibility.
+</p>
+
+<p>
+Our QR code generator for websites and social media platforms like WhatsApp and Facebook is optimized for fast performance and SEO-friendly usage. You can download your QR code instantly and use it anywhere.
+</p>
+
+<p>
+SK Toolhub focuses on providing reliable and easy-to-use online tools. This QR code generator is part of our growing collection of productivity tools designed to help users worldwide.
+</p>
+</div>
+
+<div class="faq">
+<h2>FAQs</h2>
+<div class="faq-item" onclick="toggle(this)">
+<strong>Is this QR code generator free?</strong>
+<div class="answer">Yes, it is 100% free with no limits.</div>
+</div>
+<div class="faq-item" onclick="toggle(this)">
+<strong>Can I generate WhatsApp QR codes?</strong>
+<div class="answer">Yes, you can create WhatsApp chat QR codes easily.</div>
+</div>
+</div>
+
+<div class="more-tools">
+<h3>More Useful Tools</h3>
+<ul>
+<li><a href="/image-resizer.html">Image Resizer</a></li>
+<li><a href="/image-compressor.html">Image Compressor</a></li>
+<li><a href="/jpg-to-pdf.html">JPG to PDF</a></li>
+<li><a href="/pdf-to-jpg.html">PDF to JPG</a></li>
+</ul>
+</div>
+
+</div>
+
+<script>
+let qr;
+function generateQR(){
+const type=document.getElementById("type").value;
+const data=document.getElementById("data").value;
+let text=data;
+
+if(type==="wifi") text=`WIFI:T:WPA;S:${data};P:password;;`;
+if(type==="email") text=`mailto:${data}`;
+if(type==="phone") text=`tel:${data}`;
+if(type==="whatsapp") text=`https://wa.me/${data}`;
+if(type==="facebook") text=`https://facebook.com/${data}`;
+
+document.getElementById("qrcode").innerHTML="";
+qr=new QRCode("qrcode",{text,width:200,height:200});
+document.getElementById("downloadBtn").style.display="block";
+}
+
+function downloadQR(){
+const img=document.querySelector("#qrcode img");
+const a=document.createElement("a");
+a.href=img.src;
+a.download="qr-code.png";
+a.click();
+}
+
+function toggle(el){
+el.querySelector(".answer").style.display=
+el.querySelector(".answer").style.display==="block"?"none":"block";
+}
+</script>
+
 </body>
 </html>
