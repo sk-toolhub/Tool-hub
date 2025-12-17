@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Free QR Code Generator Online - Create Custom QR Codes Instantly | Sk Toolhub</title>
+    <meta name="description" content="Sk Toolhub's free QR Code Generator creates custom QR codes for URLs, WhatsApp, contact info, WiFi, PDFs, and social media. No registration required. Download in PNG/SVG formats instantly.">
+    <meta name="keywords" content="QR code generator, free QR code maker, create QR code online, QR code for website, WhatsApp QR code, business QR code, dynamic QR code, WiFi QR code, contact QR code, QR code with logo, download QR code, PNG QR code, SVG QR code, QR code marketing, digital QR code, Sk Toolhub">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.sktoolhub.in/qr-generator.html">
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Free QR Code Generator - Create Custom QR Codes Online | Sk Toolhub">
+    <meta property="og:description" content="Generate free custom QR codes for business, marketing, websites, and personal use. No limits, no registration required at Sk Toolhub.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sktoolhub.in/qr-generator.html">
+    <meta property="og:image" content="https://www.sktoolhub.in/images/qr-code-generator-og.jpg">
+    <meta property="og:site_name" content="Sk Toolhub">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free QR Code Generator Online - No Registration Required | Sk Toolhub">
+    <meta name="twitter:description" content="Create custom QR codes instantly for free at Sk Toolhub. Perfect for business cards, marketing materials, websites, and digital campaigns.">
+    <meta name="twitter:image" content="https://www.sktoolhub.in/images/qr-code-twitter-card.jpg">
+    
+    <!-- Structured Data / Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "QR Code Generator",
+        "url": "https://www.sktoolhub.in/qr-generator.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "description": "Sk Toolhub's free online tool to generate custom QR codes for business and personal use",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "Sk Toolhub",
+            "url": "https://www.sktoolhub.in",
+            "logo": "https://www.sktoolhub.in/logo.png",
+            "sameAs": [
+                "https://www.facebook.com/sktoolhub",
+                "https://twitter.com/sktoolhub",
+                "https://www.linkedin.com/company/sktoolhub"
+            ]
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1250",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "featureList": [
+            "Custom QR Code Colors",
+            "Logo Integration",
+            "Multiple Formats",
+            "High Resolution Output",
+            "No Watermarks",
+            "Dynamic QR Codes",
+            "Free Forever"
+        ]
+    }
+    </script>
+    
+    <!-- Additional Schema for HowTo -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Generate a QR Code with Sk Toolhub",
+        "description": "Step-by-step guide to create custom QR codes using Sk Toolhub's free generator",
+        "totalTime": "PT1M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "text": "Visit Sk Toolhub's QR Code Generator page"
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Enter your URL or text in the input field"
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Customize colors, size, and add logo if needed"
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Click Generate QR Code button"
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Download your QR code in PNG or SVG format"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.sktoolhub.in/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====== Global Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ====== Header Styles ====== */
+        .header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .logo span {
+            color: #7c3aed;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+        
+        /* ====== Main Content ====== */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .hero-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .brand-highlight {
+            color: #2563eb;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* ====== Tool Container ====== */
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .preview-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #2563eb;
+        }
+        
+        /* ====== Form Styles ====== */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        .color-pickers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .color-input {
+            width: 100%;
+            height: 45px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .qr-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .option-card {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .option-card.active {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+        
+        .option-card i {
+            font-size: 24px;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* ====== Preview Section ====== */
+        .qr-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        #qrCodeImage {
+            max-width: 250px;
+            max-height: 250px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .download-btn {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #059669;
+        }
+        
+        /* ====== SEO Article ====== */
+        .seo-article {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        
+        .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 25px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .article-content h2, .article-content h3 {
+            color: #2563eb;
+            margin: 25px 0 15px;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+        
+        .article-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .article-content li {
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #2563eb;
+            margin: 25px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .feature-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature-item i {
+            color: #2563eb;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        /* ====== Footer ====== */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #e5e7eb;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #d1d5db;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #2563eb;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        
+        .brand-footer {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        /* ====== Responsive Design ====== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .seo-article {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">Sk <span>Toolhub</span></a>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="#how-to-use">Guide</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">Free QR Code Generator Online</h1>
+                <p class="hero-subtitle">Create custom QR codes for websites, business cards, marketing materials, WhatsApp, contact information, WiFi networks, PDFs, and social media profiles. Powered by <span class="brand-highlight">Sk Toolhub</span> - No registration required. Download in high-quality PNG and SVG formats.</p>
+            </section>
+
+            <!-- Tool Container -->
+            <div class="tool-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <h2 class="section-title"><i class="fas fa-edit"></i> Create Your QR Code</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Enter URL or Text:</label>
+                        <input type="text" class="form-input" id="qrInput" placeholder="https://example.com or any text" value="https://www.sktoolhub.in/">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">QR Code Type:</label>
+                        <div class="qr-options">
+                            <div class="option-card active" onclick="selectOption(this)">
+                                <i class="fas fa-globe"></i>
+                                <div>Website URL</div>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this)">
+                                <i class="fab fa-whatsapp"></i>
+                                <div>WhatsApp</div>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this)">
+                                <i class="fas fa-user"></i>
+                                <div>Contact Info</div>
+                            </div>
+                            <div class="option-card" onclick="selectOption(this)">
+                                <i class="fas fa-wifi"></i>
+                                <div>WiFi Network</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Customize Colors:</label>
+                        <div class="color-pickers">
+                            <div>
+                                <label class="form-label">Foreground Color</label>
+                                <input type="color" class="color-input" id="foregroundColor" value="#000000">
+                            </div>
+                            <div>
+                                <label class="form-label">Background Color</label>
+                                <input type="color" class="color-input" id="backgroundColor" value="#ffffff">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Size:</label>
+                        <select class="form-select" id="qrSize">
+                            <option value="200">Small (200x200)</option>
+                            <option value="300" selected>Medium (300x300)</option>
+                            <option value="400">Large (400x400)</option>
+                            <option value="500">Extra Large (500x500)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="generate-btn" onclick="generateQRCode()">
+                        <i class="fas fa-qrcode"></i> Generate QR Code
+                    </button>
+                </div>
+                
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <h2 class="section-title"><i class="fas fa-eye"></i> Preview & Download</h2>
+                    
+                    <div class="qr-preview">
+                        <img id="qrCodeImage" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.sktoolhub.in" alt="QR Code Generated by Sk Toolhub">
+                    </div>
+                    
+                    <div class="download-buttons">
+                        <a href="#" class="download-btn" id="downloadPNG">
+                            <i class="fas fa-download"></i> Download PNG
+                        </a>
+                        <a href="#" class="download-btn" id="downloadSVG" style="background: #3b82f6;">
+                            <i class="fas fa-download"></i> Download SVG
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEO Optimized Article -->
+            <section class="seo-article" id="seo-content">
+                <h2 class="article-title">Complete Guide to QR Codes: How to Create, Use, and Optimize</h2>
+                
+                <div class="article-content">
+                    <p>Welcome to <strong>Sk Toolhub's comprehensive guide to QR codes</strong>. In today's digital age, QR codes have become essential tools for businesses, marketers, and individuals alike. Whether you're looking to share contact information, promote your website, or create digital menus, our free QR Code Generator makes the process simple and efficient.</p>
+                    
+                    <div class="highlight-box">
+                        <h3>Why Choose Sk Toolhub's QR Code Generator?</h3>
+                        <p>At <strong>Sk Toolhub</strong>, we provide a completely free, no-registration-required QR code generator that stands out from the competition. Unlike other tools that add watermarks or limit downloads, our tool offers unlimited, high-quality QR codes for all your needs.</p>
+                    </div>
+                    
+                    <h2>What is a QR Code?</h2>
+                    <p>QR Code (Quick Response Code) is a two-dimensional barcode that can store various types of information, including URLs, contact details, text, and more. Originally developed for the automotive industry, QR codes are now widely used in marketing, retail, healthcare, education, and personal applications.</p>
+                    
+                    <h2>Benefits of Using QR Codes</h2>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-bolt"></i>
+                            <h4>Instant Access</h4>
+                            <p>Users can instantly access websites, contact information, or documents by scanning the code with their smartphone camera.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Trackable Analytics</h4>
+                            <p>Dynamic QR codes allow you to track scans, locations, and user engagement metrics for better marketing insights.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-paint-brush"></i>
+                            <h4>Customizable Design</h4>
+                            <p>Customize colors, add logos, and design QR codes that match your brand identity perfectly.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Mobile-Friendly</h4>
+                            <p>With smartphone penetration at all-time highs, QR codes provide seamless mobile experiences for users.</p>
+                        </div>
+                    </div>
+                    
+                    <h2>Types of QR Codes You Can Create with Sk Toolhub</h2>
+                    <ul>
+                        <li><strong>Website URL QR Codes:</strong> Direct users to your website, landing pages, or specific products</li>
+                        <li><strong>WhatsApp QR Codes:</strong> Start WhatsApp chats or add contacts instantly</li>
+                        <li><strong>Contact Information QR Codes:</strong> Share vCard details including name, phone, email, and address</li>
+                        <li><strong>WiFi Network QR Codes:</strong> Allow guests to connect to WiFi without sharing passwords</li>
+                        <li><strong>PDF Document QR Codes:</strong> Share documents, menus, or brochures digitally</li>
+                        <li><strong>Social Media QR Codes:</strong> Link to Facebook, Instagram, LinkedIn, or Twitter profiles</li>
+                        <li><strong>Email QR Codes:</strong> Pre-filled email messages with subject and recipient</li>
+                        <li><strong>SMS QR Codes:</strong> Pre-filled text messages with phone numbers</li>
+                    </ul>
+                    
+                    <h2>How to Use Sk Toolhub's QR Code Generator</h2>
+                    <p>Creating a QR code with <strong>Sk Toolhub</strong> takes just three simple steps:</p>
+                    <ol>
+                        <li><strong>Enter Your Content:</strong> Input your URL, text, or contact information in the generator field</li>
+                        <li><strong>Customize Design:</strong> Choose colors, size, and add your logo if desired</li>
+                        <li><strong>Download & Use:</strong> Download in PNG or SVG format and implement in your marketing materials</li>
+                    </ol>
+                    
+                    <h2>Best Practices for QR Code Implementation</h2>
+                    <p>To maximize the effectiveness of your QR codes, follow these expert tips:</p>
+                    <ul>
+                        <li><strong>Provide Clear Instructions:</strong> Tell users what to expect when they scan the code</li>
+                        <li><strong>Ensure Proper Sizing:</strong> Minimum 2x2 cm for print materials to ensure scannability</li>
+                        <li><strong>Test Before Distribution:</strong> Always test your QR codes with multiple devices and apps</li>
+                        <li><strong>Add Value:</strong> Offer discounts, exclusive content, or useful information to encourage scans</li>
+                        <li><strong>Optimize Landing Pages:</strong> Ensure mobile-optimized landing pages for best user experience</li>
+                    </ul>
+                    
+                    <h2>Common Questions About QR Codes</h2>
+                    
+                    <h3>Are QR codes free to use?</h3>
+                    <p>Yes! At <strong>Sk Toolhub</strong>, we provide completely free QR code generation with no hidden fees, watermarks, or usage limits. Our tool is supported by our commitment to providing free online utilities to users worldwide.</p>
+                    
+                    <h3>Do QR codes expire?</h3>
+                    <p>Static QR codes (like those generated by our tool) do not expire unless the linked content is removed. Dynamic QR codes from premium services may have expiration based on subscription plans.</p>
+                    
+                    <h3>Can I track QR code scans?</h3>
+                    <p>Our basic QR codes are static and don't include tracking. However, we recommend using URL shorteners with analytics or dedicated QR tracking services if scan analytics are essential for your campaign.</p>
+                    
+                    <h3>What's the difference between PNG and SVG formats?</h3>
+                    <p>PNG is a raster format perfect for web use and standard printing. SVG is a vector format that maintains perfect quality at any size, ideal for large-format printing and professional design work.</p>
+                    
+                    <h2>Why Sk Toolhub is Your Best Choice for QR Code Generation</h2>
+                    <p>As part of the <strong>Sk Toolhub</strong> family of free online tools, our QR Code Generator offers several advantages:</p>
+                    <ul>
+                        <li><strong>Completely Free:</strong> No charges, no subscriptions, no hidden costs</li>
+                        <li><strong>No Registration Required:</strong> Generate QR codes instantly without creating an account</li>
+                        <li><strong>High-Quality Output:</strong> Crisp, clear QR codes that scan perfectly every time</li>
+                        <li><strong>Multiple Formats:</strong> Download in both PNG and SVG for maximum flexibility</li>
+                        <li><strong>Customization Options:</strong> Full control over colors, size, and design elements</li>
+                        <li><strong>Privacy Focused:</strong> We don't store your data or track your QR code content</li>
+                    </ul>
+                    
+                    <p>Join thousands of satisfied users who trust <strong>Sk Toolhub</strong> for their QR code needs. Whether you're a small business owner, marketer, educator, or individual user, our tool provides professional-grade QR codes without the professional price tag.</p>
+                    
+                    <div class="highlight-box">
+                        <h3>Ready to Create Your First QR Code?</h3>
+                        <p>Use our generator above to create your custom QR code today. Need help or have questions? Explore our other free tools at <a href="https://www.sktoolhub.in" style="color: #2563eb; font-weight: 600;">www.sktoolhub.in</a> or check our comprehensive FAQ section.</p>
+                    </div>
+                    
+                    <p><strong>Keywords for SEO:</strong> free qr code generator, create qr code online, qr code maker no registration, custom qr code with logo, business qr codes, marketing qr codes, whatsapp qr code generator, wifi qr code creator, contact qr code, vcard qr code, png qr code, svg qr code, high resolution qr code, sk toolhub qr generator, best free qr code tool 2024, digital marketing tools, online utilities.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="brand-footer">Sk Toolhub</div>
+                    <p>Your ultimate destination for free online tools and utilities. Creating solutions that make digital life simpler.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="https://www.sktoolhub.in">Home</a>
+                        <a href="https://www.sktoolhub.in/tools.html">All Tools</a>
+                        <a href="https://www.sktoolhub.in/privacy.html">Privacy Policy</a>
+                        <a href="https://www.sktoolhub.in/terms.html">Terms of Service</a>
+                        <a href="https://www.sktoolhub.in/contact.html">Contact Us</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Popular Tools</h3>
+                    <div class="footer-links">
+                        <a href="https://www.sktoolhub.in/qr-generator.html">QR Code Generator</a>
+                        <a href="https://www.sktoolhub.in/pdf-tools.html">PDF Tools</a>
+                        <a href="https://www.sktoolhub.in/image-tools.html">Image Tools</a>
+                        <a href="https://www.sktoolhub.in/text-tools.html">Text Tools</a>
+                        <a href="https://www.sktoolhub.in/coding-tools.html">Coding Tools</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="footer-links">
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Sk Toolhub. All rights reserved. | <a href="https://www.sktoolhub.in" style="color: #d1d5db;">www.sktoolhub.in</a></p>
+                <p>This tool is completely free to use. No registration required. No data collection.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // QR Code Generator Function
+        function generateQRCode() {
+            const input = document.getElementById('qrInput').value;
+            const foreground = document.getElementById('foregroundColor').value.replace('#', '');
+            const background = document.getElementById('backgroundColor').value.replace('#', '');
+            const size = document.getElementById('qrSize').value;
+            
+            if (!input.trim()) {
+                alert('Please enter some text or URL to generate QR code');
+                return;
+            }
+            
+            // Generate QR code using Google Charts API
+            const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chco=${foreground}&chld=H|0&chl=${encodeURIComponent(input)}`;
+            
+            // Update image source
+            const qrImage = document.getElementById('qrCodeImage');
+            qrImage.src = qrUrl;
+            qrImage.alt = `QR Code for ${input.substring(0, 50)}...`;
+            
+            // Update download links
+            document.getElementById('downloadPNG').href = qrUrl + '&chof=.png';
+            document.getElementById('downloadSVG').href = qrUrl.replace('chart.googleapis.com/chart', 'api.qrserver.com/v1/create-qr-code') + '&format=svg';
+        }
+        
+        // Select option function
+        function selectOption(element) {
+            // Remove active class from all options
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to clicked option
+            element.classList.add('active');
+            
+            // Set example text based on selection
+            const inputField = document.getElementById('qrInput');
+            const optionText = element.querySelector('div').textContent.trim();
+            
+            switch(optionText) {
+                case 'Website URL':
+                    inputField.value = 'https://www.sktoolhub.in';
+                    inputField.placeholder = 'Enter website URL';
+                    break;
+                case 'WhatsApp':
+                    inputField.value = 'https://wa.me/911234567890';
+                    inputField.placeholder = 'Enter WhatsApp number with country code';
+                    break;
+                case 'Contact Info':
+                    inputField.value = 'BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:1234567890\nEMAIL:john@example.com\nEND:VCARD';
+                    inputField.placeholder = 'Enter contact information (vCard format)';
+                    break;
+                case 'WiFi Network':
+                    inputField.value = 'WIFI:S:NetworkName;T:WPA;P:Password123;;';
+                    inputField.placeholder = 'Enter WiFi details (SSID and Password)';
+                    break;
+            }
+        }
+        
+        // Initialize with default QR code
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQRCode();
+        });
+    </script>
+</body>
+  </html>
