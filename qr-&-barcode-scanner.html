@@ -1,138 +1,844 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Free QR & Barcode Scanner Online | Scan QR Code Using Camera – SK Toolhub</title>
-
-<meta name="description" content="Free QR & Barcode Scanner online by SK Toolhub. Scan QR codes and barcodes instantly using front or back camera. No app, no signup, 100% secure.">
-
-<meta name="keywords" content="qr code scanner, barcode scanner online, free qr scanner, qr and barcode scanner, scan qr code online, qr code reader, barcode reader online, qr scanner using camera, scan qr code without app, secure qr scanner, sk toolhub qr scanner">
-
-<link rel="canonical" href="https://www.sktoolhub.in/qr-barcode-scanner.html">
-
-<meta property="og:title" content="Free QR & Barcode Scanner – SK Toolhub">
-<meta property="og:description" content="Scan QR codes and barcodes instantly using your camera. Free, fast and secure.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.sktoolhub.in/qr-barcode-scanner.html">
-<meta property="og:site_name" content="SK Toolhub">
-
-<meta name="twitter:card" content="summary_large_image">
-
-<script src="https://unpkg.com/html5-qrcode"></script>
-
-<style>
-body{margin:0;font-family:Poppins,Arial,sans-serif;background:#f4f8ff}
-.container{max-width:900px;margin:auto;padding:20px}
-.header{text-align:center;margin-bottom:25px}
-.header h1{color:#0066ff}
-.tool-box{background:#fff;padding:25px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
-label{font-weight:600}
-select{width:100%;padding:10px;margin:10px 0;border-radius:10px;border:1px solid #ccc}
-#reader{max-width:480px;margin:15px auto}
-.result{margin-top:15px;font-size:16px;color:#333;word-break:break-word}
-button{padding:10px 18px;border:none;border-radius:10px;background:#0066ff;color:#fff;font-weight:600;cursor:pointer;margin-top:10px}
-button:hover{background:#004ecc}
-.actions{text-align:center}
-</style>
-</head>
-
-<body>
-<div class="container">
-
-<div class="header">
-<h1>Free QR & Barcode Scanner Online</h1>
-<p>Scan QR codes and barcodes instantly using front or back camera</p>
-</div>
-
-<!-- TOOL -->
-<div class="tool-box">
-
-<label>Select Camera</label>
-<select id="cameraSelect"></select>
-
-<div id="reader"></div>
-
-<div class="result" id="result">
-Scan result will appear here...
-</div>
-
-<div class="actions">
-<button id="copyBtn" style="display:none">Copy Result</button>
-</div>
-
-<audio id="beep">
-<source src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" type="audio/ogg">
-</audio>
-
-</div>
-
-</div>
-
-<script>
-let html5QrCode;
-let currentCameraId=null;
-
-const cameraSelect=document.getElementById("cameraSelect");
-const resultBox=document.getElementById("result");
-const copyBtn=document.getElementById("copyBtn");
-const beep=document.getElementById("beep");
-
-function isValidUrl(text){
-  return /^https?:\/\//i.test(text);
-}
-
-function startScanner(cameraId){
-  if(html5QrCode){
-    html5QrCode.stop().catch(()=>{});
-  }
-
-  html5QrCode=new Html5Qrcode("reader");
-  html5QrCode.start(
-    cameraId,
-    { fps:10, qrbox:{width:250,height:250} },
-    decodedText=>{
-      beep.play().catch(()=>{});
-      resultBox.innerHTML="<strong>Scanned Result:</strong><br>"+decodedText;
-      copyBtn.style.display="inline-block";
-
-      if(isValidUrl(decodedText)){
-        setTimeout(()=>{
-          window.open(decodedText,"_blank");
-        },800);
-      }
-    },
-    error=>{}
-  );
-}
-
-Html5Qrcode.getCameras().then(cameras=>{
-  cameraSelect.innerHTML="";
-  cameras.forEach((cam,i)=>{
-    const opt=document.createElement("option");
-    opt.value=cam.id;
-    opt.text=cam.label || "Camera " + (i+1);
-    cameraSelect.appendChild(opt);
-
-    if(cam.label.toLowerCase().includes("back") ||
-       cam.label.toLowerCase().includes("rear") ||
-       cam.label.toLowerCase().includes("environment")){
-      currentCameraId=cam.id;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Free QR & Barcode Scanner Tool | Scan Codes Online | Sk Toolhub</title>
+    <meta name="description" content="Free online QR code and barcode scanner tool. Scan any QR code or barcode instantly using your device camera. No downloads required. 100% free at Sk Toolhub.">
+    <meta name="keywords" content="QR code scanner, barcode scanner, free online scanner, QR code reader, barcode reader, scan QR code, mobile scanner, webcam scanner, code 128, code 39, EAN, UPC, data matrix, QR code generator, QR code creator, barcode generator, free tools, online tools, digital tools, utility tools, code scanner online, scan with camera, QR code decoder, barcode decoder, product barcode scanner">
+    
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://sktoolhub.com/qr-barcode-scanner">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sktoolhub.com/qr-barcode-scanner">
+    <meta property="og:title" content="Free QR & Barcode Scanner Tool | Scan Codes Online | Sk Toolhub">
+    <meta property="og:description" content="Free online QR code and barcode scanner tool. Scan any QR code or barcode instantly using your device camera.">
+    <meta property="og:image" content="https://sktoolhub.com/images/qr-scanner-og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sktoolhub.com/qr-barcode-scanner">
+    <meta property="twitter:title" content="Free QR & Barcode Scanner Tool | Scan Codes Online | Sk Toolhub">
+    <meta property="twitter:description" content="Free online QR code and barcode scanner tool. Scan any QR code or barcode instantly using your device camera.">
+    <meta property="twitter:image" content="https://sktoolhub.com/images/qr-scanner-twitter-image.jpg">
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Sk Toolhub",
+      "url": "https://sktoolhub.com",
+      "logo": "https://sktoolhub.com/images/logo.png",
+      "description": "Sk Toolhub provides free online tools for everyday digital needs",
+      "sameAs": [
+        "https://facebook.com/sktoolhub",
+        "https://twitter.com/sktoolhub",
+        "https://instagram.com/sktoolhub"
+      ]
     }
-  });
-
-  if(!currentCameraId && cameras.length>0){
-    currentCameraId=cameras[0].id;
-  }
-
-  cameraSelect.value=currentCameraId;
-  startScanner(currentCameraId);
-});
-
-cameraSelect.addEventListener("change",()=>{
-  startScanner(cameraSelect.value);
-});
-
-copyBtn.onclick=function(){
-
+    </script>
+    
+    <!-- WebPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "QR and Barcode Scanner Tool",
+      "description": "Free online QR code and barcode scanner tool",
+      "url": "https://sktoolhub.com/qr-barcode-scanner",
+      "mainEntity": {
+        "@type": "SoftwareApplication",
+        "name": "QR and Barcode Scanner",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    }
+    </script>
+    
+    <!-- HowTo Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Use QR and Barcode Scanner",
+      "description": "Step-by-step guide to scan QR codes and barcodes",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Allow camera access",
+          "text": "Click the 'Start Scanner' button and allow camera access when prompted"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Position the code",
+          "text": "Hold your device so the QR code or barcode is within the scanner frame"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Wait for scan",
+          "text": "The scanner will automatically detect and decode the code"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "View results",
+          "text": "View the decoded information or click on URLs to open them"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #4dabf7;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .tool-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 900px;
+        }
+        
+        .tool-title {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border-bottom: 2px solid #4dabf7;
+            padding-bottom: 0.5rem;
+        }
+        
+        .tool-description {
+            color: #555;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .scanner-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scanner-wrapper {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        #scanner-container {
+            width: 100%;
+            height: 400px;
+            background: #111;
+            position: relative;
+        }
+        
+        #scanner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .scanner-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 200px;
+            border: 3px solid #4dabf7;
+            border-radius: 8px;
+            z-index: 10;
+            box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        }
+        
+        .scanner-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: #4dabf7;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #339af0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f1f3f5;
+            color: #495057;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-success {
+            background: #40c057;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #37b24d;
+        }
+        
+        .results-section {
+            width: 100%;
+            max-width: 600px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .results-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        #scan-result {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid #4dabf7;
+            word-break: break-all;
+            min-height: 60px;
+            font-family: monospace;
+        }
+        
+        #result-url {
+            color: #1c7ed6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        #result-url:hover {
+            text-decoration: underline;
+        }
+        
+        .camera-selector {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .instructions {
+            background: #e7f5ff;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .instructions h3 {
+            color: #1c7ed6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 900px;
+        }
+        
+        .content-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .content-article {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .content-article h2, .content-article h3 {
+            color: #2c3e50;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .content-article p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .content-article ul, .content-article ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+        }
+        
+        .keyword-box {
+            background: #f8f9fa;
+            border-left: 4px solid #4dabf7;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-container, .content-section {
+                padding: 1.5rem;
+            }
+            
+            #scanner-container {
+                height: 300px;
+            }
+            
+            .scanner-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .scanning {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { border-color: #4dabf7; }
+            50% { border-color: #ff6b6b; }
+            100% { border-color: #4dabf7; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Sk Toolhub</h1>
+            <p class="tagline">Free online tools for everyday digital tasks. No downloads, no registration required.</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="tool-container">
+            <h1 class="tool-title">Free QR Code & Barcode Scanner</h1>
+            <p class="tool-description">Scan any QR code or barcode instantly using your device's camera. This tool works completely in your browser - no data is sent to our servers. 100% free and private.</p>
+            
+            <div class="scanner-section">
+                <div class="scanner-wrapper">
+                    <div id="scanner-container">
+                        <video id="scanner-video" playsinline></video>
+                        <div class="scanner-frame"></div>
+                    </div>
+                </div>
+                
+                <div class="scanner-controls">
+                    <button id="start-scanner" class="btn btn-primary">
+                        <span>🔍</span> Start Scanner
+                    </button>
+                    <button id="stop-scanner" class="btn btn-secondary hidden">
+                        <span>⏸️</span> Pause Scanner
+                    </button>
+                    <button id="switch-camera" class="btn btn-secondary">
+                        <span>🔄</span> Switch Camera
+                    </button>
+                    <button id="test-scan" class="btn btn-success">
+                        <span>🧪</span> Test with Sample QR
+                    </button>
+                </div>
+                
+                <div class="camera-selector">
+                    <label for="camera-select">Camera:</label>
+                    <select id="camera-select">
+                        <option value="">Select Camera</option>
+                    </select>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How to use this QR & Barcode Scanner:</h3>
+                    <ul>
+                        <li>Click "Start Scanner" and allow camera access when prompted</li>
+                        <li>Position the QR code or barcode within the scanning frame</li>
+                        <li>The scanner will automatically detect and decode the code</li>
+                        <li>For URLs, click the link that appears to open the website</li>
+                        <li>Use "Switch Camera" to toggle between front and back cameras</li>
+                    </ul>
+                </div>
+                
+                <div class="results-section">
+                    <h3 class="results-title"><span>📊</span> Scan Results:</h3>
+                    <div id="scan-result">
+                        <p id="result-text">Scanner not active. Click "Start Scanner" to begin.</p>
+                        <a id="result-url" class="hidden" href="#" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2 class="content-title">The Complete Guide to QR Codes and Barcodes: Scanning, Uses, and Technology</h2>
+            
+            <div class="content-article">
+                <div class="keyword-box">
+                    <strong>Keywords:</strong> QR code scanner, barcode scanner, free online scanner, QR code reader, barcode reader, scan QR code, mobile scanner, webcam scanner, code 128, code 39, EAN, UPC, data matrix, QR code generator, QR code creator, barcode generator, free tools, online tools, digital tools, utility tools, code scanner online, scan with camera, QR code decoder, barcode decoder, product barcode scanner
+                </div>
+                
+                <p>In today's digital age, <strong>QR codes and barcodes</strong> have become ubiquitous elements of our daily lives. From product packaging to restaurant menus, event tickets to payment systems, these two-dimensional and one-dimensional codes serve as bridges between physical objects and digital information. This comprehensive guide explores everything you need to know about QR codes and barcodes, with a special focus on how to use scanning tools like the <strong>free QR and barcode scanner</strong> provided by Sk Toolhub.</p>
+                
+                <h2>Understanding QR Codes: More Than Just Square Patterns</h2>
+                
+                <p><strong>QR codes</strong> (Quick Response codes) were originally developed in 1994 by the Japanese company Denso Wave for tracking automotive parts. Unlike traditional barcodes that store information horizontally, QR codes store data in both horizontal and vertical directions, allowing them to hold significantly more information. A standard QR code can store up to 7,089 numeric characters or 4,296 alphanumeric characters, making them versatile tools for various applications.</p>
+                
+                <p>The structure of a QR code includes several key components: finder patterns (the three squares in the corners), alignment patterns, timing patterns, and the data area. Modern QR codes often include error correction capability, allowing them to be scanned even if partially damaged or obscured. This robustness has contributed to their widespread adoption across industries.</p>
+                
+                <h3>Common Uses of QR Codes</h3>
+                
+                <p>Today, <strong>QR code scanning</strong> serves numerous purposes:</p>
+                
+                <ul>
+                    <li><strong>Marketing and Advertising:</strong> QR codes link to websites, promotional videos, or special offers</li>
+                    <li><strong>Contactless Payments:</strong> Payment QR codes facilitate transactions without physical contact</li>
+                    <li><strong>Digital Menus:</strong> Restaurants use QR codes to provide touchless menu access</li>
+                    <li><strong>Event Management:</strong> Tickets and boarding passes often incorporate QR codes</li>
+                    <li><strong>Product Information:</strong> QR codes on products link to manuals, specifications, or authenticity verification</li>
+                    <li><strong>Wi-Fi Access:</strong> QR codes can encode network credentials for easy connection</li>
+                    <li><strong>Business Cards:</strong> Digital vCards can be encoded in QR codes for contact sharing</li>
+                </ul>
+                
+                <h2>Barcodes: The Original Product Identification System</h2>
+                
+                <p>While QR codes have gained popularity in recent years, traditional <strong>barcodes</strong> remain essential for inventory management, retail, and logistics. The first barcode system was patented in 1952, but it wasn't until the 1970s that the Universal Product Code (UPC) became the standard for product labeling in retail environments.</p>
+                
+                <p>Barcodes work by representing data in varying widths and spacings of parallel lines (1D barcodes) or patterns of dots, squares, and other geometric shapes (2D barcodes). Common barcode formats include:</p>
+                
+                <ul>
+                    <li><strong>UPC (Universal Product Code):</strong> The standard retail barcode in North America</li>
+                    <li><strong>EAN (European Article Number):</strong> International standard barcode for retail products</li>
+                    <li><strong>Code 128:</strong> High-density linear barcode used in shipping and packaging</li>
+                    <li><strong>Code 39:</strong> Alphanumeric barcode commonly used in non-retail environments</li>
+                    <li><strong>Data Matrix:</strong> Two-dimensional barcode that can store large amounts of data in small space</li>
+                </ul>
+                
+                <h2>How QR and Barcode Scanners Work</h2>
+                
+                <p>A <strong>QR code scanner</strong> or <strong>barcode reader</strong> works by illuminating the code with red light (often from an LED), then measuring the reflected light with a photodiode. The pattern of dark and light areas creates a unique signal that is converted into digital data. Modern scanners, like the one provided by Sk Toolhub, use device cameras and sophisticated algorithms to decode these patterns.</p>
+                
+                <p>The scanning process typically involves these steps:</p>
+                
+                <ol>
+                    <li>Image capture through the device camera</li>
+                    <li>Pre-processing to enhance contrast and reduce noise</li>
+                    <li>Pattern recognition to identify the code type and orientation</li>
+                    <li>Decoding the binary pattern into meaningful data</li>
+                    <li>Error correction (for QR codes with this feature)</li>
+                    <li>Output of the decoded information or action (like opening a URL)</li>
+                </ol>
+                
+                <h2>The Advantages of Online Scanning Tools</h2>
+                
+                <p>While dedicated scanning apps are available, <strong>online QR and barcode scanners</strong> like the Sk Toolhub scanner offer distinct advantages:</p>
+                
+                <ul>
+                    <li><strong>No Installation Required:</strong> Access directly through your web browser</li>
+                    <li><strong>Cross-Platform Compatibility:</strong> Works on desktop, laptop, tablet, and mobile devices</li>
+                    <li><strong>Privacy Protection:</strong> Scanning occurs locally in your browser without data being sent to servers</li>
+                    <li><strong>Always Updated:</strong> No need to update apps - improvements are automatically available</li>
+                    <li><strong>Free Access:</strong> Completely free with no premium tiers or subscriptions</li>
+                </ul>
+                
+                <h2>Using Sk Toolhub's Free Scanner Tool</h2>
+                
+                <p>The <strong>free QR and barcode scanner</strong> provided by Sk Toolhub exemplifies modern web technology at its best. Built with HTML5, JavaScript, and device camera APIs, this tool offers a seamless scanning experience. Key features include:</p>
+                
+                <ul>
+                    <li><strong>Camera Selection:</strong> Switch between front and back cameras for optimal scanning</li>
+                    <li><strong>Automatic Detection:</strong> Scans codes automatically without requiring manual capture</li>
+                    <li><strong>URL Recognition:</strong> Automatically detects and makes URLs clickable for instant access</li>
+                    <li><strong>Multiple Format Support:</strong> Reads various QR code and barcode formats</li>
+                    <li><strong>Responsive Design:</strong> Works perfectly on all screen sizes</li>
+                </ul>
+                
+                <h2>Security Considerations When Scanning Codes</h2>
+                
+                <p>While <strong>QR code scanning</strong> is generally safe, it's important to exercise caution:</p>
+                
+                <ul>
+                    <li>Only scan codes from trusted sources</li>
+                    <li>Be cautious of codes that redirect to unfamiliar websites</li>
+                    <li>Verify the URL before entering sensitive information</li>
+                    <li>Use scanners (like Sk Toolhub's) that show the decoded content before taking action</li>
+                    <li>Avoid scanning codes in unsolicited emails or messages</li>
+                </ul>
+                
+                <h2>The Future of Code Scanning Technology</h2>
+                
+                <p>As technology evolves, so do scanning capabilities. Future developments may include:</p>
+                
+                <ul>
+                    <li>Augmented Reality integration with code scanning</li>
+                    <li>AI-powered scanners that understand context and content</li>
+                    <li>Blockchain-verified codes for enhanced security and authenticity</li>
+                    <li>Smaller, more data-dense codes for limited-space applications</li>
+                    <li>Integration with IoT devices for automatic scanning and action</li>
+                </ul>
+                
+                <h2>Conclusion</h2>
+                
+                <p><strong>QR codes and barcodes</strong> have transformed how we access information and interact with products. From their humble beginnings in inventory management to their current status as essential tools in marketing, payments, and information sharing, these codes represent a perfect marriage of physical and digital worlds. Tools like Sk Toolhub's <strong>free online QR and barcode scanner</strong> make this technology accessible to everyone, eliminating the need for specialized apps or equipment. Whether you're a consumer looking to access product information, a business professional sharing contact details, or a developer implementing code-based solutions, understanding and utilizing these scanning technologies is an essential skill in our increasingly connected world.</p>
+                
+                <p>The next time you encounter a QR code or barcode, remember that you have a powerful <strong>free scanning tool</strong> available at your fingertips. Sk Toolhub's scanner provides a secure, private, and efficient way to decode these information-packed patterns, bridging the gap between physical objects and digital resources with just a click.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <h3>Sk Toolhub</h3>
+            <p>Free online tools for everyday tasks. No registration, no downloads, no limits.</p>
+            <p class="copyright">© 2023 Sk Toolhub. All rights reserved. This tool is 100% free to use.</p>
+        </div>
+    </footer>
+    
+    <!-- Include QR/Barcode scanning library -->
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.19.1"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const videoElement = document.getElementById('scanner-video');
+            const startButton = document.getElementById('start-scanner');
+            const stopButton = document.getElementById('stop-scanner');
+            const switchButton = document.getElementById('switch-camera');
+            const testButton = document.getElementById('test-scan');
+            const cameraSelect = document.getElementById('camera-select');
+            const resultText = document.getElementById('result-text');
+            const resultUrl = document.getElementById('result-url');
+            const scannerFrame = document.querySelector('.scanner-frame');
+            
+            // Scanner variables
+            let codeReader = null;
+            let isScanning = false;
+            let currentStream = null;
+            let cameras = [];
+            let currentCameraIndex = 0;
+            let usingBackCamera = true;
+            
+            // Initialize the barcode scanner
+            function initScanner() {
+                const { BrowserQRCodeReader, BrowserBarcodeReader } = window.ZXing;
+                codeReader = new BrowserQRCodeReader();
+                
+                // Populate camera dropdown
+                listCameras();
+                
+                // Event listeners
+                startButton.addEventListener('click', startScanner);
+                stopButton.addEventListener('click', stopScanner);
+                switchButton.addEventListener('click', switchCamera);
+                testButton.addEventListener('click', testScanner);
+                cameraSelect.addEventListener('change', changeCamera);
+            }
+            
+            // List available cameras
+            async function listCameras() {
+                try {
+                    const videoInputDevices = await ZXing.BrowserCodeReader.listVideoInputDevices();
+                    cameras = videoInputDevices;
+                    
+                    cameraSelect.innerHTML = '<option value="">Select Camera</option>';
+                    
+                    videoInputDevices.forEach((device, index) => {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.text = device.label || `Camera ${index + 1}`;
+                        cameraSelect.appendChild(option);
+                        
+                        // Try to identify back camera (usually the second one or has "back" in label)
+                        if (device.label && device.label.toLowerCase().includes('back')) {
+                            currentCameraIndex = index;
+                            option.selected = true;
+                        }
+                    });
+                    
+                    // If no back camera found but we have multiple cameras, use the second one
+                    if (cameras.length > 1 && currentCameraIndex === 0) {
+                        currentCameraIndex = 1;
+                        cameraSelect.selectedIndex = currentCameraIndex + 1; // +1 for the "Select Camera" option
+                    }
+                } catch (error) {
+                    console.error('Error listing cameras:', error);
+                }
+            }
+            
+            // Start the scanner
+            async function startScanner() {
+                if (isScanning) return;
+                
+                try {
+                    // Get selected camera or default to back camera
+                    const selectedCameraId = cameraSelect.value || (cameras[currentCameraIndex] ? cameras[currentCameraIndex].deviceId : undefined);
+                    
+                    // Start decoding
+                    const result = await codeReader.decodeFromVideoDevice(
+                        selectedCameraId,
+                        videoElement,
+                        (result, error) => {
+                            if (result) {
+                                handleScanResult(result.text);
+                            }
+                            
+                            if (error && !(error instanceof ZXing.NotFoundException)) {
+                                console.error('Scan error:', error);
+                            }
+                        }
+                    );
+                    
+                    currentStream = result.stream;
+                    isScanning = true;
+                    
+                    // Update UI
+                    startButton.classList.add('hidden');
+                    stopButton.classList.remove('hidden');
+                    scannerFrame.classList.add('scanning');
+                    resultText.textContent = 'Scanning... Position a QR code or barcode within the frame.';
+                    resultUrl.classList.add('hidden');
+                    
+                    console.log('Scanner started successfully');
+                } catch (error) {
+                    console.error('Error starting scanner:', error);
+                    resultText.textContent = 'Error: Could not access camera. Please ensure you have granted camera permissions.';
+                }
+            }
+            
+            // Stop the scanner
+            function stopScanner() {
+                if (!isScanning) return;
+                
+                // Stop all tracks in the stream
+                if (currentStream) {
+                    currentStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Reset the scanner
+                if (codeReader) {
+                    codeReader.reset();
+                }
+                
+                isScanning = false;
+                
+                // Update UI
+                startButton.classList.remove('hidden');
+                stopButton.classList.add('hidden');
+                scannerFrame.classList.remove('scanning');
+                resultText.textContent = 'Scanner stopped. Click "Start Scanner" to begin again.';
+                resultUrl.classList.add('hidden');
+            }
+            
+            // Switch between front and back camera
+            function switchCamera() {
+                if (cameras.length < 2) {
+                    resultText.textContent = 'Only one camera available on this device.';
+                    return;
+                }
+                
+                // Toggle camera index
+                currentCameraIndex = (currentCameraIndex + 1) % cameras.length;
+                usingBackCamera = !usingBackCamera;
+                
+                // Update dropdown
+                cameraSelect.selectedIndex = currentCameraIndex + 1; // +1 for the "Select Camera" option
+                
+                // Restart scanner if it's running
+                if (isScanning) {
+                    stopScanner();
+                    setTimeout(startScanner, 500);
+                }
+                
+                // Update button text
+                switchButton.innerHTML = `<span>🔄</span> Switch to ${usingBackCamera ? 'Front' : 'Back'} Camera`;
+            }
+            
+            // Change camera via dropdown
+            function changeCamera() {
+                const selectedIndex = cameraSelect.selectedIndex;
+                if (selectedIndex === 0) return; // "Select Camera" option
+                
+                currentCameraIndex = selectedIndex - 1; // -1 for the "Select Camera" option
+                
+                // Restart scanner if it's running
+                if (isScanning) {
+                    stopScanner();
+                    setTimeout(startScanner, 500);
+                }
+            }
+            
+            // Handle scan results
+            function handleScanResult(text) {
+                console.log('Scanned:', text);
+                resultText.textContent = `Scanned: ${text}`;
+                
+                // Check if it's a URL
+                const urlPattern = /^(https?:\/\/|www\.)[^\s]+$/i;
+                if (urlPattern.test(text)) {
+                    let url = text;
+                    if (!text.startsWith('http')) {
+                        url = 'https://' + text;
+                    }
+                    
+                    resultUrl.href = url;
+                    resultUrl.textContent = `Open: ${url}`;
+                    resultUrl.classList.remove('hidden');
+                    
+                    // Optional: Auto-open URLs (uncomment if desired)
+                    // window.open(url, '_blank');
+                } else {
+                    resultUrl.classList.add('hidden');
+                }
+                
+                // Visual feedback
+                scannerFrame.style.borderColor = '#40c057';
+                setTimeout(() => {
+                    if (scannerFrame.classList.contains('scanning')) {
+                        scannerFrame.style.borderColor = '';
+                    }
+                }, 500);
+            }
+            
+            // Test with a sample QR code (simulated)
+            function testScanner() {
+                stopScanner();
+                
+                // Simulate scanning a QR code
+                const sampleData = [
+                    'https://sktoolhub.com',
+                    'https://example.com/product-info',
+                    'WIFI:S:MyNetwork;T:WPA;P:MyPassword;;',
+                    'BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD',
+                    'Product Code: ABC123-XYZ\nPrice: $49.99\nIn Stock: Yes'
+                ];
+                
+                const randomData = sampleData[Math.floor(Math.random() * sampleData.length)];
+                handleScanResult(randomData);
+                
+                resultText.textContent = `Test Scan Result: ${randomData}`;
+            }
+            
+            // Initialize the scanner when page loads
+            initScanner();
+            
+            // Update switch button text based on initial camera state
+            switchButton.innerHTML = `<span>🔄</span> Switch to ${usingBackCamera ? 'Front' : 'Back'} Camera`;
+        });
+    </script>
+</body>
+</html>
