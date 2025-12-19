@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="favicon-16x16.png"type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Image, Video & PDF Tools Online – Sk ToolHub</title>
     <meta name="description" content="Use free online tools for images, videos, and PDFs on Sk ToolHub. Fast, secure, no-login tools for editing, converting, compressing, and more.">
+    
     <!-- Open Graph Meta Tags -->
-<meta property="og:title" content="SK Toolhub - Image, Video and PDF resizer"/>
-<meta property="og:description" content="Use SK Toolhub’s free online tools like image resizer, PDF converter, video compressor, and more to make your work easy." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.sktoolhub.in/" />
-<meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg" />
-<meta property="og:site_name" content="SK Toolhub" />
-
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="SK Toolhub - Compress image, pdf and Video" />
-<meta name="twitter:description" content="Use SK Toolhub’s powerful free tools for image, video, and document conversions easily." />
-<meta name="twitter:image" content="https://www.sktoolhub.in/og-image.jpg" />
+    <meta property="og:title" content="SK Toolhub - Image, Video and PDF resizer"/>
+    <meta property="og:description" content="Use SK Toolhub's free online tools like image resizer, PDF converter, video compressor, and more to make your work easy." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.sktoolhub.in/" />
+    <meta property="og:image" content="https://www.sktoolhub.in/og-image.jpg" />
+    <meta property="og:site_name" content="SK Toolhub" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SK Toolhub - Compress image, pdf and Video" />
+    <meta name="twitter:description" content="Use SK Toolhub's powerful free tools for image, video, and document conversions easily." />
+    <meta name="twitter:image" content="https://www.sktoolhub.in/og-image.jpg" />
+    
     <link rel="canonical" href="https://www.sktoolhub.in/" />
+    
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "SK ToolHub",
-  "url": "https://www.sktoolhub.in/",
-  "publisher": {
-    "@type": "Organization",
-    "name": "SK ToolHub",
-    "url": "https://www.sktoolhub.in"
-  },
-  "description": "SK ToolHub provides free online tools like Image Compressor, Image Background Remover, PDF Converter, Word Counter and more. Fast, easy and free to use.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://www.sktoolhub.in/?s={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SK ToolHub",
+      "url": "https://www.sktoolhub.in/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "SK ToolHub",
+        "url": "https://www.sktoolhub.in"
+      },
+      "description": "SK ToolHub provides free online tools like Image Compressor, Image Background Remover, PDF Converter, Word Counter and more. Fast, easy and free to use.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.sktoolhub.in/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.sktoolhub.in/sitemap.xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -102,6 +106,8 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
+            position: relative;
         }
 
         .nav-links a {
@@ -109,10 +115,82 @@
             color: #333;
             font-weight: 500;
             transition: color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
         }
 
         .nav-links a:hover {
             color: #667eea;
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 10px 0;
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f1f5f9;
+            color: #667eea;
+            padding-left: 25px;
+        }
+
+        /* Submenu Styles */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            display: none;
+            padding: 10px 0;
+        }
+
+        .dropdown-submenu:hover .submenu {
+            display: block;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
         }
 
         /* Hero Section */
@@ -219,7 +297,7 @@
             padding: 1rem 0;
             border-bottom: 1px solid #f1f5f9;
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -253,10 +331,12 @@
             transition: background 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .use-tool-btn:hover {
             background: #5a6fd8;
+            transform: translateY(-2px);
         }
 
         /* Features Section */
@@ -346,23 +426,62 @@
             color: #cbd5e0;
         }
 
+        .contact-info i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+
         .footer-bottom {
             text-align: center;
             margin-top: 3rem;
             padding-top: 2rem;
             border-top: 1px solid #2d3748;
             color: #cbd5e0;
+            font-size: 0.9rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .main-nav {
-                flex-direction: column;
-                gap: 1rem;
+            .mobile-menu-btn {
+                display: block;
             }
 
             .nav-links {
-                gap: 1rem;
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+                margin-top: 10px;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+
+            .submenu {
+                position: static;
+                box-shadow: none;
+                padding-left: 20px;
             }
 
             .hero h1 {
@@ -397,67 +516,79 @@
                 padding: 1.5rem;
             }
         }
-   </style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RMR7WDYG2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-9RMR7WDYG2');
-</script>
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RMR7WDYG2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9RMR7WDYG2');
+    </script>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="top-bar">
             <div class="nav-container">
-                sktoolhub@gmail.com
+                ✉️ sktoolhub@gmail.com
             </div>
         </div>
         <div class="nav-container">
             <nav class="main-nav">
                 <div class="logo">
-                     sk toolhub
+                    <i class="fas fa-tools"></i> SK Toolhub
                 </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
                 <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#tools">Tools</a></li>
-
-    <li class="dropdown">
-        <a href="blogs/index.html">Blogs ▼</a>
-        <ul class="dropdown-menu">
-
-            <li class="dropdown-submenu">
-                <a href="#">Image Tools</a>
-                <ul class="submenu">
-                    <li><a href="blogs/image-resizer.html">Image Resizer</a></li>
-                    <li><a href="image-compressor-listing.html">Image Compressor</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="blogs/index.html">Blogs ▼</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a href="#">Image Tools</a>
+                                <ul class="submenu">
+                                    <li><a href="blogs/image-resizer.html">Image Resizer</a></li>
+                                    <li><a href="image-compressor-listing.html">Image Compressor</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li class="dropdown-submenu">
+                                <a href="#">PDF Tools</a>
+                                <ul class="submenu">
+                                    <li><a href="jpg-to-pdf-listing.html">JPG to PDF</a></li>
+                                    <li><a href="blogs/pdf-compressor.html">PDF Compressor</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li class="dropdown-submenu">
+                                <a href="#">Video Tools</a>
+                                <ul class="submenu">
+                                    <li><a href="video-to-gif-listing.html">Video to GIF</a></li>
+                                    <li><a href="video-compressor.html">Video Compressor</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
-            </li>
-
-            <li class="dropdown-submenu">
-                <a href="#">PDF Tools</a>
-                <ul class="submenu">
-                    <li><a href="jpg-to-pdf-listing.html">JPG to PDF</a></li>
-                    <li><a href="blogs/pdf-compressor.html">PDF Compressor</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown-submenu">
-    <a href="#">Video Tools</a>
-    <ul class="submenu">
-        <li><a href="video-to-gif-listing.html">Video to GIF</a></li>
-        <li><a href="video-compressor.html">Video Compressor</a></li>
-    </ul>
-</li>
-
-        </ul>
-    </li>
-
-    <li><a href="#contact">Contact</a></li>
-</ul>
             </nav>
         </div>
     </header>
@@ -465,7 +596,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Image, PDF and Video resizer</h1>
+            <h1>Image, PDF and Video Tools</h1>
             <p>SK Toolhub brings powerful online utilities in one place. From image converters and video tools to PDF utilities and smart advanced tools — everything is free and just a click away. More tools are being added regularly to help you work smarter and faster.</p>
         </div>
     </section>
@@ -479,7 +610,7 @@
 
         <div class="tools-grid">
             <!-- Image Tools Category -->
-            <div class="tool-category">
+            <div class="tool-category fade-in">
                 <div class="category-header">
                     <div class="category-icon">
                         <i class="fas fa-image"></i>
@@ -519,7 +650,7 @@
             </div>
 
             <!-- More Image Tools -->
-            <div class="tool-category">
+            <div class="tool-category fade-in">
                 <div class="category-header">
                     <div class="category-icon">
                         <i class="fas fa-edit"></i>
@@ -559,7 +690,7 @@
             </div>
 
             <!-- Document Tools -->
-            <div class="tool-category">
+            <div class="tool-category fade-in">
                 <div class="category-header">
                     <div class="category-icon">
                         <i class="fas fa-file-alt"></i>
@@ -590,82 +721,54 @@
                     </li>
                 </ul>
             </div>
-       <!-- ============================================
-    Coding/Utility Tools Section
-================================================ -->
-<div class="tool-category">
-    <div class="category-header">
-        <div class="category-icon">
-            <i class="fas fa-code"></i>
-        </div>
-        <h3>Coding/Utility Tools (Supported)</h3>
-    </div>
-    
-    <ul class="tools-list">
-        <!-- QR Code Generator -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>QR Code Generator</h4>
-                <p>Create custom QR codes for URLs, text, contacts, and more</p>
+            
+            <!-- Coding/Utility Tools Section -->
+            <div class="tool-category fade-in">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Coding/Utility Tools</h3>
+                </div>
+                
+                <ul class="tools-list">
+                    <!-- QR Code Generator -->
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>QR Code Generator</h4>
+                            <p>Create custom QR codes for URLs, text, contacts, and more</p>
+                        </div>
+                        <a href="qr-generator.html" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    
+                    <!-- QR & Barcode Scanner -->
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>QR & Barcode Scanner</h4>
+                            <p>Scan QR Codes and Barcodes using your device's camera</p>
+                        </div>
+                        <a href="qr-barcode-scanner.html" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    
+                    <!-- Barcode Generator -->
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Barcode Generator</h4>
+                            <p>Generate barcodes in multiple formats (EAN-13, CODE128, etc.)</p>
+                        </div>
+                        <a href="barcode-generator.html" class="use-tool-btn">Use Tool</a>
+                    </li>
+                    
+                    <!-- Password Generator -->
+                    <li class="tool-item">
+                        <div class="tool-info">
+                            <h4>Password Generator</h4>
+                            <p>Create strong and secure random passwords instantly</p>
+                        </div>
+                        <a href="password-generator.html" class="use-tool-btn">Use Tool</a>
+                    </li>
+                </ul>
             </div>
-            <a href="qr-generator.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- QR & Barcode Code Scanner -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>QR & Barcode Code Scanner</h4>
-                <p>Scan QR Codes and Barcodes using your device's camera (HTTPS required)</p>
-            </div>
-            <a href="qr-&-barcode-scanner.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- Barcode Generator -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>Barcode Generator</h4>
-                <p>Generate barcodes in multiple formats (EAN-13, CODE128, etc.)</p>
-            </div>
-            <a href="barcode-generator.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- Password Generator -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>Password Generator</h4>
-                <p>Create strong and secure random passwords instantly</p>
-            </div>
-            <a href="password-generator.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- Color Picker Tool -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>Color Picker Tool</h4>
-                <p>Pick colors from screen and get HEX, RGB, HSL values</p>
-            </div>
-            <a href="color-picker.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- Gradient Generator -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>Gradient Generator</h4>
-                <p>Create beautiful CSS gradients with custom colors and angles</p>
-            </div>
-            <a href="gradient-generator.html" class="use-tool-btn">Use Tool</a>
-        </li>
-        
-        <!-- HTML → CSS Beautifier -->
-        <li class="tool-item">
-            <div class="tool-info">
-                <h4>HTML → CSS Beautifier</h4>
-                <p>Format and beautify your HTML and CSS code with proper indentation</p>
-            </div>
-            <a href="html-css-beautifier.html" class="use-tool-btn">Use Tool</a>
-        </li>
-    </ul>
-</div>
         </div>
     </section>
 
@@ -676,28 +779,28 @@
             <p>We provide the best online tools experience</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <i class="fas fa-bolt"></i>
                 </div>
                 <h3>Fast Processing</h3>
                 <p>Lightning-fast processing with our optimized algorithms</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <h3>Secure & Private</h3>
                 <p>Your files are processed securely and never stored</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <i class="fas fa-laptop"></i>
                 </div>
                 <h3>No Installation</h3>
                 <p>Use directly in your browser without any downloads</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <i class="fas fa-dollar-sign"></i>
                 </div>
@@ -730,13 +833,14 @@
                 <ul>
                     <li><a href="#image-tools">Image Tools</a></li>
                     <li><a href="#document-tools">Document Tools</a></li>
+                    <li><a href="#utility-tools">Utility Tools</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Contact Info</h4>
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> sktoolhub@gmail.com</p>
-                    <p><i class="fas fa-globe"></i><a href=#https://www.sktoolhub.in/index.html">www.sktoolhub.in</a><//p>
+                    <p><i class="fas fa-globe"></i> <a href="https://www.sktoolhub.in/index.html">www.sktoolhub.in</a></p>
                 </div>
             </div>
         </div>
@@ -746,23 +850,76 @@
     </footer>
 
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    
+                    // Smooth scroll to target
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
 
-        // Add loading animation
+        // Page load animation
         document.addEventListener('DOMContentLoaded', function() {
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s ease';
+            
             setTimeout(() => {
                 document.body.style.opacity = '1';
             }, 100);
+            
+            // Add fade-in animation to elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Tool button click tracking
+        document.querySelectorAll('.use-tool-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const toolName = this.textContent.trim();
+                console.log(`Tool clicked: ${toolName}`);
+                // You can add Google Analytics tracking here
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'tool_click', {
+                        'event_category': 'engagement',
+                        'event_label': toolName
+                    });
+                }
+            });
         });
     </script>
 </body>
