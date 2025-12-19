@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -135,12 +135,4 @@ cameraSelect.addEventListener("change",()=>{
 });
 
 copyBtn.onclick=function(){
-  const text=resultBox.innerText.replace("Scanned Result:","").trim();
-  navigator.clipboard.writeText(text);
-  copyBtn.innerText="Copied ✔";
-  setTimeout(()=>copyBtn.innerText="Copy Result",1500);
-};
-</script>
 
-</body>
-</html>
