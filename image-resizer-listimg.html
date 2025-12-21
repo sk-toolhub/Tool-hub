@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - Articles List | Sk Toolhub</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .main-title {
+            text-align: center;
+            color: #2575fc;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+            font-size: 16px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .article-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid #6a11cb;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-left-color: #ff416c;
+        }
+        .article-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2575fc;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .article-title:before {
+            content: "📐";
+            margin-right: 12px;
+            font-size: 22px;
+        }
+        .article-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .article-meta {
+            font-size: 13px;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px dashed #eee;
+            padding-top: 12px;
+        }
+        .read-more {
+            color: #6a11cb;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .tool-link {
+            display: block;
+            text-align: center;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            width: fit-content;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+        }
+        .tool-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.4);
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            .article-card {
+                padding: 20px;
+            }
+            .article-title {
+                font-size: 18px;
+            }
+            .article-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Image Resizer – Blog & Articles | Sk Toolhub
+</header>
+
+<div class="container">
+    
+    <h1 class="main-title">Complete Guide to Image Resizing</h1>
+    <p class="subtitle">Explore our collection of detailed articles covering everything about image resizing, aspect ratio preservation, batch processing, and practical guides to resize images for different platforms.</p>
+
+    <!-- TOOL LINK -->
+    <a href="https://www.sktoolhub.in/image-resizer.html" class="tool-link">
+        🚀 Try Our Free Image Resizer Tool Now
+    </a>
+
+    <!-- ARTICLE 1 -->
+    <a href="image-resizer-article1.html" class="article-card">
+        <div class="article-title">How to Resize Images Without Losing Quality – Ultimate Guide 2024</div>
+        <p class="article-desc">A comprehensive step-by-step guide covering resizing techniques, aspect ratio preservation, and tools to resize images for different purposes while maintaining perfect visual quality.</p>
+        <div class="article-meta">
+            <span>📚 Beginner to Advanced</span>
+            <span>⏱️ 8 min read</span>
+            <span class="read-more">Read Full Guide →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 2 -->
+    <a href="image-resizer-article2.html" class="article-card">
+        <div class="article-title">Understanding Aspect Ratios: How to Resize Images Correctly</div>
+        <p class="article-desc">Detailed explanation of aspect ratios, common mistakes when resizing, and techniques to maintain proper proportions for social media, websites, and printing.</p>
+        <div class="article-meta">
+            <span>📐 Aspect Ratio Guide</span>
+            <span>⏱️ 6 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 3 -->
+    <a href="image-resizer-article3.html" class="article-card">
+        <div class="article-title">Image Resizing for Social Media: Perfect Sizes for Instagram, Facebook, LinkedIn</div>
+        <p class="article-desc">Platform-specific resizing guidelines to ensure your images look perfect on all major social media platforms with optimal dimensions for profile pictures, covers, and posts.</p>
+        <div class="article-meta">
+            <span>📸 Social Media Guide</span>
+            <span>⏱️ 7 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 4 -->
+    <a href="image-resizer-article4.html" class="article-card">
+        <div class="article-title">Batch Image Resizing: How to Resize Multiple Images at Once</div>
+        <p class="article-desc">Save time by learning batch resizing techniques for processing hundreds of images simultaneously. Perfect for photographers, e-commerce stores, and content creators.</p>
+        <div class="article-meta">
+            <span>🖼️ Bulk Processing</span>
+            <span>⏱️ 5 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 5 -->
+    <a href="image-resizer-article5.html" class="article-card">
+        <div class="article-title">Mobile Image Resizing: How to Resize Photos on Smartphone</div>
+        <p class="article-desc">Practical guide to resizing high-resolution mobile photos for sharing on WhatsApp, Instagram, email, and documents without losing important details.</p>
+        <div class="article-meta">
+            <span>📱 Mobile Guide</span>
+            <span>⏱️ 4 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 6 -->
+    <a href="image-resizer-article6.html" class="article-card">
+        <div class="article-title">Resizing Images for Websites: Optimal Dimensions for Speed & Quality</div>
+        <p class="article-desc">Learn how to resize images for optimal website performance, including responsive image techniques, breakpoint considerations, and file size optimization.</p>
+        <div class="article-meta">
+            <span>⚡ Website Performance</span>
+            <span>⏱️ 6 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 7 -->
+    <a href="image-resizer-article7.html" class="article-card">
+        <div class="article-title">Image Resizing vs Cropping: What's the Difference & When to Use Each</div>
+        <p class="article-desc">Clear explanation of resizing and cropping techniques with visual examples, practical use cases, and guidelines for choosing the right method for different projects.</p>
+        <div class="article-meta">
+            <span>🔍 Technical Comparison</span>
+            <span>⏱️ 7 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 8 -->
+    <a href="image-resizer-article8.html" class="article-card">
+        <div class="article-title">Image Size Change Kaise Kare – Complete Hindi Guide</div>
+        <p class="article-desc">Hindi mein complete guide: Image dimensions kaise change kare, aspect ratio maintain kaise kare, aur best free tools ka use kaise kare WhatsApp, Facebook ke liye.</p>
+        <div class="article-meta">
+            <span>🇮🇳 Hindi Guide</span>
+            <span>⏱️ 5 min read</span>
+            <span class="read-more">पूरा आर्टिकल पढ़ें →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 9 -->
+    <a href="image-resizer-article9.html" class="article-card">
+        <div class="article-title">Advanced Image Resizing Techniques: Smart Objects, Content-Aware Scale</div>
+        <p class="article-desc">Professional techniques including smart object resizing, content-aware scaling, and maintaining image quality when resizing to extreme dimensions.</p>
+        <div class="article-meta">
+            <span>🚀 Advanced Techniques</span>
+            <span>⏱️ 9 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 10 -->
+    <a href="image-resizer-article10.html" class="article-card">
+        <div class="article-title">Common Image Resizing Mistakes & How to Avoid Them</div>
+        <p class="article-desc">Learn about typical errors people make when resizing images – stretching, pixelation, wrong aspect ratios – and how to fix them for perfect results every time.</p>
+        <div class="article-meta">
+            <span>⚠️ Mistakes & Solutions</span>
+            <span>⏱️ 5 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 11 -->
+    <a href="image-resizer-article11.html" class="article-card">
+        <div class="article-title">Resizing Images for Printing: DPI, Resolution & Size Guide</div>
+        <p class="article-desc">Complete guide to resizing images for printing purposes, understanding DPI requirements, resolution needs, and optimal dimensions for different print sizes.</p>
+        <div class="article-meta">
+            <span>🖨️ Printing Guide</span>
+            <span>⏱️ 6 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- ARTICLE 12 -->
+    <a href="image-resizer-article12.html" class="article-card">
+        <div class="article-title">Responsive Images: Resizing for Different Screen Sizes & Devices</div>
+        <p class="article-desc">Learn how to create responsive images that automatically adjust to different screen sizes, devices, and resolutions for optimal viewing experience.</p>
+        <div class="article-meta">
+            <span>📱 Responsive Design</span>
+            <span>⏱️ 7 min read</span>
+            <span class="read-more">Read Full Article →</span>
+        </div>
+    </a>
+
+    <!-- BOTTOM TOOL LINK -->
+    <a href="https://www.sktoolhub.in/image-resizer.html" class="tool-link">
+        🔧 Start Resizing Images for Free Now
+    </a>
+
+</div>
+
+<footer>
+    <p>© 2024 <strong>Sk Toolhub</strong> – Free Online Image Resizer & Tools</p>
+    <p>All articles are regularly updated with latest image resizing techniques and best practices.</p>
+</footer>
+
+</body>
+</html>
