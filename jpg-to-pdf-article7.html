@@ -809,15 +809,14 @@ from PIL import Image
 def batch_jpg_to_pdf(input_folder, output_pdf):
     images = []
     for filename in sorted(os.listdir(input_folder)):
-        if filename.endswith('.jpg') or filename.endswith('.jpeg'):
-            img_path = os.path.join(input_folder, filename)
-            images.append(img_path)
-    
-    with open(output_pdf, "wb") as f:
-        f.write(img2pdf.convert(images))
-    
-    print(f"Successfully converted {len(images)} images to {output_pdf}")
+        if filename.lower().endswith(('.jpg', '.jpeg')):
+    image_path = os.path.join(input_folder, filename)
+    image_list.append(image_path)
 
+with open(output_pdf, "wb") as pdf_file:
+    pdf_file.write(img2pdf.convert(image_list))
+
+print(f"Successfully converted {len(image_list)} images into {output_pdf}")
 # Usage
 batch_jpg_to_pdf('input_images/', 'output_document.pdf')
                 </pre>
